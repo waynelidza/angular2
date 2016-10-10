@@ -1,3 +1,91 @@
-<h1>
-  {{title}}
-</h1>
+
+
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top affix">
+  <div  class="container" >
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <img src="Images/ReasonLogo.png" height="45" width ="109" style="margin-left:-10px;"/>
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span> menu <i class="fa fa-bars"></i>
+        </button>
+
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="active">
+            <a class="page-scroll" href="#">absa\Nhlanhla</a>
+          </li>
+
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </div>
+</nav>
+
+<!-- Main submit-->
+<div class="container" style="margin-top:100px;">
+  <h2><span class="glyphicon glyphicon-cog blue"></span> Provision your Reason Environment</h2>
+  <form #x="ngForm" (ngSubmit)="sendRequest(x.value)">
+    <div class="form-group">
+      <label for="templateName">Provisioning Name</label>
+      <input type="text" class="form-control" id="templateName" placeholder="Enter a friendly name" name="templateName" ngModel >
+    </div>
+    <div class="form-group">
+      <label for="templatejson">JSON Template:</label>
+      <textarea class="form-control" rows="20" id="templatejson" placeholder="Enter your JSON provisioning template"  name="templatejson" ngModel></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit <span class="glyphicon glyphicon-arrow-right "></span>  </button>
+  </form>
+  <br/>
+  <div >
+    <div style='border:1px solid red;display:{{display}};' class="{{class}}" >{{message}}</div>
+  </div>
+
+  <br/>
+
+  <!-- Status -->
+  <div *ngIf="displayRequestDiv">
+    <h4>Request Status: {{status}}</h4>
+  </div>
+
+  <hr/>
+  <hr/>
+  <div class="container">
+    <div class="row">
+
+      <!-- Logs -->
+      <div class=" logDump " *ngIf="displayLogDiv">
+        <h4>Logs</h4>
+        <ul>
+          <li *ngFor="let logJSON of logJSONs">{{logJSON.title}}</li>
+        </ul>
+      </div>
+    </div>
+
+    <br/>
+    <div class="row">
+      <!-- Outputs -->
+      <div class=" logDump " *ngIf="displayOutputDiv">
+        <h4>Outputs</h4>
+        <ul>
+          <li *ngFor="let outputJSON of outputJSONs">{{outputJSON.title}}</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <br/>
+  <br/>
+  <br/>
+  <!-- Footer -->
+  <nav id="footer" class="navbar navbar-default navbar-fixed-bottom affix">
+    <div style="margin-left:auto;margin-right:auto;width:250px;line-height:50px;color:#919396">
+      &copy; Project Reason {{year}}
+    </div>
+  </nav>

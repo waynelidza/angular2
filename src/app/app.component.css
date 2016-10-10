@@ -1,0 +1,48 @@
+.left {
+    overflow: hidden;
+    min-height: 350px;
+    width: 550px;
+    border: 1px solid #c0c0c0;
+
+}
+
+.right {
+    float: left;
+    width:450px;
+    min-height: 350px;
+    margin-right: 30px;
+    border: 1px solid #c0c0c0;
+
+}
+
+.template_text_box{
+
+height:220px;
+width:420px
+
+}
+
+.name_text_box{
+
+height:50px;
+width:420px
+
+}
+
+.logDump{
+overflow-y:scroll;
+overflow-x:hidden;
+min-height: 350px;
+border: 1px solid #b2b4b7;
+background-color: #eaecef;
+padding:20px;
+}
+
+.glyphicon{
+
+}
+
+.blue
+{
+    color:#337ab7;
+}
