@@ -35,10 +35,23 @@ export class AppComponent {
   public class = '';
   public year = new Date().getFullYear();
   public requestSubmitted=false;
+  public statusTimeStamp = new Date().toDateString() + " " + new Date().toTimeString();
+  public logsTimeStamp =  new Date().toDateString() + " " + new Date().toTimeString();
+  public outputsTimeStamp =  new Date().toDateString() + " " + new Date().toTimeString();
+  public statusChangeMessage = 'Polling...';
+  public pollCounter = 0;
+  public pollCounterString = '';
+  public statusSubscription = null;
 
   constructor(private _demoService: DemoService) {
 
   }
+
+getTimeStamp(){
+  return new Date().toDateString() + " " + new Date().toTimeString();
+}
+
+
 
 //Submit button click---------------------------------------------------------------------------------------------------------
   sendRequest(formValue){
@@ -172,16 +185,34 @@ getStatustPoll() {
         console.log('waiting for uui...')
       }
 
-      //CALL POLLABLE SERVICE
-      this._demoService.getStatustPoll(this.uuid, this.templateName).subscribe(
-        data => {
-        this.status = data.status,this.displayRequestDiv = true
-        }
-
-    );
+      //CALL POLLABLE SERVICE WITH A SUBSCRIPTION TO CANCEL LATER
+     this.statusSubscription = this._demoService.getStatustPoll(this.uuid, this.templateName).subscribe(data => {
+                                this.displayRequestDiv = true, this.statusTimeStamp = this.getTimeStamp(),this.doStatusCheck(data),
+                                 this.pollCounter++; this.pollCounterString = this.pollCounter.toString()}
+    ); 
   }
 //----------------------------------------------------------------------------------------------------------------------------
+doStatusCheck(data){
 
+  if(data.status != this.status)
+  {
+    this.statusChangeMessage = 'Changed from ' + this.status + ' to ' + data.status ;
+
+    this.status = data.status; //IT CHANGED
+
+    //...to created
+    if(this.status == 'created'){
+
+      //unsubscribe from the status poller
+      this.statusSubscription.unsubscribe();
+
+        //call get for get outputs
+        this._demoService.getOutputs(this.uuid, this.templateName).subscribe(
+        data => { this.displayOutputDiv = true, this.outputsTimeStamp = this.getTimeStamp() })
+    }
+
+  }
+}
 
 }
 bootstrap(AppComponent, [HTTP_PROVIDERS,]);
