@@ -2,7 +2,6 @@ import{Component, NgModule}from '@angular/core';
 import {Http, HTTP_PROVIDERS}from "@angular/http";
 '@angular/http'; import 'rxjs/add/operator/map';
 import {bootstrap}from "@angular/platform-browser-dynamic";
-
 import {DemoService}from './shared/demo.service';
 import {Observable}from 'rxjs/Rx';
 
@@ -37,141 +36,113 @@ export class AppComponent {
   public year = new Date().getFullYear();
   public requestSubmitted=false;
 
-  constructor(private _demoService: DemoService) {}
+  constructor(private _demoService: DemoService) {
 
+  }
+
+//Submit button click---------------------------------------------------------------------------------------------------------
   sendRequest(formValue){
 
-    var v= false;
-      if(formValue.templateName.length > 0)
-      {
-            v = true;
-      }
-      else
-      {
-        this.hasError = true;
-        this.messageStatus = 'danger';
-        this.message = 'Template name must be entered!!';
-      }
+    var v = false;
+    this.uuid = '';
+    //validation #1
+    if(formValue.templateName.length > 0)
+    {
+          v = true;
+    }
+    else
+    {
+      this.hasError = true;
+      this.messageStatus = 'danger';
+      this.message = 'Template name must be entered!!';
+    }
 
+    //validation #2
     if(this.IsJsonString(formValue.templatejson) && v == true )
     {
           this.templateName = formValue.templateName;
           this.templatejson = formValue.templatejson;
 
-                  var sleep = function (time) {
-
+          //TOO: IS THIS STILL NEEDED???
+            var sleep = function (time) {
             return new Promise((resolve) => setTimeout(resolve, time));
           }
 
-        this.getPost();
+        //DO INITIAL POST
+        this.doPost();
 
         sleep(1000).then(() => {
 
-                  if (this.status === "submitted")
-                  {
-                    //this.displayOutputDiv = true;
-                    //this.displayLogDiv = true;
-                   // this.displayRequestDiv = true;
+                if (this.status === "submitted"){
+                this.hasError = false;
+                this.messageStatus = 'success';
+                this.message = '';
+                this.class = 'alert alert-success';
+                this.message = 'uuid: ' + this.uuid;
+                this.display = 'visible';
 
-                   // this.getLogandOutput();
+                this.requestSubmitted = true; // :) WE HAVE THE UUID :)
 
-                    this.hasError = false;
-                    this.messageStatus = 'success';
-                    this.message = '';
-                    this.class = 'alert alert-success';
-                    this.message = 'uuid: ' + this.uuid;
-                    this.display = 'visible';
+                //CHECK THE STATUS AND THEN POLL...
+                this.getStatustPoll();
 
-                    this.requestSubmitted = true;
-
-
-
-                  }
-                else
-                {
-
-                  //alert ("We couldn't get a response from the server");
-                  this.hasError = true;
-                  this.messageStatus = 'danger';
-                  this.message = 'Error: No response from server';
-                  this.class = 'alert alert-danger';
                 }
-
-              });
-
-
+                else{
+                this.hasError = true;
+                this.messageStatus = 'danger';
+                this.message = 'Error: No response from server';
+                this.class = 'alert alert-danger';
+                }
+        });
     }
     else{
 
+      //DO ERROR FORMATTING ETC...
         this.hasError = true;
         this.messageStatus = 'danger';
         this.class = 'alert alert-danger';
 
-      if(v == true )
-      {
-        if(formValue.templatejson.length > 0)
-        {
-          this.message = 'Error: JSON Template is required';
+        if(v == true ){
+          if(formValue.templatejson.length > 0){
+            this.message = 'Error: JSON Template is required';
+          }
+          else{
+              this.message = 'Error: Json is invalid';
+          }
         }
-        else
-        {
-            this.message = 'Error: Json is invalid';
+        else{
+          this.message = 'Error: Provisioning Name is a required field';
         }
-
-      }
-      else
-      {
-
-        this.message = 'Error: Provisioning Name is a required field';
-      }
 
     }
 
-
+    //SHOW MESSAGE DIV LASTLY
     this.messageDiv = this.messageDiv.replace('[MessageStatus]',this.messageStatus);
     this.messageDiv = this.messageDiv.replace('[ErrorMEssage]',this.message);
 
     this.finalMessage = this.messageDiv;
     this.display = 'visible';
 
-
-            if(this.requestSubmitted==true){
-
-            this.getStatus();
-            }
-
-            else{
-
-            console.log('is false');
-
-            }
-
-
 }
 
-
- getPost() {
+//----------------------------------------------------------------------------------------------------------------------------
+ doPost() {
 
    if(this.IsJsonString(this.templatejson)){
-
-     // alert('json is valid');
-    this._demoService.getPost(this.templateName,this.templatejson ).subscribe(
-
-      data => { this.posts = 'created',this.uuid = data.uuid, this.status=data.status},
-      err => console.error(err),
-     // () => console.log('done loading posts')
-      () => console.log('done loading posts')
-    );
-   }
-else{
-
-  alert('not valid JSON');
-}
+        this._demoService.doPost(this.templateName,this.templatejson ).subscribe(
+          data => { this.posts = 'created',this.uuid = data.uuid, this.status=data.status},
+          err => console.error(err), //TODO: OUTPUT ERRORS/MESSAGES TO UX
+          () => console.log('done loading posts') //TODO: OUTPUT ERRORS/MESSAGES TO UX
+        );
+      }
+      else{
+        alert('not valid JSON'); //TODO: OUTPUT ERRORS/MESSAGES TO UX
+    }
 
   }
 
+//SIMPLE IS VALID JASON CHECK----------------------------------------------------------------------------------------------------------------------------
  IsJsonString(str) {
-
     try {
         JSON.parse(str);
     } catch (e) {
@@ -180,30 +151,36 @@ else{
     return true;
 }
 
-
+//----------------------------------------------------------------------------------------------------------------------------
   getLogandOutput() {
 
     this._demoService.getLogandOutput(this.uuid).subscribe(
+
       data => {
         this.outputJSONs = data[0],
         this.logJSONs = data[1]
       }
+    );
+  }
+  
+//STATUS POLL----------------------------------------------------------------------------------------------------------------------------
+getStatustPoll() {
+
+      //WAIT FOR THE UUID TO BE SET ...USUALLY A FEW SECONDS
+      while(this.uuid == '')
+      {
+        console.log('waiting for uui...')
+      }
+
+      //CALL POLLABLE SERVICE
+      this._demoService.getStatustPoll(this.uuid, this.templateName).subscribe(
+        data => {
+        this.status = data.status,this.displayRequestDiv = true
+        }
 
     );
   }
-
-  getStatus() {
-console.log('get status');
-
-
-                          //this.displayOutputDiv = true;
-                    //this.displayLogDiv = true;
-                   // this.displayRequestDiv = true;
-
-                   // this.getLogandOutput();
-
-
-  }
+//----------------------------------------------------------------------------------------------------------------------------
 
 
 }
