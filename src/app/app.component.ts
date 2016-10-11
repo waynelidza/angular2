@@ -44,6 +44,7 @@ export class AppComponent {
   public statusSubscription = null;
   public logSubscription = null;
   public logArr = [];
+  public outputDic = {};
 
 
   constructor(private _demoService: DemoService) {
@@ -79,14 +80,15 @@ export class AppComponent {
       this.templatejson = formValue.templatejson;
 
       //TOO: IS THIS STILL NEEDED???
-      // var sleep = function (time) {
-      //   return new Promise((resolve) => setTimeout(resolve, time));
-      // }
+       var sleep = function (time) {
+         return new Promise((resolve) => setTimeout(resolve, time));
+       }
 
       //DO INITIAL POST
       this.doPost();
 
-      //sleep(1000).then(() => {
+      sleep(1000).then(() => {
+
 
         if (this.status === "submitted") {
           this.hasError = false;
@@ -97,7 +99,7 @@ export class AppComponent {
           this.display = 'visible';
 
           this.requestSubmitted = true; // :) WE HAVE THE UUID :)
-
+          
           //CHECK THE STATUS AND THEN POLL...
           this.getStatustPoll();
 
@@ -108,7 +110,7 @@ export class AppComponent {
           this.message = 'Error: No response from server';
           this.class = 'alert alert-danger';
         }
-      //});
+      });
     }
     else {
 
@@ -142,10 +144,11 @@ export class AppComponent {
 
   //----------------------------------------------------------------------------------------------------------------------------
   doPost() {
-
+   
     if (this.IsJsonString(this.templatejson)) {
+
       this._demoService.doPost(this.templateName, this.templatejson).subscribe(
-        data => { this.posts = 'created', this.uuid = data.uuid, this.status = data.status },
+        data => { this.posts = 'created', this.uuid = data.uuid, this.status = data.status},
         err => console.error(err), //TODO: OUTPUT ERRORS/MESSAGES TO UX
         () => console.log('done loading posts') //TODO: OUTPUT ERRORS/MESSAGES TO UX
       );
@@ -186,6 +189,7 @@ export class AppComponent {
       console.log('waiting for uui...')
     }
 
+ 
     //CALL POLLABLE SERVICE WITH A SUBSCRIPTION TO CANCEL LATER
     this.statusSubscription = this._demoService.getStatustPoll(this.uuid, this.templateName).subscribe(data => {
       this.displayRequestDiv = true, this.statusTimeStamp = this.getTimeStamp(), this.doStatusCheck(data),
@@ -196,16 +200,10 @@ export class AppComponent {
 
 
     this.logSubscription = this._demoService.getLogPoll(this.uuid, this.templateName).subscribe(data => {
-      this.displayLogDiv = true, this.logsTimeStamp = this.getTimeStamp(), this.logArr = data.logs, this.bindLogs(data.logs)
+      this.displayLogDiv = true, this.logsTimeStamp = this.getTimeStamp(), this.logArr = data.logs
     });
 
   }
-  //----------------------------------------------------------------------------------------------------------------------------
-
-bindLogs(dataLogs)
-{
-  console.log(dataLogs);
-}
 
   //----------------------------------------------------------------------------------------------------------------------------
   doStatusCheck(data) {
@@ -224,14 +222,20 @@ bindLogs(dataLogs)
         //CALL SINGLE GET FOR TERRAFORM OUTPUTS
         //TODO: DIPLAY OUTPUTS...
         this._demoService.getOutputs(this.uuid, this.templateName).subscribe(
-          data => { this.displayOutputDiv = true, this.outputsTimeStamp = this.getTimeStamp() })
+          data => { this.displayOutputDiv = true, this.outputsTimeStamp = this.getTimeStamp(), this.outputDic = data.outputs })
+          
+          //UNSUBSCRIBE FROM LOG POLL
+          this.logSubscription.unsubscribe();
+          //
       }
       else if (this.status == 'failed') {
 
         //TODO: DO FAIL CODE HERE...
-        //...
-        //...
-        alert('Provising failed, pelse check the logs')
+        //alert('Provising failed, please check the logs')
+          this.hasError = true;
+          this.messageStatus = 'danger';
+          this.message = 'Error: Provising failed, please check the logs';
+          this.class = 'alert alert-danger';
       }
     }
   }
