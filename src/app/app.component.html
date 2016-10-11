@@ -66,13 +66,15 @@
   <div class="container">
     <div class="row">
 
-      <!-- Logs -->
+      <!-- Logss -->
       <div class=" logDump " *ngIf="displayLogDiv">
         <h4>Logs</h4>
         <h5>Last query:{{logsTimeStamp}}</h5>
+
         <ul>
-          <li *ngFor="let logJSON of logJSONs">{{logJSON.title}}</li>
+          <li *ngFor="let item of logArr">{{item}}</li>
         </ul>
+
       </div>
     </div>
 
@@ -92,7 +94,7 @@
   <br/>
   <br/>
   <br/>
-  
+
   <!-- Footer -->
   <nav id="footer" class="navbar navbar-default navbar-fixed-bottom affix">
     <div style="margin-left:auto;margin-right:auto;width:250px;line-height:50px;color:#919396">
