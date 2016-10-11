@@ -52,8 +52,6 @@
     <div style='border:1px solid red;display:{{display}};' class="{{class}}" >{{message}}</div>
   </div>
 
-  
-
   <!-- Status -->
   <div *ngIf="displayRequestDiv">
     <h4><b>Status:</b> {{status}}</h4>
@@ -61,7 +59,6 @@
     <h6><b>Last query:</b> {{statusTimeStamp}}</h6>
    
   </div>
-
 
   <div class="container">
     <div class="row">
@@ -79,15 +76,20 @@
     </div>
 
     <br/>
+
     <div class="row">
+
       <!-- Outputs -->
       <div class=" logDump " *ngIf="displayOutputDiv">
         <h4>Outputs</h4>
         <h5>Last query:{{outputsTimeStamp}}</h5>
+
         <ul>
-          <li *ngFor="let myItem of outputDic">{{myItem}}</li>
+          <li *ngFor="let item of outputDic"><b>{{item["k"]}} :</b> {{item["v"]}}</li>
         </ul>
+        
       </div>
+
     </div>
 
   </div>

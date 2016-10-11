@@ -45,6 +45,7 @@ export class AppComponent {
   public logSubscription = null;
   public logArr = [];
   public outputDic = {};
+  
 
 
   constructor(private _demoService: DemoService) {
@@ -224,6 +225,10 @@ export class AppComponent {
         this._demoService.getOutputs(this.uuid, this.templateName).subscribe(
           data => { this.displayOutputDiv = true, this.outputsTimeStamp = this.getTimeStamp(), this.outputDic = data.outputs })
           
+          
+
+
+
           //UNSUBSCRIBE FROM LOG POLL
           this.logSubscription.unsubscribe();
           //
