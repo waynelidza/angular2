@@ -48,8 +48,12 @@
   <br/>
   
   <!-- Messages = error or sucess -->
-  <div >
-    <div style='border:1px solid red;display:{{display}};' class="{{class}}" >{{message}}</div>
+  <div class="container">
+    <div class="row">
+      <div >
+        <div style='border:1px solid red;display:{{display}};' class="{{class}}" >{{message}}</div>
+      </div>
+    </div>
   </div>
 
   <!-- Status -->
@@ -68,9 +72,9 @@
         <h4>Logs</h4>
         <h5>Last query:{{logsTimeStamp}}</h5>
 
-        <ul>
+        <ol>
           <li *ngFor="let item of logArr">{{item}}</li>
-        </ul>
+        </ol>
 
       </div>
     </div>
@@ -84,10 +88,11 @@
         <h4>Outputs</h4>
         <h5>Last query:{{outputsTimeStamp}}</h5>
 
-        <ul>
-          <li *ngFor="let item of outputDic"><b>{{item["k"]}} :</b> {{item["v"]}}</li>
-        </ul>
-        
+        <ol>
+          <!--<li *ngFor="let item of outputDic"><b>{{item["k"]}} :</b> {{item["v"]}}</li>-->
+             <li *ngFor="let item of outputsArr">{{item}}</li>
+        </ol>
+
       </div>
 
     </div>

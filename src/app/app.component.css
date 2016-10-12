@@ -30,9 +30,9 @@ width:420px
 }
 
 .logDump{
-overflow-y:scroll;
+overflow-y:hidden;
 overflow-x:hidden;
-min-height: 350px;
+min-height: 100px;
 border: 1px solid #b2b4b7;
 background-color: #eaecef;
 padding:20px;

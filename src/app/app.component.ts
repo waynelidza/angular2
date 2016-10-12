@@ -45,7 +45,7 @@ export class AppComponent {
   public logSubscription = null;
   public logArr = [];
   public outputDic = {};
-  
+  public outputsArr = [];
 
 
   constructor(private _demoService: DemoService) {
@@ -223,7 +223,7 @@ export class AppComponent {
         //CALL SINGLE GET FOR TERRAFORM OUTPUTS
         //TODO: DIPLAY OUTPUTS...
         this._demoService.getOutputs(this.uuid, this.templateName).subscribe(
-          data => { this.displayOutputDiv = true, this.outputsTimeStamp = this.getTimeStamp(), this.outputDic = data.outputs })
+          data => { this.displayOutputDiv = true, this.outputsTimeStamp = this.getTimeStamp(), this.outputDic = data.outputs, this.convertToArr(data.outputs) })
           
           
 
@@ -244,6 +244,21 @@ export class AppComponent {
       }
     }
   }
+
+convertToArr(Input)
+{
+  //console.log('convertToArr');
+
+      for(var i in Input){
+        console.log(i);
+        console.log(Input[i]);
+        this.outputsArr.push(i + ": " + Input[i]);
+      }
+}
+
+}
+
+
 
 }
 bootstrap(AppComponent, [HTTP_PROVIDERS,]);
