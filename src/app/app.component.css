@@ -16,14 +16,12 @@
 }
 
 .template_text_box{
-
 height:220px;
 width:420px
 
 }
 
 .name_text_box{
-
 height:50px;
 width:420px
 
@@ -36,10 +34,6 @@ min-height: 100px;
 border: 1px solid #b2b4b7;
 background-color: #eaecef;
 padding:20px;
-}
-
-.glyphicon{
-
 }
 
 .blue

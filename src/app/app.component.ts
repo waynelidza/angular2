@@ -47,10 +47,11 @@ export class AppComponent {
   public outputDic = {};
   public outputsArr = [];
   public homeURL = 'http://localhost:4200/';
+  public result : Array<Object>; 
 
-
-  constructor(private _demoService: ReasonService) {
+  constructor(private _demoService: ReasonService,private http:Http) {
     
+
   }
 
   //HELPERS
@@ -58,6 +59,7 @@ export class AppComponent {
     return new Date().toDateString() + " " + new Date().toTimeString();
   }
 
+//---------------------------------------------------------------------------------------------------------
   reloadPage(){
 
     location.reload();
@@ -205,16 +207,16 @@ export class AppComponent {
   }
 
   //----------------------------------------------------------------------------------------------------------------------------
-  getLogandOutput() {
+  // getLogandOutput() {
 
-    this._demoService.getLogandOutput(this.uuid).subscribe(
+  //   this._demoService.getLogandOutput(this.uuid).subscribe(
 
-      data => {
-        this.outputJSONs = data[0],
-          this.logJSONs = data[1]
-      }
-    );
-  }
+  //     data => {
+  //       this.outputJSONs = data[0],
+  //         this.logJSONs = data[1]
+  //     }
+  //   );
+  // }
 
   //STATUS POLL----------------------------------------------------------------------------------------------------------------------------
   getStatustPoll() {
@@ -293,8 +295,6 @@ convertToArr(Input)
 }
 
 
-
-}
 bootstrap(AppComponent, [HTTP_PROVIDERS,]);
 bootstrap(AppComponent, [
   disableDeprecatedForms(), provideForms()

@@ -40,7 +40,7 @@
       <textarea class="form-control" rows="15" id="templatejson" placeholder="Enter your JSON provisioning template"  name="templatejson" ngModel></textarea>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit&nbsp; 
+    <button id='btnSubmit' type="submit" class="btn btn-primary">Submit&nbsp; 
       <span class="glyphicon glyphicon-arrow-right "></span>  
     </button>
 
@@ -55,7 +55,7 @@
   <div class="container">
     <div class="row">
       <div >
-        <div style='border:1px solid red;display:{{display}};' class="{{class}}" >{{message}}</div>
+        <div id='msgDiv' style='border:1px solid red;display:{{display}};' class="{{class}}" >{{message}}</div>
       </div>
     </div>
   </div>
