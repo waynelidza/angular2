@@ -1,0 +1,23 @@
+[
+  {
+    "_id": "578c8c670f3cd0941efb337c",
+    "name": "John",
+    "gender": "Male",
+    "age": "34",
+    "__v": 0
+  },
+  {
+    "_id": "578c8c670f3cd0941Kfb337c",
+    "name": "JohnK",
+    "gender": "Male",
+    "age": "34",
+    "__v": 0
+  },
+  {
+    "_id": "578c89670f3cd0941efb337c",
+    "name": "Johny",
+    "gender": "Male",
+    "age": "34",
+    "__v": 0
+  }
+]
