@@ -5,7 +5,7 @@
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
-        <img src="Images/ReasonLogo.png" height="45" width ="109" style="margin-left:-10px;"/>
+        <a href ='{{homeURL}}' ><img src="Images/ReasonLogo.png" height="45" width ="109" style="margin-left:-20px;"/></a>
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
           <span class="sr-only">Toggle navigation</span> menu <i class="fa fa-bars"></i>
         </button>
@@ -40,9 +40,13 @@
       <textarea class="form-control" rows="15" id="templatejson" placeholder="Enter your JSON provisioning template"  name="templatejson" ngModel></textarea>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit 
+    <button type="submit" class="btn btn-primary">Submit&nbsp; 
       <span class="glyphicon glyphicon-arrow-right "></span>  
     </button>
+
+      <div style='float:right;'>
+        <a href ='{{homeURL}}' class="btn btn-primary" >Refresh &nbsp;<span class="glyphicon glyphicon-refresh "></span>  </a>
+      </div>
   </form>
 
   <br/>

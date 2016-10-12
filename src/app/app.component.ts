@@ -46,10 +46,11 @@ export class AppComponent {
   public logArr = [];
   public outputDic = {};
   public outputsArr = [];
+  public homeURL = 'http://localhost:4200/';
 
 
   constructor(private _demoService: DemoService) {
-
+    
   }
 
   //HELPERS
@@ -57,7 +58,11 @@ export class AppComponent {
     return new Date().toDateString() + " " + new Date().toTimeString();
   }
 
+  reloadPage(){
 
+    location.reload();
+    
+  }
 
   //Submit button click---------------------------------------------------------------------------------------------------------
   sendRequest(formValue) {
@@ -92,13 +97,8 @@ export class AppComponent {
 
 
         if (this.status === "submitted") {
-          this.hasError = false;
-          this.messageStatus = 'success';
-          this.message = '';
-          this.class = 'alert alert-success';
-          this.message = 'uuid: ' + this.uuid;
-          this.display = 'visible';
 
+          this.setMessage('uuid: ' + this.uuid,'s');
           this.requestSubmitted = true; // :) WE HAVE THE UUID :)
           
           //CHECK THE STATUS AND THEN POLL...
@@ -106,30 +106,33 @@ export class AppComponent {
 
         }
         else {
-          this.hasError = true;
-          this.messageStatus = 'danger';
-          this.message = 'Error: No response from server';
-          this.class = 'alert alert-danger';
+
+          this.setMessage('Error: No response from server','e');
+
         }
       });
     }
     else {
 
       //DO ERROR FORMATTING ETC...
-      this.hasError = true;
-      this.messageStatus = 'danger';
-      this.class = 'alert alert-danger';
+      //this.hasError = true;
+      //this.messageStatus = 'danger';
+      //this.class = 'alert alert-danger';
 
       if (v == true) {
-        if (formValue.templatejson.length > 0) {
-          this.message = 'Error: JSON Template is required';
+
+        if (formValue.templatejson.length < 1) {
+         // this.message = 'Error: JSON Template is required';
+          this.setMessage('Error: JSON Template is required','e');
         }
         else {
-          this.message = 'Error: Json is invalid';
+          //this.message = 'Error: Json is invalid';
+          this.setMessage('Error: JSON Template is not valid JSON','e');
         }
       }
       else {
-        this.message = 'Error: Provisioning Name is a required field';
+        //this.message = 'Error: Provisioning Name is a required field';
+        this.setMessage('Error: Provisioning Name is a required field','e');
       }
 
     }
@@ -156,9 +159,40 @@ export class AppComponent {
     }
     else {
       alert('not valid JSON'); //TODO: OUTPUT ERRORS/MESSAGES TO UX
+       this.setMessage('Error: Template is not valid JSON','e');
     }
 
   }
+//MESSGA EFORMATTING------------------------------------------------------------------------------------------------
+  setMessage(TheMessage, MessageType ){
+
+    if(MessageType == "s")
+    {
+          this.message = TheMessage
+          this.hasError = false;
+          this.messageStatus = 'success';
+          this.class = 'alert alert-success';
+          this.display = 'visible';
+    }
+    else if(MessageType == "e")
+    {
+          this.message = TheMessage
+          this.hasError = true;
+          this.messageStatus = 'danger';
+          this.class = 'alert alert-danger';
+          this.display = 'visible';
+    }  
+    else if(MessageType == "i")
+    {
+      //TODO:.............
+    }
+    else
+    {
+      //TODO:.............
+    }
+
+  }
+
 
   //SIMPLE IS VALID JASON CHECK------------------------------------------------------------------------------------------------
   IsJsonString(str) {
@@ -225,22 +259,22 @@ export class AppComponent {
         this._demoService.getOutputs(this.uuid, this.templateName).subscribe(
           data => { this.displayOutputDiv = true, this.outputsTimeStamp = this.getTimeStamp(), this.outputDic = data.outputs, this.convertToArr(data.outputs) })
           
-          
-
-
-
           //UNSUBSCRIBE FROM LOG POLL
           this.logSubscription.unsubscribe();
           //
+
+           this.setMessage('Provisioning complete OK','s');
       }
       else if (this.status == 'failed') {
 
         //TODO: DO FAIL CODE HERE...
         //alert('Provising failed, please check the logs')
-          this.hasError = true;
-          this.messageStatus = 'danger';
-          this.message = 'Error: Provising failed, please check the logs';
-          this.class = 'alert alert-danger';
+          // this.hasError = true;
+          // this.messageStatus = 'danger';
+          // this.message = 'Error: Provising failed, please check the logs';
+          // this.class = 'alert alert-danger';
+
+          this.setMessage('Error: Provising failed, please check the logs','e');
       }
     }
   }
