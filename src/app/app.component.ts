@@ -2,7 +2,7 @@ import { Component, NgModule } from '@angular/core';
 import { Http, HTTP_PROVIDERS } from "@angular/http";
 '@angular/http'; import 'rxjs/add/operator/map';
 import { bootstrap } from "@angular/platform-browser-dynamic";
-import { DemoService } from './shared/demo.service';
+import { ReasonService } from './shared/demo.service';
 import { Observable } from 'rxjs/Rx';
 
 import { FormsModule, provideForms, disableDeprecatedForms } from "@angular/forms";
@@ -11,7 +11,7 @@ import { FormsModule, provideForms, disableDeprecatedForms } from "@angular/form
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [DemoService],
+  providers: [ReasonService],
 })
 
 export class AppComponent {
@@ -49,7 +49,7 @@ export class AppComponent {
   public homeURL = 'http://localhost:4200/';
 
 
-  constructor(private _demoService: DemoService) {
+  constructor(private _demoService: ReasonService) {
     
   }
 
@@ -61,7 +61,7 @@ export class AppComponent {
   reloadPage(){
 
     location.reload();
-    
+
   }
 
   //Submit button click---------------------------------------------------------------------------------------------------------

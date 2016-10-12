@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
-export class DemoService {
+export class ReasonService {
 
 constructor(private http:Http) {
 
