@@ -9,6 +9,9 @@ export class ReasonService {
 public wsURL = '';
 public ExampleKey1 = '';
 public ExampleKey2 = '';
+public GetStatustPollMilliSeconds  = 1000;
+public GetLogPollMilliSeconds  = 1000;
+public HomeURL  = '';
 
 
 constructor(private http:Http) {
@@ -33,10 +36,11 @@ constructor(private http:Http) {
     setConfigs(configObject){
 
         this.wsURL = configObject.wsUrl
-        //alert(this.wsURL);
+        
         //set other congifs as needed
-        this.ExampleKey1 = configObject.ExampleKey1
-        this.ExampleKey2 = configObject.ExampleKey2
+        this.GetStatustPollMilliSeconds = configObject.GetStatustPollMilliSeconds
+        this.GetLogPollMilliSeconds = configObject.GetLogPollMilliSeconds
+        this.HomeURL = configObject.HomeURL;
     }
 
 
@@ -67,14 +71,14 @@ constructor(private http:Http) {
     getStatustPoll(uuid: string, name: string) {
 
         //return Observable.interval(1000).flatMapTo(this.http.get('http://localhost:3000/products/'+ name +'/deployments/'+ uuid +'/status').map((res:Response) => res.json()),);
-         return Observable.interval(1000).flatMapTo(this.http.get(`${this.wsURL}/products/${name}/deployments/${uuid}/status`).map((res:Response) => res.json()),);
+         return Observable.interval(this.GetStatustPollMilliSeconds ).flatMapTo(this.http.get(`${this.wsURL}/products/${name}/deployments/${uuid}/status`).map((res:Response) => res.json()),);
     }
 
     //LOG POLLING--------------------------------------------------------------------------------------------------------------
     getLogPoll(uuid: string, name: string) {
 
         //return Observable.interval(1000).flatMapTo(this.http.get('http://localhost:3000/products/'+ name +'/deployments/'+ uuid +'/logs').map((res:Response) => res.json()),);
-        return Observable.interval(1000).flatMapTo(this.http.get(`${this.wsURL}/products/${name}/deployments/${uuid}/logs`).map((res:Response) => res.json()),);
+        return Observable.interval(this.GetLogPollMilliSeconds).flatMapTo(this.http.get(`${this.wsURL}/products/${name}/deployments/${uuid}/logs`).map((res:Response) => res.json()),);
     }
 
     //SINGLE GET TERRAFORM OUTPUTS--------------------------------------------------------------------------------------------------------------
