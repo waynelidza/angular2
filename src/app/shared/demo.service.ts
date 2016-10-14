@@ -23,16 +23,12 @@ constructor(private http:Http) {
     //----------------------------------------------------------------------------------------------------------------------------
     getConfigs(){
 
-        //return this.http.get('/app/shared/log.json').map((res:Response) => res.json())
-        //this.http.get('/app/shared/ReasonConfig.json').map(res => res.json()).subscribe(value => {
             this.http.get('../../Configs/Configs.json').map(res => res.json()).subscribe(value => {
             this.setConfigs(value[0]); 
-            //this.wsURL = value[0].wsUrl
-            //alert(this.wsURL);
         }, err => console.log(`Error: ${err}`), ()=>console.log('getConfigs run'));
         
     }
-
+    //----------------------------------------------------------------------------------------------------------------------------
     setConfigs(configObject){
 
         this.wsURL = configObject.wsUrl
@@ -43,6 +39,15 @@ constructor(private http:Http) {
         this.HomeURL = configObject.HomeURL;
     }
 
+
+    //----------------------------------------------------------------------------------------------------------------------------
+    doFeedbackPost(jsonData)  {
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(`${this.wsURL}/feedback`,jsonData,options).map(res=>res.json());
+    }
 
     //----------------------------------------------------------------------------------------------------------------------------
     doPost(productName, jsonTemplate)  {

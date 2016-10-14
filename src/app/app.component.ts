@@ -26,6 +26,7 @@ export class AppComponent {
   public status;
   public templateName;
   public templatejson;
+
   public message = '';
   public hasError = false;
   public messageStatus = '';
@@ -33,6 +34,16 @@ export class AppComponent {
   public display = 'none';
   public messageDiv = '<div class="alert alert-[MessageStatus]"><strong>[MessageStatus]]!</strong> [ErrorMEssage]</div>';
   public class = '';
+
+
+  public message2 = '';
+  public hasError2= false;
+  public messageStatus2 = '';
+  public finalMessage2 = '';
+  public display2 = 'none';
+  public messageDiv2 = '<div class="alert alert-[MessageStatus]"><strong>[MessageStatus]]!</strong> [ErrorMEssage]</div>';
+  public class2 = '';
+
   public year = new Date().getFullYear();
   public requestSubmitted = false;
   public statusTimeStamp = new Date().toDateString() + " " + new Date().toTimeString();
@@ -49,6 +60,9 @@ export class AppComponent {
   public homeURL = 'http://localhost:4200/';
   public result : Array<Object>; 
   public displaySubmitButton = true;
+  public displayFeedback = false;
+  public feedbackSent = false;
+ 
 
   constructor(private _demoService: ReasonService,private http:Http) {
     
@@ -65,6 +79,23 @@ export class AppComponent {
     location.reload();
   }
 
+//FeedbackRequest button click---------------------------------------------------------------------------------------------------------
+  sendFeedbackRequest(formValue){
+
+    var jsonData = JSON.stringify(formValue);
+    
+          this._demoService.doFeedbackPost(jsonData).subscribe(
+          );
+
+          this.setFeedbackMessage('Thanks for the feedback, we will get back to you shortly :)','s');
+
+  }
+
+  checkResults(data)
+  {
+    alert(data.status);
+     
+  }
   //Submit button click---------------------------------------------------------------------------------------------------------
   sendRequest(formValue) {
 
@@ -75,6 +106,8 @@ export class AppComponent {
     this.hasError = false;
     this.display = 'none';
     this.statusChangeMessage = 'Polling...';
+    this.displayFeedback = false;
+
     var v = false;
     this.uuid = '';
 
@@ -202,6 +235,37 @@ export class AppComponent {
 
   }
 
+  setFeedbackMessage(TheMessage, MessageType ){
+
+console.log('setFeedbackMessage');
+this.feedbackSent = true;
+
+    if(MessageType == "s")
+    {
+          this.message2 = TheMessage
+          this.hasError2 = false;
+          this.messageStatus2 = 'success';
+          this.class2 = 'alert alert-success';
+          this.display2 = 'visible';
+    }
+    else if(MessageType == "e")
+    {
+          this.message2 = TheMessage
+          this.hasError2 = true;
+          this.messageStatus2 = 'danger';
+          this.class2 = 'alert alert-danger';
+          this.display2 = 'visible';
+    }  
+    else if(MessageType == "i")
+    {
+      //TODO:.............
+    }
+    else
+    {
+      //TODO:.............
+    }
+
+  }
 
   //SIMPLE IS VALID JASON CHECK------------------------------------------------------------------------------------------------
   IsJsonString(str) {
@@ -257,6 +321,7 @@ export class AppComponent {
       this.status = data.status; //IT CHANGED
 
       //...to created
+      var didEnd = false;
       if (this.status == 'created') {
 
         //unsubscribe from the status poller
@@ -269,13 +334,15 @@ export class AppComponent {
           
           //UNSUBSCRIBE FROM LOG POLL
           this.logSubscription.unsubscribe();
-          //
 
            this.setMessage('Provisioning complete OK','s');
            
            this.pollCounterString = '';
            
            this.displaySubmitButton = true;
+
+           didEnd = true;
+           
       }
       else if (this.status == 'failed') {
 
@@ -283,7 +350,14 @@ export class AppComponent {
           this.displaySubmitButton = true;
           this.pollCounterString = '';
           this.setMessage('Error: Provising failed, please check the logs','e');
+
+          didEnd = true;
+          
       }
+        if(didEnd == true)
+        {
+          this.displayFeedback = true;
+        }
     }
   }
 
