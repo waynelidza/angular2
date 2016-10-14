@@ -26,6 +26,7 @@ export class AppComponent {
   public status;
   public templateName;
   public templatejson;
+
   public message = '';
   public hasError = false;
   public messageStatus = '';
@@ -33,6 +34,16 @@ export class AppComponent {
   public display = 'none';
   public messageDiv = '<div class="alert alert-[MessageStatus]"><strong>[MessageStatus]]!</strong> [ErrorMEssage]</div>';
   public class = '';
+
+
+  public message2 = '';
+  public hasError2= false;
+  public messageStatus2 = '';
+  public finalMessage2 = '';
+  public display2 = 'none';
+  public messageDiv2 = '<div class="alert alert-[MessageStatus]"><strong>[MessageStatus]]!</strong> [ErrorMEssage]</div>';
+  public class2 = '';
+
   public year = new Date().getFullYear();
   public requestSubmitted = false;
   public statusTimeStamp = new Date().toDateString() + " " + new Date().toTimeString();
@@ -47,10 +58,15 @@ export class AppComponent {
   public outputDic = {};
   public outputsArr = [];
   public homeURL = 'http://localhost:4200/';
+  public result : Array<Object>; 
+  public displaySubmitButton = true;
+  public displayFeedback = false;
+  public feedbackSent = false;
+ 
 
-
-  constructor(private _demoService: ReasonService) {
+  constructor(private _demoService: ReasonService,private http:Http) {
     
+  this.homeURL = _demoService.HomeURL;
   }
 
   //HELPERS
@@ -58,14 +74,39 @@ export class AppComponent {
     return new Date().toDateString() + " " + new Date().toTimeString();
   }
 
+//---------------------------------------------------------------------------------------------------------
   reloadPage(){
-
     location.reload();
+  }
+
+//FeedbackRequest button click---------------------------------------------------------------------------------------------------------
+  sendFeedbackRequest(formValue){
+
+    var jsonData = JSON.stringify(formValue);
+    
+          this._demoService.doFeedbackPost(jsonData).subscribe(
+          );
+
+          this.setFeedbackMessage('Thanks for the feedback, we will get back to you shortly :)','s');
 
   }
 
+  checkResults(data)
+  {
+    alert(data.status);
+     
+  }
   //Submit button click---------------------------------------------------------------------------------------------------------
   sendRequest(formValue) {
+
+    //clear any vars
+    this.displayOutputDiv = false;
+    this.displayLogDiv = false;
+    this.displayRequestDiv = false;
+    this.hasError = false;
+    this.display = 'none';
+    this.statusChangeMessage = 'Polling...';
+    this.displayFeedback = false;
 
     var v = false;
     this.uuid = '';
@@ -82,6 +123,9 @@ export class AppComponent {
 
     //validation #2
     if (this.IsJsonString(formValue.templatejson) && v == true) {
+
+      this.displaySubmitButton = false;
+
       this.templateName = formValue.templateName;
       this.templatejson = formValue.templatejson;
 
@@ -101,13 +145,14 @@ export class AppComponent {
           this.setMessage('uuid: ' + this.uuid,'s');
           this.requestSubmitted = true; // :) WE HAVE THE UUID :)
           
-          //CHECK THE STATUS AND THEN POLL...
-          this.getStatustPoll();
+          //CHECK THE STATUS AND START POLLING...
+          this.startPolling();
 
         }
         else {
 
           this.setMessage('Error: No response from server','e');
+          this.displaySubmitButton = true;
 
         }
       });
@@ -115,24 +160,20 @@ export class AppComponent {
     else {
 
       //DO ERROR FORMATTING ETC...
-      //this.hasError = true;
-      //this.messageStatus = 'danger';
-      //this.class = 'alert alert-danger';
-
       if (v == true) {
 
         if (formValue.templatejson.length < 1) {
-         // this.message = 'Error: JSON Template is required';
           this.setMessage('Error: JSON Template is required','e');
+          this.displaySubmitButton = true;
         }
         else {
-          //this.message = 'Error: Json is invalid';
           this.setMessage('Error: JSON Template is not valid JSON','e');
+          this.displaySubmitButton = true;
         }
       }
       else {
-        //this.message = 'Error: Provisioning Name is a required field';
         this.setMessage('Error: Provisioning Name is a required field','e');
+        this.displaySubmitButton = true;
       }
 
     }
@@ -158,8 +199,9 @@ export class AppComponent {
       );
     }
     else {
-      alert('not valid JSON'); //TODO: OUTPUT ERRORS/MESSAGES TO UX
+
        this.setMessage('Error: Template is not valid JSON','e');
+       this.displaySubmitButton = true;
     }
 
   }
@@ -193,6 +235,37 @@ export class AppComponent {
 
   }
 
+  setFeedbackMessage(TheMessage, MessageType ){
+
+console.log('setFeedbackMessage');
+this.feedbackSent = true;
+
+    if(MessageType == "s")
+    {
+          this.message2 = TheMessage
+          this.hasError2 = false;
+          this.messageStatus2 = 'success';
+          this.class2 = 'alert alert-success';
+          this.display2 = 'visible';
+    }
+    else if(MessageType == "e")
+    {
+          this.message2 = TheMessage
+          this.hasError2 = true;
+          this.messageStatus2 = 'danger';
+          this.class2 = 'alert alert-danger';
+          this.display2 = 'visible';
+    }  
+    else if(MessageType == "i")
+    {
+      //TODO:.............
+    }
+    else
+    {
+      //TODO:.............
+    }
+
+  }
 
   //SIMPLE IS VALID JASON CHECK------------------------------------------------------------------------------------------------
   IsJsonString(str) {
@@ -205,27 +278,26 @@ export class AppComponent {
   }
 
   //----------------------------------------------------------------------------------------------------------------------------
-  getLogandOutput() {
+  // getLogandOutput() {
 
-    this._demoService.getLogandOutput(this.uuid).subscribe(
+  //   this._demoService.getLogandOutput(this.uuid).subscribe(
 
-      data => {
-        this.outputJSONs = data[0],
-          this.logJSONs = data[1]
-      }
-    );
-  }
+  //     data => {
+  //       this.outputJSONs = data[0],
+  //         this.logJSONs = data[1]
+  //     }
+  //   );
+  // }
 
   //STATUS POLL----------------------------------------------------------------------------------------------------------------------------
-  getStatustPoll() {
+  startPolling() {
 
     //WAIT FOR THE UUID TO BE SET ...USUALLY A FEW SECONDS
     while (this.uuid == '') {
       console.log('waiting for uui...')
     }
 
- 
-    //CALL POLLABLE SERVICE WITH A SUBSCRIPTION TO CANCEL LATER
+    //CALL STAUS POLLABLE SERVICE WITH A SUBSCRIPTION TO CANCEL LATER
     this.statusSubscription = this._demoService.getStatustPoll(this.uuid, this.templateName).subscribe(data => {
       this.displayRequestDiv = true, this.statusTimeStamp = this.getTimeStamp(), this.doStatusCheck(data),
         this.pollCounter++; this.pollCounterString = this.pollCounter.toString()
@@ -233,7 +305,7 @@ export class AppComponent {
     );
 
 
-
+    //CALL LOG POLLABLE SERVICE WITH A SUBSCRIPTION TO CANCEL LATER
     this.logSubscription = this._demoService.getLogPoll(this.uuid, this.templateName).subscribe(data => {
       this.displayLogDiv = true, this.logsTimeStamp = this.getTimeStamp(), this.logArr = data.logs
     });
@@ -249,11 +321,12 @@ export class AppComponent {
       this.status = data.status; //IT CHANGED
 
       //...to created
+      var didEnd = false;
       if (this.status == 'created') {
 
         //unsubscribe from the status poller
         this.statusSubscription.unsubscribe();
-
+        
         //CALL SINGLE GET FOR TERRAFORM OUTPUTS
         //TODO: DIPLAY OUTPUTS...
         this._demoService.getOutputs(this.uuid, this.templateName).subscribe(
@@ -261,21 +334,30 @@ export class AppComponent {
           
           //UNSUBSCRIBE FROM LOG POLL
           this.logSubscription.unsubscribe();
-          //
 
            this.setMessage('Provisioning complete OK','s');
+           
+           this.pollCounterString = '';
+           
+           this.displaySubmitButton = true;
+
+           didEnd = true;
+           
       }
       else if (this.status == 'failed') {
 
         //TODO: DO FAIL CODE HERE...
-        //alert('Provising failed, please check the logs')
-          // this.hasError = true;
-          // this.messageStatus = 'danger';
-          // this.message = 'Error: Provising failed, please check the logs';
-          // this.class = 'alert alert-danger';
-
+          this.displaySubmitButton = true;
+          this.pollCounterString = '';
           this.setMessage('Error: Provising failed, please check the logs','e');
+
+          didEnd = true;
+          
       }
+        if(didEnd == true)
+        {
+          this.displayFeedback = true;
+        }
     }
   }
 
@@ -293,8 +375,6 @@ convertToArr(Input)
 }
 
 
-
-}
 bootstrap(AppComponent, [HTTP_PROVIDERS,]);
 bootstrap(AppComponent, [
   disableDeprecatedForms(), provideForms()
