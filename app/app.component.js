@@ -12,6 +12,7 @@ var core_1 = require('@angular/core');
 var http_1 = require("@angular/http");
 '@angular/http';
 require('rxjs/add/operator/map');
+//import { bootstrap } from "@angular/platform-browser-dynamic";
 var demo_service_1 = require('./shared/demo.service');
 var AppComponent = (function () {
     function AppComponent(_demoService, http) {
@@ -175,8 +176,9 @@ var AppComponent = (function () {
         else {
         }
     };
+    //setFeedbackMessage------------------------------------------------------------------------------------------------
     AppComponent.prototype.setFeedbackMessage = function (TheMessage, MessageType) {
-        console.log('setFeedbackMessage');
+        //console.log('setFeedbackMessage');
         this.feedbackSent = true;
         if (MessageType == "s") {
             this.message2 = TheMessage;
@@ -279,9 +281,7 @@ var AppComponent = (function () {
         core_1.Component({
             selector: 'app',
             templateUrl: 'app/app.component.html',
-            //templateUrl: 'app/app.component.1.htmlf',
             styleUrls: ['app/app.component.css'],
-            //template: "<h1><span class='foo'>hhhhhhhhhhhhhhhhhhhhhh</span></h1>",
             providers: [demo_service_1.ReasonService],
         }), 
         __metadata('design:paramtypes', [demo_service_1.ReasonService, http_1.Http])
@@ -289,11 +289,6 @@ var AppComponent = (function () {
     return AppComponent;
 }());
 exports.AppComponent = AppComponent;
-// }
-// bootstrap(AppComponent, [HTTP_PROVIDERS,]);
-// bootstrap(AppComponent, [
-//   disableDeprecatedForms(), provideForms()
-//]);
 // DEPLOYMENT_STATUSES = %i{
 //   submitted
 //   creating

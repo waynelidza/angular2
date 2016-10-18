@@ -1,7 +1,7 @@
 import { Component, NgModule } from '@angular/core';
 import { Http } from "@angular/http";
 '@angular/http'; import 'rxjs/add/operator/map';
-import { bootstrap } from "@angular/platform-browser-dynamic";
+//import { bootstrap } from "@angular/platform-browser-dynamic";
 import { ReasonService } from './shared/demo.service';
 import { Observable } from 'rxjs/Rx';
 
@@ -10,9 +10,7 @@ import { FormsModule } from "@angular/forms";
 @Component({
   selector: 'app',
 templateUrl: 'app/app.component.html',
-//templateUrl: 'app/app.component.1.htmlf',
-   styleUrls: ['app/app.component.css'], //OK TESTED
-    //template: "<h1><span class='foo'>hhhhhhhhhhhhhhhhhhhhhh</span></h1>",
+   styleUrls: ['app/app.component.css'], 
   providers: [ReasonService],
 })
 
@@ -36,7 +34,6 @@ export class AppComponent {
   public display = 'none';
   public messageDiv = '<div class="alert alert-[MessageStatus]"><strong>[MessageStatus]]!</strong> [ErrorMEssage]</div>';
   public class = '';
-
 
   public message2 = '';
   public hasError2= false;
@@ -235,11 +232,12 @@ export class AppComponent {
     }
 
   }
-
+  
+//setFeedbackMessage------------------------------------------------------------------------------------------------
   setFeedbackMessage(TheMessage:string, MessageType:string ){
 
-console.log('setFeedbackMessage');
-this.feedbackSent = true;
+    //console.log('setFeedbackMessage');
+    this.feedbackSent = true;
 
     if(MessageType == "s")
     {
@@ -374,18 +372,6 @@ convertToArr(Input:any)
 }
 
 }
-
-
-
-
-
-// }
-
-
-// bootstrap(AppComponent, [HTTP_PROVIDERS,]);
-// bootstrap(AppComponent, [
-//   disableDeprecatedForms(), provideForms()
-//]);
 
 // DEPLOYMENT_STATUSES = %i{
 //   submitted
