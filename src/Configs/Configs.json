@@ -1,7 +1,0 @@
-[{
-"wsUrl" : "http://localhost:3000",
-"GetStatustPollMilliSeconds" : 1000,
-"GetLogPollMilliSeconds" : 1000,
-"HomeURL" : "http://localhost:4200",
-"ProvisioningTimeoutMilliSeconds" : 1000
-}]
