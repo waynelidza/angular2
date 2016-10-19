@@ -279,7 +279,7 @@ var AppComponent = (function () {
     };
     AppComponent = __decorate([
         core_1.Component({
-            selector: 'app',
+            selector: 'main-app-component',
             templateUrl: 'app/app.component.html',
             styleUrls: ['app/app.component.css'],
             providers: [demo_service_1.ReasonService],

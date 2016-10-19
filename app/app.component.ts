@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Rx';
 import { FormsModule } from "@angular/forms";
 
 @Component({
-  selector: 'app',
+  selector: 'main-app-component',
 templateUrl: 'app/app.component.html',
    styleUrls: ['app/app.component.css'], 
   providers: [ReasonService],

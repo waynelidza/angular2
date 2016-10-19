@@ -6,9 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
 
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+
+   <script src="Scripts/jquery/jquery-3.1.1.min.js"></script>
+   <link rel="stylesheet" href="Scripts/bootstrap/css/bootstrap.css">
+   <script src="Scripts/bootstrap/js/bootstrap.min.js"></script 
   
     <!-- Polyfill(s) for older browsers -->
     <script src="node_modules/core-js/client/shim.min.js"></script>
@@ -18,12 +22,18 @@
     <script src="node_modules/systemjs/dist/system.src.js"></script>
 
     <script src="systemjs.config.js"></script>
+
     <script>
       System.import('app').catch(function(err){ console.error(err); });
     </script>
+    
   </head>
 
   <body>
-    <app><div class="content"><img src='Images/ajax-loader-2.gif'/><br/>Reason loading...</div></app>
+    
+    <main-app-component>
+      <div class="content"><img src='Images/ajax-loader-2.gif'/><br/>Reason loading...</div>
+    </main-app-component>
+
   </body>
 </html>
