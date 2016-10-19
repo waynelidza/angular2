@@ -4,13 +4,14 @@ import { Http } from "@angular/http";
 import { Observable } from 'rxjs/Rx';
 import { FormsModule } from "@angular/forms";
 //import { Sample } from './components/sample.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-component',
 templateUrl: 'app/app.component.html',
    styleUrls: ['app/app.component.css'], 
   //providers: [ReasonService]
-  
+   
 })
 
 export class AppComponent {

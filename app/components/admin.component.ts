@@ -5,6 +5,7 @@ import { ReasonService } from '.././services/reason.service';
 import { Observable } from 'rxjs/Rx';
 import { FormsModule } from "@angular/forms";
 import { Sample } from '.././components/sample.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'admin-component',

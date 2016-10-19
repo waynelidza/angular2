@@ -7,10 +7,12 @@ import { AdminComponent } from './components/admin.component';
 import { StdProvisioningComponent } from './components/stdprovisioning.component';
 import { HomeComponent } from './components/home.component';
 import { AppComponent }  from './app.component';
+import { AppRoutingModule }     from './app.routes';
+
 
 
 @NgModule({
-  imports: [ BrowserModule,FormsModule,HttpModule],
+  imports: [ BrowserModule,FormsModule,HttpModule,AppRoutingModule],
   declarations: [ AppComponent,Sample,AdminComponent,StdProvisioningComponent,HomeComponent],
   bootstrap: [ AppComponent ]
 })
