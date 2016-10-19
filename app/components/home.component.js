@@ -11,19 +11,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 '@angular/http';
 require('rxjs/add/operator/map');
-//import { Sample } from './components/sample.component';
-var AppComponent = (function () {
-    function AppComponent() {
+var reason_service_1 = require('.././services/reason.service');
+var HomeComponent = (function () {
+    function HomeComponent() {
+        console.log('export class HomeComponent ');
     }
-    AppComponent = __decorate([
+    HomeComponent = __decorate([
         core_1.Component({
-            selector: 'app-component',
-            templateUrl: 'app/app.component.html',
-            styleUrls: ['app/app.component.css'],
+            selector: 'home-component',
+            templateUrl: 'app/components/home.component.html',
+            styleUrls: ['app/components/home.component.css'],
+            providers: [reason_service_1.ReasonService]
         }), 
         __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    ], HomeComponent);
+    return HomeComponent;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.HomeComponent = HomeComponent;
+//# sourceMappingURL=home.component.js.map

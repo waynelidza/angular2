@@ -9,21 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-'@angular/http';
-require('rxjs/add/operator/map');
-//import { Sample } from './components/sample.component';
-var AppComponent = (function () {
-    function AppComponent() {
+var Sample = (function () {
+    function Sample() {
+        this.name = "Andre";
     }
-    AppComponent = __decorate([
+    Sample = __decorate([
         core_1.Component({
-            selector: 'app-component',
-            templateUrl: 'app/app.component.html',
-            styleUrls: ['app/app.component.css'],
+            selector: 'sample-sample',
+            template: "<span style='margin-top:100px;'><h1>Hello  from the sample!</h1><span>",
         }), 
         __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    ], Sample);
+    return Sample;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.Sample = Sample;
+//# sourceMappingURL=sample.component.js.map

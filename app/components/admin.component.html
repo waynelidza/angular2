@@ -1,0 +1,124 @@
+<!-- Main submit-->
+<div class="container" style="margin-top:50px; border: 0px solid grey;padding 10px;">
+
+  <h2><span class="glyphicon glyphicon-cloud-upload blue"></span> Provision your Reason Environment | Admin</h2>
+  <form #x="ngForm" (ngSubmit)="sendRequest(x.value)">
+
+    <div class="input-group">
+       <span class="input-group-addon" id="Provisioning Name-addon" >Provisioning Name</span>
+      <input type="text" class="form-control" id="templateName" placeholder="Enter a friendly name" name="templateName" ngModel aria-describedby="Provisioning Name-addon">
+    </div>
+
+<br/>
+
+    <div class="form-group">
+      <label for="templatejson">JSON Template:</label>
+      <textarea class="form-control" rows="15" id="templatejson" placeholder="Enter your JSON provisioning template"  name="templatejson" ngModel></textarea>
+    </div>
+
+
+      <button id='btnSubmit' type="submit" class="btn btn-primary" title="Click to start provisioning"  *ngIf="displaySubmitButton">Submit&nbsp; 
+        <span class="glyphicon glyphicon-play "></span>  
+      </button>
+
+    <!-- Busy spinner-->
+      <img src="Images/ajax-loader-2.gif" *ngIf="!displaySubmitButton"/>
+    
+      <div style='float:right;'>
+        <a href ='{{homeURL}}' class="btn btn-primary" >Clear &nbsp;<span class="glyphicon glyphicon-refresh "></span>  </a>
+      </div>
+  </form>
+ </div> 
+
+  <!-- Messages = error or sucess -->
+  <div class="container" style="margin-top:20px;">
+    <div class="row">
+      <div >
+        <div id='message' style='border:0px solid red;display:{{display}};' class="{{class}}" >{{message}}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status -->
+  <div class="container " >
+      <div *ngIf="displayRequestDiv">
+        <h4><b>Status:</b> <span id='status' >{{status}}</span></h4>
+        <h5><b>Message:</b> {{statusChangeMessage}} <span *ngIf="!displaySubmitButton">{{pollCounterString}}</span></h5>
+        <h6><b>Last staus query:</b> {{statusTimeStamp}}</h6>
+      </div>
+  </div>
+
+  <div class="container" style="margin-top:20px;">
+
+    <div class="row">
+      <!-- Logss -->
+      <div class=" logDump " *ngIf="displayLogDiv">
+        <h4><span class="glyphicon glyphicon-list blue"></span>  Logs (<span id='logCounter'>{{logArr.length}})</span></h4>
+        <h5>Last log query:{{logsTimeStamp}}</h5>
+
+        <ol>
+          <li *ngFor="let item of logArr">{{item}}</li>
+        </ol>
+
+      </div>
+    </div>
+
+  
+  <div class="row" style="margin-top:20px;">
+
+      <!-- Outputs -->
+      <div class=" logDump " *ngIf="displayOutputDiv">
+        <h4><span class="glyphicon glyphicon-check blue"></span>  Outputs (<span id='outputCounter'>{{outputsArr.length}})</span></h4>
+        <h5>Last outputs query:{{outputsTimeStamp}}</h5>
+
+        <ol>
+          <!--<li *ngFor="let item of outputDic"><b>{{item["k"]}} :</b> {{item["v"]}}</li>-->
+             <li *ngFor="let item of outputsArr">{{item}}</li>
+        </ol>
+
+      </div>
+    </div>
+
+  </div>
+
+ 
+  <!-- Feedback Form -->
+<div class="container" style="margin-top:50px; border: 0px solid grey;padding 10px;" *ngIf="displayFeedback">
+<hr/>
+  <h3><span class="glyphicon glyphicon-thumbs-up blue"></span> Thanks for using Reason, please send us your feedback</h3>
+  <form #feedbackForm="ngForm" (ngSubmit)="sendFeedbackRequest(feedbackForm.value); feedbackForm.reset();">
+
+    <div class="input-group">
+      <span class="input-group-addon" id="Your Email Address-addon" >Your Email Address</span>
+      <input type="email" class="form-control" id="email" placeholder="Your email address" name="email" ngModel aria-describedby="Your Email Address-addon">
+    </div>
+
+    <br/>
+
+    <div class="form-group">
+      <label for="comment">Your comments:</label>
+      <textarea class="form-control" rows="10" id="comment" placeholder="Enter your feedback"  name="comment" ngModel required></textarea>
+    </div>
+
+      <button id='sdf' type="submit" class="btn btn-primary" title="Click to send feedback" >Send&nbsp; 
+        <span class="glyphicon glyphicon-send "></span>  
+      </button>
+
+  </form>
+
+    <div class="container" style="margin-top:20px;"*ngIf="feedbackSent">
+    <div class="row">
+      <div >
+        <div id='message2' style='border:0px solid red;display:{{display2}};' class="{{class2}}" >{{message2}}</div>
+      </div>
+    </div>
+  </div>
+
+ </div> 
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
