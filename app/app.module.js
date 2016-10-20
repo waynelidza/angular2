@@ -16,6 +16,7 @@ var admin_component_1 = require('./components/admin/admin.component');
 var stdprovisioning_component_1 = require('./components/stdprovisioning/stdprovisioning.component');
 var home_component_1 = require('./components/home/home.component');
 var app_component_1 = require('./app.component');
+var feedback_component_1 = require('./components/feedback/feedback.component');
 var app_routes_1 = require('./app.routes');
 var AppModule = (function () {
     function AppModule() {
@@ -23,7 +24,7 @@ var AppModule = (function () {
     AppModule = __decorate([
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule, app_routes_1.AppRoutingModule],
-            declarations: [app_component_1.AppComponent, admin_component_1.AdminComponent, stdprovisioning_component_1.StdProvisioningComponent, home_component_1.HomeComponent],
+            declarations: [app_component_1.AppComponent, admin_component_1.AdminComponent, stdprovisioning_component_1.StdProvisioningComponent, home_component_1.HomeComponent, feedback_component_1.FeedbackComponent],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

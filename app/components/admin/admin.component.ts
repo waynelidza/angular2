@@ -1,11 +1,11 @@
 import { Component, NgModule } from '@angular/core';
 import { Http } from "@angular/http";
-'@angular/http'; import 'rxjs/add/operator/map';
-import { ReasonService } from '../../services/reason.service';
 import { Observable } from 'rxjs/Rx';
 import { FormsModule } from "@angular/forms";
-import { Sample } from '../../components/sample.component';
 import { Router } from '@angular/router';
+
+import {FeedbackComponent} from'../../components/feedback/feedback.component';
+import { ReasonService } from '../../services/reason.service';
 
 @Component({
   selector: 'admin-component',
@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 })
 
 export class AdminComponent {
+
   title = 'Reason Admin UX';
   public outputJSONs:string;
   public logJSONs:string;
@@ -63,9 +64,9 @@ export class AdminComponent {
   public displayFeedback = false;
   public feedbackSent = false;
  
-      constructor(private _demoService: ReasonService,private http:Http) {
+      constructor(private _reasonService: ReasonService, private http:Http) {
     
-        this.homeURL = _demoService.HomeURL;
+        this.homeURL = _reasonService.HomeURL;
   }
 
   //HELPERS
@@ -83,7 +84,7 @@ export class AdminComponent {
 
     var jsonData = JSON.stringify(formValue);
     
-          this._demoService.doFeedbackPost(jsonData).subscribe(
+          this._reasonService.doFeedbackPost(jsonData).subscribe(
           );
 
           this.setFeedbackMessage('Thanks for the feedback, we will get back to you shortly :)','s');
@@ -191,7 +192,7 @@ export class AdminComponent {
    
     if (this.IsJsonString(this.templatejson)) {
 
-      this._demoService.doPost(this.templateName, this.templatejson).subscribe(
+      this._reasonService.doPost(this.templateName, this.templatejson).subscribe(
         data => { this.posts = 'created', this.uuid = data.uuid, this.status = data.status},
         err => console.error(err), //TODO: OUTPUT ERRORS/MESSAGES TO UX
         () => console.log('done loading posts') //TODO: OUTPUT ERRORS/MESSAGES TO UX
@@ -280,7 +281,7 @@ export class AdminComponent {
   //----------------------------------------------------------------------------------------------------------------------------
   // getLogandOutput() {
 
-  //   this._demoService.getLogandOutput(this.uuid).subscribe(
+  //   this._reasonService.getLogandOutput(this.uuid).subscribe(
 
   //     data => {
   //       this.outputJSONs = data[0],
@@ -298,15 +299,14 @@ export class AdminComponent {
     }
 
     //CALL STAUS POLLABLE SERVICE WITH A SUBSCRIPTION TO CANCEL LATER
-    this.statusSubscription = this._demoService.getStatustPoll(this.uuid, this.templateName).subscribe(data => {
+    this.statusSubscription = this._reasonService.getStatustPoll(this.uuid, this.templateName).subscribe(data => {
       this.displayRequestDiv = true, this.statusTimeStamp = this.getTimeStamp(), this.doStatusCheck(data),
         this.pollCounter++; this.pollCounterString = this.pollCounter.toString()
     }
     );
 
-
     //CALL LOG POLLABLE SERVICE WITH A SUBSCRIPTION TO CANCEL LATER
-    this.logSubscription = this._demoService.getLogPoll(this.uuid, this.templateName).subscribe(data => {
+    this.logSubscription = this._reasonService.getLogPoll(this.uuid, this.templateName).subscribe(data => {
       this.displayLogDiv = true, this.logsTimeStamp = this.getTimeStamp(), this.logArr = data.logs
     });
 
@@ -329,7 +329,7 @@ export class AdminComponent {
         
         //CALL SINGLE GET FOR TERRAFORM OUTPUTS
         //TODO: DIPLAY OUTPUTS...
-        this._demoService.getOutputs(this.uuid, this.templateName).subscribe(
+        this._reasonService.getOutputs(this.uuid, this.templateName).subscribe(
           data => { this.displayOutputDiv = true, this.outputsTimeStamp = this.getTimeStamp(), this.outputDic = data.outputs, this.convertToArr(data.outputs) })
           
           //UNSUBSCRIBE FROM LOG POLL
@@ -366,8 +366,8 @@ convertToArr(Input:any)
   //console.log('convertToArr');
 
       for(var i in Input){
-        console.log(i);
-        console.log(Input[i]);
+        //console.log(i);
+        //console.log(Input[i]);
         this.outputsArr.push(i + ": " + Input[i]);
       }
 }

@@ -13,12 +13,14 @@ var router_1 = require('@angular/router');
 var admin_component_1 = require('./components/admin/admin.component');
 var stdprovisioning_component_1 = require('./components/stdprovisioning/stdprovisioning.component');
 var home_component_1 = require('./components/home/home.component');
+var feedback_component_1 = require('./components/feedback/feedback.component');
 // Route Configuration
 var routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'admin', component: admin_component_1.AdminComponent },
     { path: 'std', component: stdprovisioning_component_1.StdProvisioningComponent },
-    { path: 'home', component: home_component_1.HomeComponent }
+    { path: 'home', component: home_component_1.HomeComponent },
+    { path: 'feedback', component: feedback_component_1.FeedbackComponent }
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {
