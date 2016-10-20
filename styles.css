@@ -150,3 +150,16 @@ nav a.router-link-active {
   transform: translate(-50%, -50%);
   margin-left:-50px;
 }
+
+
+.blue{
+    color:#136aa4;
+}
+
+.green{
+    color:mediumseagreen;
+}
+
+.red{
+    color:red;
+}
