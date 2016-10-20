@@ -1,0 +1,59 @@
+
+
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top affix" style='background-color:#e7e7e7'>
+
+  <div  class="container" >
+    <div class="container-fluid">
+
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header" style='background-color:#e7e7e7'>
+        <a [routerLink]="['/home']" style='background-color:#e7e7e7'><img src="assets/Images/ReasonLogo.png" height="45" width ="109" style="margin-left:-20px;" title="Everyone will eventually listen to Reason"/></a>
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span> menu <i class="fa fa-bars"></i>
+        </button>
+
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <!--<ul class="nav navbar-nav navbar-right">
+          <li class="active">
+            <a class="page-scroll" href="#">absa\Leewayne</a>
+          </li>
+              <li><a class="mdl-navigation__link" [routerLink]="['/admin']">Admin</a></li>
+              <li><a class="mdl-navigation__link" [routerLink]="['/std']">Std</a></li>
+
+
+        </ul>-->
+<div class="dropdown">
+ 
+  
+
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#">absa\Leewayne</a></li>
+      <li><a class="mdl-navigation__link" [routerLink]="['/admin']">Admin</a></li>
+      <li><a class="mdl-navigation__link" [routerLink]="['/std']">Std</a></li>
+      <li><a class="mdl-navigation__link" [routerLink]="['/feedback']">Feedback</a></li>
+
+    </ul>
+</div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </div>
+</nav>
+
+
+
+    <!-- Router Outlet -->
+    <div class="container" style="margin-top:60px;">
+      <router-outlet></router-outlet>
+    </div>
+
+  <!-- Footer -->
+  <nav id="footer" class="navbar navbar-default navbar-fixed-bottom affix" style='background-color:#e7e7e7'>
+    <div style="margin-left:auto;margin-right:auto;width:250px;line-height:50px;color:#919396">
+      &copy; Project Reason {{year}}<br/>
+    </div>
+  </nav>
