@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule, Input } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 
 import { ReasonService } from '../app/reason.service';
@@ -12,10 +12,11 @@ import { ReasonService } from '../app/reason.service';
 })
 export class FeedbackComponent {
 
+    private showMessage:boolean  =false;
     private responseMessage:string = "";
     private class:string = "";
     private display:string = "";
-
+    @Input() featureName:string = "";
     constructor(private _reasonService: ReasonService){
 
     }
@@ -28,8 +29,8 @@ export class FeedbackComponent {
     
           this._reasonService.doFeedbackPost(jsonData).subscribe(
           );
-
-          this.setFeedbackMessage('Thanks for the feedback, we will get back to you shortly :)','s');
+          
+          this.setFeedbackMessage(`Thanks for the feedback WRT the ${this.featureName}, we will get back to you shortly :)`,'s');
 
   }
 
@@ -56,7 +57,7 @@ export class FeedbackComponent {
     {
       //TODO:.............
     }
-
+      this.showMessage = true;
   }
 
 }
