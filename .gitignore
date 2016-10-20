@@ -36,3 +36,5 @@ Thumbs.db
 # TypeScript Generated Files
 app/components/**/*.js
 app/components/**/*.js.map
+app/services/**/*.js
+app/services/**/*.js.map
