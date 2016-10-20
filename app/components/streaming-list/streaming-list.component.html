@@ -1,0 +1,9 @@
+<div class="row">
+    <div class="streaming-list" *ngIf="isVisible">
+        <h4><span [class]="'glyphicon blue ' + iconType" style="padding-right:3px"></span>{{title}}(<span id="logCounter">{{items.length}}</span>)</h4>
+        <h5>{{status}}</h5>
+        <ol>
+            <li *ngFor="let item of items">{{item}}</li>
+        </ol>
+    </div>
+</div>

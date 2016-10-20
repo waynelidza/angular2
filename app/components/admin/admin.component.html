@@ -49,36 +49,22 @@
   </div>
 
   <div class="container" style="margin-top:20px;">
-
-    <div class="row">
-      <!-- Logss -->
-      <div class=" logDump " *ngIf="displayLogDiv">
-        <h4><span class="glyphicon glyphicon-list blue"></span>  Logs (<span id='logCounter'>{{logArr.length}})</span></h4>
-        <h5>Last log query:{{logsTimeStamp}}</h5>
-
-        <ol>
-          <li *ngFor="let item of logArr">{{item}}</li>
-        </ol>
-
-      </div>
-    </div>
-
-  
-  <div class="row" style="margin-top:20px;">
-
-      <!-- Outputs -->
-      <div class=" logDump " *ngIf="displayOutputDiv">
-        <h4><span class="glyphicon glyphicon-check blue"></span>  Outputs (<span id='outputCounter'>{{outputsArr.length}})</span></h4>
-        <h5>Last outputs query:{{outputsTimeStamp}}</h5>
-
-        <ol>
-          <!--<li *ngFor="let item of outputDic"><b>{{item["k"]}} :</b> {{item["v"]}}</li>-->
-             <li *ngFor="let item of outputsArr">{{item}}</li>
-        </ol>
-
-      </div>
-    </div>
-
+    <streaming-list-component 
+      [is-visible]="displayLogDiv"
+      [items]="logArr"
+      [status]="'Last log query:' + logsTimeStamp" 
+      icon-type="glyphicon-list"
+      title="Logs">
+    </streaming-list-component>
+  </div>
+  <div class="container" style="margin-top:20px;">
+    <streaming-list-component 
+      [is-visible]="displayOutputDiv"
+      [items]="outputsArr" 
+      [status]="'Last log query:' + logsTimeStamp"
+      icon-type="glyphicon-check"
+      title="Outputs">
+    </streaming-list-component> 
   </div>
 
  
