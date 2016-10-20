@@ -34,9 +34,6 @@ testem.log
 Thumbs.db
 
 # TypeScript Generated Files
-app/components/**/*.js
-app/components/**/*.js.map
-app/services/**/*.js
-app/services/**/*.js.map
-app/*.js
-app/*.js.map
+**/*.js
+**/*.js.map
+!src/assets/**/*.js
