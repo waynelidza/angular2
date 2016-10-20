@@ -1,9 +1,9 @@
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import {AdminComponent} from'./components/admin.component';
-import {StdProvisioningComponent} from'./components/stdprovisioning.component';
-import {HomeComponent} from'./components/home.component';
+import {AdminComponent} from'./components/admin/admin.component';
+import {StdProvisioningComponent} from'./components/stdprovisioning/stdprovisioning.component';
+import {HomeComponent} from'./components/home/home.component';
 
 // Route Configuration
 const routes: Routes = [

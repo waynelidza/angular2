@@ -12,10 +12,9 @@ var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
 var http_1 = require('@angular/http');
-var sample_component_1 = require('./components/sample.component');
-var admin_component_1 = require('./components/admin.component');
-var stdprovisioning_component_1 = require('./components/stdprovisioning.component');
-var home_component_1 = require('./components/home.component');
+var admin_component_1 = require('./components/admin/admin.component');
+var stdprovisioning_component_1 = require('./components/stdprovisioning/stdprovisioning.component');
+var home_component_1 = require('./components/home/home.component');
 var app_component_1 = require('./app.component');
 var app_routes_1 = require('./app.routes');
 var AppModule = (function () {
@@ -24,7 +23,7 @@ var AppModule = (function () {
     AppModule = __decorate([
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule, app_routes_1.AppRoutingModule],
-            declarations: [app_component_1.AppComponent, sample_component_1.Sample, admin_component_1.AdminComponent, stdprovisioning_component_1.StdProvisioningComponent, home_component_1.HomeComponent],
+            declarations: [app_component_1.AppComponent, admin_component_1.AdminComponent, stdprovisioning_component_1.StdProvisioningComponent, home_component_1.HomeComponent],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

@@ -1,17 +1,16 @@
 import { Component, NgModule } from '@angular/core';
 import { Http } from "@angular/http";
 '@angular/http'; import 'rxjs/add/operator/map';
-import { ReasonService } from '.././services/reason.service';
+import { ReasonService } from '../../services/reason.service';
 import { Observable } from 'rxjs/Rx';
 import { FormsModule } from "@angular/forms";
-import { Sample } from '.././components/sample.component';
+import { Sample } from '../../components/sample.component';
 
 @Component({
   selector: 'stdprovisioning-component',
-templateUrl: 'app/components/stdprovisioning.component.html',
-   styleUrls: ['app/components/stdprovisioning.component.css'], 
+  templateUrl: 'app/components/stdprovisioning/stdprovisioning.component.html',
+  styleUrls: ['app/components/stdprovisioning/stdprovisioning.component.css'], 
   providers: [ReasonService]
-  
 })
 
 export class StdProvisioningComponent {

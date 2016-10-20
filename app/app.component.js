@@ -9,8 +9,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-'@angular/http';
-require('rxjs/add/operator/map');
 var AppComponent = (function () {
     function AppComponent() {
     }
@@ -18,7 +16,7 @@ var AppComponent = (function () {
         core_1.Component({
             selector: 'app-component',
             templateUrl: 'app/app.component.html',
-            styleUrls: ['app/app.component.css'],
+            styleUrls: ['app/app.component.css']
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);

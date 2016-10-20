@@ -10,9 +10,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
-var admin_component_1 = require('./components/admin.component');
-var stdprovisioning_component_1 = require('./components/stdprovisioning.component');
-var home_component_1 = require('./components/home.component');
+var admin_component_1 = require('./components/admin/admin.component');
+var stdprovisioning_component_1 = require('./components/stdprovisioning/stdprovisioning.component');
+var home_component_1 = require('./components/home/home.component');
 // Route Configuration
 var routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },

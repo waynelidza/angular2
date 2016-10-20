@@ -1,16 +1,16 @@
 import { Component, NgModule } from '@angular/core';
 import { Http } from "@angular/http";
 '@angular/http'; import 'rxjs/add/operator/map';
-import { ReasonService } from '.././services/reason.service';
+import { ReasonService } from '../../services/reason.service';
 import { Observable } from 'rxjs/Rx';
 import { FormsModule } from "@angular/forms";
-import { Sample } from '.././components/sample.component';
+import { Sample } from '../../components/sample.component';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'admin-component',
-templateUrl: 'app/components/admin.component.html',
-   styleUrls: ['app/components/admin.component.css'], 
+  templateUrl: 'app/components/admin/admin.component.html',
+  styleUrls: [ 'app/components/admin/admin.component.css' ], 
   providers: [ReasonService]
   
 })
