@@ -19,7 +19,6 @@ constructor(private http:Http) {
     //console.log('got to constructor(private http:Http) {');
     //get the configs from json file and set them....
     this.getConfigs()
-
 }
     //----------------------------------------------------------------------------------------------------------------------------
     getConfigs(){
@@ -39,7 +38,6 @@ constructor(private http:Http) {
         this.GetLogPollMilliSeconds = configObject.GetLogPollMilliSeconds
         this.HomeURL = configObject.HomeURL;
     }
-
 
     //----------------------------------------------------------------------------------------------------------------------------
     doFeedbackPost(jsonData:any)  {
@@ -94,6 +92,77 @@ constructor(private http:Http) {
         return this.http.get(`${this.wsURL}/products/${name}/deployments/${uuid}/outputs`).map((res:Response) => res.json());
     }
 
+    //PROVISIONING JSON TO BE REPLACED BY SERVICE CALL--------------------------------------------------------------------------------------------------------------
+    getProvisioningOptions(){
+
+            return `  {  
+                            "OS": [
+                            {
+                                "ID": "RHEL6",
+                                "Description": "RHEL-6.8_HVM_GA-20160503-x86_64-1-Hourly2-GP2",
+                                "Default": "false",
+                                "MinRootVolSize" : "8"
+                            },
+                                {"ID": "RHEL7",
+                                "Description": "Red Hat Enterprise Linux 7.2 (HVM)",
+                                "Default": "false",
+                                "MinRootVolSize" : "8"
+                            },
+                                {"ID": "WIN2012R2",
+                                "Description": "Microsoft Windows Server 2012 R2 Base",
+                                "Default": "true",
+                                "MinRootVolSize" : "30"
+                            },
+                                {"ID": "WIN2016",
+                                "Description": "Microsoft Windows Server 2016 Base",
+                                "Default": "false",
+                                "MinRootVolSize" : "30"
+                            }
+                            ]
+                            ,
+                                "Size": [
+                            {
+                                "ID": "S",
+                                "Description": "1 x vCPU 2GB RAM",
+                                "Default": "true"
+                            },
+                                {"ID": "M",
+                                "Description": "2 x vCPU 4GB RAM",
+                                "Default": "false"
+                            },
+                                {"ID": "L",
+                                "Description": "4 x vCPU 16GB RAM",
+                                "Default": "false"
+                            },
+                                {"ID": "XL",
+                                "Description": "8 x vCPU 32GB RAM",
+                                "Default": "false"
+                            }
+                            ]
+                            ,
+                            "AdditionalDiskSizes": 
+                            {
+                                "Minimum": "1",
+                                "Maximum": "500",
+                                "Unit": "GB",
+                                "Default": "30"
+                            }
+                            ,
+                            "Subnet": [
+                            {
+                                "ID": "subnet-d329a3b7",
+                                "Description": "Occam's RazorA",
+                                "Default": "true"
+                            },
+                                {"ID": "subnet-c0830bb6",
+                                "Description": "Occam's RazorB",
+                                "Default": "false"
+                            }
+                            ]
+                            
+                        }`
+        
+    }
 
 
 }

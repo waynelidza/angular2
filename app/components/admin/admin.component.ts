@@ -67,6 +67,10 @@ export class AdminComponent {
       constructor(private _reasonService: ReasonService, private http:Http) {
     
         this.homeURL = _reasonService.HomeURL;
+
+       var x =  _reasonService.getProvisioningOptions();
+    
+       console.log(x);
   }
 
   //HELPERS
