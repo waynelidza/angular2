@@ -7,9 +7,10 @@ import { FormsModule } from "@angular/forms";
 
 
 @Component({
+  moduleId: module.id,
   selector: 'home-component',
-  templateUrl: 'app/components/home/home.component.html',
-  styleUrls: [ 'app/components/home/home.component.css' ], 
+  templateUrl: 'home.component.html',
+  styleUrls: [ 'home.component.css' ], 
   providers: [ReasonService]
   
 })

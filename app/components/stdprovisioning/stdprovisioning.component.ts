@@ -7,9 +7,10 @@ import { FormsModule } from "@angular/forms";
 import { Sample } from '../../components/sample.component';
 
 @Component({
+  moduleId: module.id,
   selector: 'stdprovisioning-component',
-  templateUrl: 'app/components/stdprovisioning/stdprovisioning.component.html',
-  styleUrls: ['app/components/stdprovisioning/stdprovisioning.component.css'], 
+  templateUrl: 'stdprovisioning.component.html',
+  styleUrls: ['stdprovisioning.component.css'], 
   providers: [ReasonService]
 })
 

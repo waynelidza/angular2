@@ -5,9 +5,10 @@ import { ReasonService } from '../../services/reason.service';
 
 
 @Component({
+  moduleId: module.id,
   selector: 'feedback-component',
-  templateUrl: 'app/components/feedback/feedback.component.html',
-  styleUrls: [ 'app/components/feedback/feedback.component.css' ], 
+  templateUrl: 'feedback.component.html',
+  styleUrls: [ 'feedback.component.css' ], 
   providers: [ReasonService]
 })
 export class FeedbackComponent {

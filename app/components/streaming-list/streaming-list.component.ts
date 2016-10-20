@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core'
 
 @Component({
+    moduleId: module.id,
     selector: 'streaming-list-component',
-    templateUrl: 'app/components/streaming-list/streaming-list.component.html',
-    styleUrls: ['app/components/streaming-list/streaming-list.component.css'], 
+    templateUrl: 'streaming-list.component.html',
+    styleUrls: ['streaming-list.component.css'], 
 })
 export class StreamingListComponent{
     @Input() items:any;

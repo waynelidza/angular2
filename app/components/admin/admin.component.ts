@@ -8,9 +8,10 @@ import {FeedbackComponent} from'../../components/feedback/feedback.component';
 import { ReasonService } from '../../services/reason.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'admin-component',
-  templateUrl: 'app/components/admin/admin.component.html',
-  styleUrls: [ 'app/components/admin/admin.component.css' ], 
+  templateUrl: 'admin.component.html',
+  styleUrls: [ 'admin.component.css' ], 
   providers: [ReasonService]
   
 })
