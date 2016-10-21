@@ -4,7 +4,13 @@ import { Observable } from 'rxjs/Rx';
 import { FormsModule } from "@angular/forms";
 import { Router } from '@angular/router';
 
-import {FeedbackComponent} from'../feedback/feedback.component';
+import {ProvisioningOptions} from '../admin/ProvisioningOptions';
+import {OS} from '../admin/OS';
+import {Size} from '../admin/Size';
+import { SubnetID } from '../admin/SubnetID';
+
+import {FeedbackComponent} from '../feedback/feedback.component';
+//import {OS} from '../admin/ProvisioningOptions';
 import { ReasonService } from '../app/reason.service';
 
 @Component({
@@ -67,10 +73,77 @@ export class AdminComponent {
       constructor(private _reasonService: ReasonService, private http:Http) {
     
         this.homeURL = _reasonService.HomeURL;
+        
+        let proOpt:string = "";
 
-       var x =  _reasonService.getProvisioningOptions();
-    
-       console.log(x);
+        //returns object from 
+        _reasonService.getProvisioningOptions().subscribe(
+            data => { proOpt = JSON.stringify(data), console.log(JSON.stringify(data))},
+            err => console.error(err), //TODO: OUTPUT ERRORS/MESSAGES TO UX
+            () => console.log('done loading posts')
+          );
+
+        console.log(proOpt);
+
+        var po  = new ProvisioningOptions();
+
+        var os = new OS();
+        os.ID = "rel6";
+        os.Description = "rel6-descr-pity";
+        os.Default  =true;
+        os.minRootVolSize = "8";
+        po.OSArr.push(os)
+        os = new OS();
+
+        os.ID = "rel7";
+        os.Description = "rel7-descr-ddd";
+        os.Default  = false;
+        os.minRootVolSize = "9";
+        po.OSArr.push(os)
+        os = new OS();
+        
+        os.ID = "rel8";
+        os.Description = "rel8-descr-pity";
+        os.Default  = false;
+        os.minRootVolSize = "10";
+        po.OSArr.push(os)
+
+        po.AdditionalDiskSizes["Minimum"] = "1"; 
+        po.AdditionalDiskSizes["Maximum"] = "500"; 
+        po.AdditionalDiskSizes["Unit"] = "GB"; 
+
+        var s = new Size()
+        s.ID = "S";
+        s.Description = "1 x vCPU 2GB RAM"
+        s.Default = true;
+        po.SizeArr.push(s);
+
+        s.ID = "M";
+        s.Description = "2 x vCPU 4GB RAM"
+        s.Default = false;
+        po.SizeArr.push(s);
+
+        var subnet = new SubnetID();
+        subnet.ID = "subnet-d329a3b7";
+        subnet.Description = "Occam's RazorA";
+        subnet.Default = true;
+        po.SubnetIDArr.push(subnet);
+
+        subnet.ID = "subnet-d3sfdsdf";
+        subnet.Description = "Occam's RazorB";
+        subnet.Default = false;
+        po.SubnetIDArr.push(subnet);
+
+        console.log(JSON.stringify(po));
+
+        for(let i of po.OSArr){
+          console.log(i.ID);
+        }
+
+      //  console.log(obj["OS"][0]["ID"]);
+      //   console.log(obj["OS"][1]["ID"]);
+      //   console.log(obj["OS"][2]["ID"]);
+      //   console.log(obj["OS"][3]["ID"]);
   }
 
   //HELPERS
@@ -83,23 +156,23 @@ export class AdminComponent {
     location.reload();
   }
 
-//FeedbackRequest button click---------------------------------------------------------------------------------------------------------
+//FeedbackRequest button click------------------------------------------------------------------------------
   sendFeedbackRequest(formValue:any){
 
     var jsonData = JSON.stringify(formValue);
     
-          this._reasonService.doFeedbackPost(jsonData).subscribe(
-          );
+    this._reasonService.doFeedbackPost(jsonData).subscribe(
+    );
 
-          this.setFeedbackMessage('Thanks for the feedback, we will get back to you shortly :)','s');
+    this.setFeedbackMessage('[Old] Thanks for the  feedback, we will get back to you shortly :)','s');
 
   }
 
-  checkResults(data:any)
-  {
-    alert(data.status);
+  // checkResults(data:any)
+  // {
+  //   alert(data.status);
      
-  }
+  // }
   //Submit button click---------------------------------------------------------------------------------------------------------
   sendRequest(formValue:any) {
 
