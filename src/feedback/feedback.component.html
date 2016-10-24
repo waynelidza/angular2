@@ -1,6 +1,10 @@
-<h3><span class="glyphicon glyphicon-thumbs-up blue"></span> Thanks for using Reason, please send us your feedback</h3>
-<form #feedbackForm="ngForm" (ngSubmit)="sendFeedbackRequest(feedbackForm.value); feedbackForm.reset();">
 
+<script type="text/javascript" src="assets/Scripts/jquery/jquery-3.1.1.min.js"></script>
+
+<h3><span class="glyphicon glyphicon-thumbs-up blue"></span> Thanks for using Reason, please send us your feedback</h3>
+<!--
+<form #feedbackForm="ngForm" (ngSubmit)="sendFeedbackRequest(feedbackForm.value); feedbackForm.reset();"  id='daForm'>-->
+<form #feedbackForm="ngForm" (ngSubmit)="sendFeedbackRequest(feedbackForm.value); "  id='daForm'>
   <div class="input-group">
     <span class="input-group-addon" id="Your Email Address-addon" >Your Email Address</span>
     <input type="email" class="form-control" id="FeedbackEmail" placeholder="Your email address" name="email" ngModel aria-describedby="Your Email Address-addon">
@@ -10,7 +14,7 @@
 
   <div class="form-group">
     <label for="comment">Your comments:</label>
-    <textarea class="form-control" rows="10" id="FeedbackComment" placeholder="Enter your feedback"  name="comment" ngModel required></textarea>
+    <textarea class="form-control" rows="10" id="FeedbackComment" placeholder="Enter your feedback"  name="comment" ngModel ></textarea>
   </div>
 
     <button id='SendFeedback' type="submit" class="btn btn-primary" title="Click to send feedback" >Send&nbsp; 

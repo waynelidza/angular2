@@ -4,3 +4,4 @@ export class Size {
     public Description:string;
     public Default:boolean;
 }
+//TEST CLASS ONLY-PLEASE IGNORE

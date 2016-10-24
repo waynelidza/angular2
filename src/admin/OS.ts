@@ -5,3 +5,4 @@ export class OS {
     public Default:boolean;
     public minRootVolSize:string;
 }
+//TEST CLASS ONLY-PLEASE IGNORE
