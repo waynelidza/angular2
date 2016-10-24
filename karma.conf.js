@@ -8,7 +8,9 @@ module.exports = function (config) {
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
+      require('karma-phantomjs-launcher'),
       require('karma-remap-istanbul'),
+      require('karma-junit-reporter'),
       require('angular-cli/plugins/karma')
     ],
     files: [
@@ -27,12 +29,21 @@ module.exports = function (config) {
       config: './angular-cli.json',
       environment: 'dev'
     },
-    reporters: ['progress', 'karma-remap-istanbul'],
+    reporters: ['progress', 'karma-remap-istanbul', 'junit'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
-    singleRun: false
+    browsers: ['PhantomJS'],
+    singleRun: true,
+    junitReporter: {
+      outputDir: 'test-results', // results will be saved as $outputDir/$browserName.xml
+      outputFile: 'karma-tests-junit.xml', // if included, results will be saved as $outputDir/$browserName/$outputFile
+      suite: 'reason-ux', // suite will become the package name attribute in xml testsuite element
+      useBrowserName: false, // add browser name to report and classes names
+      nameFormatter: undefined, // function (browser, result) to customize the name attribute in xml testcase element
+      classNameFormatter: undefined, // function (browser, result) to customize the classname attribute in xml testcase element
+      properties: {} // key value pair of properties to add to the <properties> section of the report
+    }
   });
 };

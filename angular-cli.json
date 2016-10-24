@@ -1,7 +1,7 @@
 {
   "project": {
     "version": "1.0.0-beta.17",
-    "name": "testng"
+    "name": "Reason UX"
   },
   "apps": [
     {
@@ -39,6 +39,7 @@
   },
   "defaults": {
     "styleExt": "css",
-    "prefixInterfaces": false
+    "prefixInterfaces": false,
+    "lazyRoutePrefix": "+"
   }
 }
