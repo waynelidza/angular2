@@ -4,13 +4,15 @@ import { Observable } from 'rxjs/Rx';
 import { FormsModule } from "@angular/forms";
 import { Router } from '@angular/router';
 
+//TEST CLASSES-PLEASE IGNORE
 import {ProvisioningOptions} from '../admin/ProvisioningOptions';
 import {OS} from '../admin/OS';
 import {Size} from '../admin/Size';
 import { SubnetID } from '../admin/SubnetID';
+//--------------------------------------------------------------------
 
 import {FeedbackComponent} from '../feedback/feedback.component';
-//import {OS} from '../admin/ProvisioningOptions';
+
 import { ReasonService } from '../app/reason.service';
 
 @Component({
@@ -85,60 +87,60 @@ export class AdminComponent {
 
         console.log(proOpt);
 
-        var po  = new ProvisioningOptions();
+        // var po  = new ProvisioningOptions();
 
-        var os = new OS();
-        os.ID = "rel6";
-        os.Description = "rel6-descr-pity";
-        os.Default  =true;
-        os.minRootVolSize = "8";
-        po.OSArr.push(os)
-        os = new OS();
+        // var os = new OS();
+        // os.ID = "rel6";
+        // os.Description = "rel6-descr-pity";
+        // os.Default  =true;
+        // os.minRootVolSize = "8";
+        // po.OSArr.push(os)
+        // os = new OS();
 
-        os.ID = "rel7";
-        os.Description = "rel7-descr-ddd";
-        os.Default  = false;
-        os.minRootVolSize = "9";
-        po.OSArr.push(os)
-        os = new OS();
+        // os.ID = "rel7";
+        // os.Description = "rel7-descr-ddd";
+        // os.Default  = false;
+        // os.minRootVolSize = "9";
+        // po.OSArr.push(os)
+        // os = new OS();
         
-        os.ID = "rel8";
-        os.Description = "rel8-descr-pity";
-        os.Default  = false;
-        os.minRootVolSize = "10";
-        po.OSArr.push(os)
+        // os.ID = "rel8";
+        // os.Description = "rel8-descr-pity";
+        // os.Default  = false;
+        // os.minRootVolSize = "10";
+        // po.OSArr.push(os)
 
-        po.AdditionalDiskSizes["Minimum"] = "1"; 
-        po.AdditionalDiskSizes["Maximum"] = "500"; 
-        po.AdditionalDiskSizes["Unit"] = "GB"; 
+        // po.AdditionalDiskSizes["Minimum"] = "1"; 
+        // po.AdditionalDiskSizes["Maximum"] = "500"; 
+        // po.AdditionalDiskSizes["Unit"] = "GB"; 
 
-        var s = new Size()
-        s.ID = "S";
-        s.Description = "1 x vCPU 2GB RAM"
-        s.Default = true;
-        po.SizeArr.push(s);
+        // var s = new Size()
+        // s.ID = "S";
+        // s.Description = "1 x vCPU 2GB RAM"
+        // s.Default = true;
+        // po.SizeArr.push(s);
 
-        s.ID = "M";
-        s.Description = "2 x vCPU 4GB RAM"
-        s.Default = false;
-        po.SizeArr.push(s);
+        // s.ID = "M";
+        // s.Description = "2 x vCPU 4GB RAM"
+        // s.Default = false;
+        // po.SizeArr.push(s);
 
-        var subnet = new SubnetID();
-        subnet.ID = "subnet-d329a3b7";
-        subnet.Description = "Occam's RazorA";
-        subnet.Default = true;
-        po.SubnetIDArr.push(subnet);
+        // var subnet = new SubnetID();
+        // subnet.ID = "subnet-d329a3b7";
+        // subnet.Description = "Occam's RazorA";
+        // subnet.Default = true;
+        // po.SubnetIDArr.push(subnet);
 
-        subnet.ID = "subnet-d3sfdsdf";
-        subnet.Description = "Occam's RazorB";
-        subnet.Default = false;
-        po.SubnetIDArr.push(subnet);
+        // subnet.ID = "subnet-d3sfdsdf";
+        // subnet.Description = "Occam's RazorB";
+        // subnet.Default = false;
+        // po.SubnetIDArr.push(subnet);
 
-        console.log(JSON.stringify(po));
+        // console.log(JSON.stringify(po));
 
-        for(let i of po.OSArr){
-          console.log(i.ID);
-        }
+        // for(let i of po.OSArr){
+        //   console.log(i.ID);
+        // }
 
       //  console.log(obj["OS"][0]["ID"]);
       //   console.log(obj["OS"][1]["ID"]);
@@ -149,6 +151,7 @@ export class AdminComponent {
   //HELPERS
   getTimeStamp() {
     return new Date().toDateString() + " " + new Date().toTimeString();
+
   }
 
 //---------------------------------------------------------------------------------------------------------
@@ -161,8 +164,7 @@ export class AdminComponent {
 
     var jsonData = JSON.stringify(formValue);
     
-    this._reasonService.doFeedbackPost(jsonData).subscribe(
-    );
+    this._reasonService.doFeedbackPost(jsonData).subscribe();
 
     this.setFeedbackMessage('[Old] Thanks for the  feedback, we will get back to you shortly :)','s');
 
@@ -215,7 +217,6 @@ export class AdminComponent {
       this.doPost();
 
       sleep(1000).then(() => {
-
 
         if (this.status === "submitted") {
 
@@ -282,7 +283,8 @@ export class AdminComponent {
     }
 
   }
-//MESSGA EFORMATTING------------------------------------------------------------------------------------------------
+
+//MESSGAE FORMATTING------------------------------------------------------------------------------------------------
   setMessage(TheMessage:string, MessageType:string ){
 
     if(MessageType == "s")

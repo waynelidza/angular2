@@ -3,6 +3,7 @@ import { FormsModule } from "@angular/forms";
 
 import { ReasonService } from '../app/reason.service';
 
+declare var $:any;
 
 @Component({
   selector: 'feedback-component',
@@ -12,11 +13,16 @@ import { ReasonService } from '../app/reason.service';
 })
 export class FeedbackComponent {
 
+  
     private showMessage:boolean  =false;
     private responseMessage:string = "";
     private class:string = "";
     private display:string = "";
-    @Input() featureName:string = "";
+
+    private counter = 0;
+
+    @Input() featureName:string = "Raw Feedback Component";
+
     constructor(private _reasonService: ReasonService){
 
     }
@@ -26,7 +32,7 @@ export class FeedbackComponent {
   sendFeedbackRequest(formValue:any){
 
     var jsonData = JSON.stringify(formValue);
-    
+
           this._reasonService.doFeedbackPost(jsonData).subscribe(
           );
           

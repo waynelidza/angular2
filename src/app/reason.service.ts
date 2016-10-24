@@ -93,6 +93,4 @@ constructor(private http:Http) {
        return  this.http.get("assets/Configs/ProvisioningOptions.json").map(res=>res.json());
 
     }
-
-
 }

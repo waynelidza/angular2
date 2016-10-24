@@ -10,6 +10,7 @@ public  AdditionalDiskSizes : { [key:string]:string; } = {};
 public SizeArr:Size[] = [];
 public SubnetIDArr:SubnetID[] = [];
 }
+//TEST CLASS ONLY-PLEASE IGNORE
 
 
 
