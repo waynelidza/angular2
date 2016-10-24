@@ -37,3 +37,6 @@ Thumbs.db
 **/*.js
 **/*.js.map
 !src/assets/**/*.js
+
+# Test Results
+/test-results/*
