@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { StdProvisioning } from './model-based-form.interface';
+import { RouterModule, Routes, Router} from '@angular/router';
 
 import { ReasonService } from '../app/reason.service';
 
@@ -11,7 +12,8 @@ import {SubnetID} from '../admin/SubnetID';
 @Component({
   selector: 'model-based-form',
   templateUrl: './model-based-form.component.html',
-  styleUrls: ['./model-based-form.component.css']
+  styleUrls: ['./model-based-form.component.css'],
+  providers: [ReasonService]
 })
 
 export class ModelBasedFormComponent  {
@@ -31,106 +33,172 @@ export class ModelBasedFormComponent  {
 
  public SubnetID:string; //THE DEFAULT
  public SubnetIDArr:SubnetID[] = [];
+ public theFormJson:string;
+ 
+ public defaultAdditionalDiskSize:string;
+ public defaultAdditionalMin:string;
+ public defaultAdditionalMax:string;
+ public defaultAdditionalDiskUnit:string;
 
-  constructor(fb: FormBuilder) { 
+
+ public inputData:any;
+
+  constructor(fb: FormBuilder,private router: Router,private reasonService:ReasonService ) { 
 
     this.additionalDisks = [];
+    
+    reasonService.getProvisioningOptions().subscribe(
+            data => { 
+              this.unpackData(data);
+              //this.inputJSON = JSON.stringify(data);
+              // console.log(data["OS"]); 
+              // for(let item of data["OS"]){
+              // console.log(item.ID); 
+              // }
+              //console.log(JSON.stringify(data));
+              //this.inputData = data;
+            },
+            err => console.error(err), //TODO: OUTPUT ERRORS/MESSAGES TO UX
+            () => console.log('done loading provisioning options')
+          );
 
-    // _reasonService.getProvisioningOptions().subscribe(
-    //         data => { this.inputJSON = JSON.stringify(data), console.log(JSON.stringify(data))},
-    //         err => console.error(err), //TODO: OUTPUT ERRORS/MESSAGES TO UX
-    //         () => console.log('done loading provisioning options')
-    //       );
 
 
-        let os = new OS();
-        os.ID = "rel6";
-        os.Description = "rel6-descr-pity";
-        os.Default  =true;
-        os.minRootVolSize = "8";
-        this.OSArr.push(os);
+        
 
-        os = new OS();
-        os.ID = "rel7";
-        os.Description = "rel7-descr-ddd";
-        os.Default  = false;
-        os.minRootVolSize = "9";
-        this.OSArr.push(os);
+        // let os = new OS();
+        // os.ID = "rel6";
+        // os.Description = "rel6-descr-pity";
+        // os.Default  =true;
+        // os.minRootVolSize = "8";
+        // this.OSArr.push(os);
 
-        os = new OS();
-        os.ID = "rel8";
-        os.Description = "rel8-descr-pity";
-        os.Default  = false;
-        os.minRootVolSize = "10";
-        this.OSArr.push(os);
+        // os = new OS();
+        // os.ID = "rel7";
+        // os.Description = "rel7-descr-ddd";
+        // os.Default  = false;
+        // os.minRootVolSize = "9";
+        // this.OSArr.push(os);
 
-        var s = new Size()
-        s.ID = "S";
-        s.Description = "1 x vCPU 2GB RAM"
-        s.Default = true;
-        this.SizeArr.push(s);
+        // os = new OS();
+        // os.ID = "rel8";
+        // os.Description = "rel8-descr-pity";
+        // os.Default  = false;
+        // os.minRootVolSize = "10";
+        // this.OSArr.push(os);
 
-        s = new Size()
-        s.ID = "M";
-        s.Description = "2 x vCPU 4GB RAM"
-        s.Default = false;
-        this.SizeArr.push(s);
+        // var s = new Size()
+        // s.ID = "S";
+        // s.Description = "1 x vCPU 2GB RAM"
+        // s.Default = true;
+        // this.SizeArr.push(s);
 
-        s = new Size()
-        s.ID = "L";
-        s.Description = "4 x vCPU 8GB RAM"
-        s.Default = false;
-        this.SizeArr.push(s);
+        // s = new Size()
+        // s.ID = "M";
+        // s.Description = "2 x vCPU 4GB RAM"
+        // s.Default = false;
+        // this.SizeArr.push(s);
 
-        let snet = new SubnetID();
-        snet.ID = "123"
-        snet.Description = "Default subnet Eng"
-        snet.Default  =true;
-        this.SubnetIDArr.push(snet);
+        // s = new Size()
+        // s.ID = "L";
+        // s.Description = "4 x vCPU 8GB RAM"
+        // s.Default = false;
+        // this.SizeArr.push(s);
 
-        snet = new SubnetID();
-        snet.ID = "666"
-        snet.Description = "Satans subnet 666"
-        snet.Default  =false;
-        this.SubnetIDArr.push(snet);
+        // let snet = new SubnetID();
+        // snet.ID = "123"
+        // snet.Description = "Default subnet Eng"
+        // snet.Default  =true;
+        // this.SubnetIDArr.push(snet);
+
+        // snet = new SubnetID();
+        // snet.ID = "666"
+        // snet.Description = "Satans subnet 666"
+        // snet.Default  =false;
+        // this.SubnetIDArr.push(snet);
 
 
   }
 
+unpackData(data:any){
+      console.log(data);
+
+      //console.log('unpack OS'); 
+      let os = new OS();
+      for(let item of data["OS"]){
+        os = new OS();
+        os.ID = item.ID;
+        os.Description = item.Description;
+        os.Default  =item.Default;
+        os.minRootVolSize = item.MinRootVolSize;
+        this.OSArr.push(os);
+      }
+
+      //console.log('unpack Size'); 
+      let s = new Size()
+      for(let item of data["Size"]){
+        s = new Size()
+        s.ID = item.ID;
+        s.Description = item.Description;
+        s.Default = item.Default;
+        this.SizeArr.push(s);
+      }
+
+      //console.log('unpack Subnet'); 
+      let snet = new SubnetID();
+      for(let item of data["Subnet"]){
+        snet = new SubnetID();
+        snet.ID = item.ID;
+        snet.Description = item.Description;
+        snet.Default  = item.Default;
+        this.SubnetIDArr.push(snet);
+      }
+
+      //UNPACK VALIDATION
+      //console.log(data["AdditionalDiskSizes"].Default);
+      this.defaultAdditionalDiskSize = data["AdditionalDiskSizes"].Default;
+      this.theinput = this.defaultAdditionalDiskSize;
+      this.defaultAdditionalMax = data["AdditionalDiskSizes"].Maximum;
+      this.defaultAdditionalMin = data["AdditionalDiskSizes"].Minimum;
+      this.defaultAdditionalDiskUnit = data["AdditionalDiskSizes"].Unit;
+      
+
+}
 //----------------------------------------------------------------------------------------------------------------
   addAdditionalDisk(string,event){
-    if(Number(this.theinput) > 0 &&  Number(this.theinput) <= 500){
+    if(Number(this.theinput) >= Number(this.defaultAdditionalMin) &&  Number(this.theinput) <= Number(this.defaultAdditionalMax)){
       //console.log(this.theinput)
       this.additionalDisks.push(this.theinput);
 
       this.theJSON = JSON.stringify(this.additionalDisks);
-      this.theinput = "";
+      this.theinput = this.defaultAdditionalDiskSize;
       event.preventDefault();
     }
     else{
+      this.theinput = this.defaultAdditionalDiskSize;
         alert('Invalid disk size must be between 1 and 500');
     }
 
   }
 
-//----------------------------------------------------------------------------------------------------------------
+//-just clears full aray---------------------------------------------------------------------------------------------------------------
   removeAdditionalDisk(i: any, event,){
 
     //console.log('index # to remove = ' + i);
-     this.newArray = [];
-    for(let entry in this.additionalDisks)
-    {
-       //console.log('entry = ' + entry);
-       //console.log('val = ' + this.additionalDisks[entry]);
-        if(entry != i)
-        {
-          console.log('push = ' + this.additionalDisks[entry]);
-          this.newArray.push(this.additionalDisks[entry]);
-        }
-        else{
-          //console.log('found and skipped index #' + i);
-        }
-    }
+    //  this.newArray = [];
+    // for(let entry in this.additionalDisks)
+    // {
+    //    //console.log('entry = ' + entry);
+    //    //console.log('val = ' + this.additionalDisks[entry]);
+    //     if(entry != i)
+    //     {
+    //       console.log('push = ' + this.additionalDisks[entry]);
+    //       this.newArray.push(this.additionalDisks[entry]);
+    //     }
+    //     else{
+    //       //console.log('found and skipped index #' + i);
+    //     }
+    // }
     this.additionalDisks = [];
     //this.additionalDisks = this.newArray.splice(0);
 
@@ -140,20 +208,23 @@ export class ModelBasedFormComponent  {
     
   //----------------------------------------------------------------------------------------------------------------
   save(formValue:any){
-
+    this.theFormJson = JSON.stringify(formValue);
     console.log('save = '+JSON.stringify(formValue));
 
     //DO WS CALL HERE ......
 
     //CLEAR ALL ARRAYS ETC....
     this.additionalDisks = [];
+
+    //NAVIGATE AWAY
+    //this.router.navigate(['/home']);
   }
 //----------------------------------------------------------------------------------------------------------------
   osChanged(value:any){
 
     this.RootVolumeSize = "";
     for(let o of this.OSArr){
-         if (o.ID == value){
+         if (o.ID == String(value)){
            this.RootVolumeSize = o.minRootVolSize;
            console.log(o.minRootVolSize);
            break;

@@ -57,8 +57,8 @@
   <div class="input-group" style="margin-top:10px;">
     <span class="input-group-addon" id="YourProjectName-addon" >Additional Disks</span>
     <input type="text" class="form-control" id="theinput" name="theinput" [(ngModel)]="theinput" aria-describedby="YourProjectName-addon" >
-    <button (click)="addAdditionalDisk('1',$event)">+ Add disk</button>
-    <button (click)="removeAdditionalDisk('1',$event)">Clear all disks</button>
+    <button style="margin-right:10px;" class="btn btn-primary" (click)="addAdditionalDisk('1',$event)">+ Add disk</button>
+    <button class="btn btn-primary" (click)="removeAdditionalDisk('1',$event)"> - Clear all</button>
   </div>
 
     <!--<div style="margin-top:10px;">
@@ -92,4 +92,5 @@
 </div>
 
 </form>
-{{theJSON}}
+<div style="margin-top:10px;" ><b>Additional Disk JSON:</b> {{theJSON}}</div>
+<div style="margin-top:10px;" ><b>Form JSON:</b> {{theFormJson}}</div>
