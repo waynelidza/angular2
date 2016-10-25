@@ -5,7 +5,7 @@ import { MockBackend } from '@angular/http/testing'
 import { Observable } from 'rxjs/Rx';
 
 import { ReasonService } from './reason.service';
-import { HttpMockResponse } from '../testing/http-responses';
+import { HttpMockResponse } from '../testing/mock-http-response';
 
 describe('Reason Service', () => {
   let mockBackend: MockBackend;
