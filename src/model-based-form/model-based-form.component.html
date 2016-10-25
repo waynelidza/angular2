@@ -1,0 +1,95 @@
+
+<!--<div class="container" style="margin-top:10px;">
+    <h4>Standard Provisioning</h4>
+
+  <form #myform="ngForm" (ngSubmit)="save(myform.value); "  id='myform'>
+
+    <button (click)="addAdditionalDisk('30',$event)">Click</button>
+
+    <div>{{additionalDisks.length}}</div>
+    
+        <textarea  id="poes" name ="poes" ngmodel ></textarea>
+    
+            <div *ngFor="let item of additionalDisks; let i = index;">
+
+                <textarea  id="foo{{i}}" name="foo{{i}}"  ngmodel>{{item}} </textarea>
+        
+            </div>
+        
+            <button type="submit" >Submit</button>
+    </form>
+    
+</div>-->
+
+<form #feedbackForm="ngForm" (ngSubmit)="save(feedbackForm.value); feedbackForm.reset();  "  id='daForm'>
+
+  <div class="input-group">
+    <span class="input-group-addon" id="YourProjectName-addon" >Project Name</span>
+    <input type="text" class="form-control" id="ProjectName" name="ProjectName" ngModel aria-describedby="YourProjectName-addon" required>
+  </div>
+
+  <div class="input-group" style="margin-top:10px;">
+    <span class="input-group-addon" id="YourProvisioningName-addon" >Provisioning Name</span>
+    <input type="text" class="form-control" id="ProvisioningName" name="ProvisioningName" ngModel aria-describedby="YourProvisioningName-addon" required>
+  </div>
+
+
+    <div style="margin-top:10px;">
+        Select an OS
+        <select class="form-control" [(ngModel)]="OS" name="OS" (change)="osChanged($event.target.value)" required>     
+            <option *ngFor="let x of OSArr" [value]="x.ID" >{{x.Description}}</option>
+        </select> 
+    </div>
+
+  <div class="input-group" style="margin-top:10px;">
+    <span class="input-group-addon" id="YourRootVolumeSize-addon" >Root Volume Size</span>
+    <input type="text" class="form-control" id="RootVolumeSize" name="RootVolumeSize" ngModel aria-describedby="YourRootVolumeSize-addon"  [(ngModel)]="RootVolumeSize"  required>
+  </div>
+
+    <div style="margin-top:10px;">
+        Select a VM size
+        <select class="form-control" [(ngModel)]="Size" name="Size" required>     
+            <option *ngFor="let x of SizeArr" [value]="x.ID" >{{x.Description}}</option>
+        </select> 
+    </div>
+
+
+  <div class="input-group" style="margin-top:10px;">
+    <span class="input-group-addon" id="YourProjectName-addon" >Additional Disks</span>
+    <input type="text" class="form-control" id="theinput" name="theinput" [(ngModel)]="theinput" aria-describedby="YourProjectName-addon" >
+    <button (click)="addAdditionalDisk('1',$event)">+ Add disk</button>
+    <button (click)="removeAdditionalDisk('1',$event)">Clear all disks</button>
+  </div>
+
+    <!--<div style="margin-top:10px;">
+        <span class="input-group-addon" id="AdditionalDiskSize-addon" >Additional Disk Size</span>
+        <input  type="text" class="form-control"  id="theinput" name="theinput" [(ngModel)]="theinput" aria-describedby="AdditionalDiskSize-addon" >
+        <button (click)="addAdditionalDisk('1',$event)">+ Add disk</button>
+        <button (click)="removeAdditionalDisk('1',$event)">Clear all disks</button>
+    </div>-->
+
+    <div><b>Additional Disk Count:</b> {{additionalDisks.length}}</div>
+
+        <div *ngFor="let item of additionalDisks; let i = index;">
+
+            <span class="input-group-addon" >Additional Disk-{{i}}</span>
+            <!--<textarea  id="additionalDisks{{i+1}}" name="additionalDisks{{i+1}}" [(ngModel)]="additionalDisks[i]" required onfocusout="additionalDisks{{i+1}}.focus();">{{item}} </textarea>-->
+            <input  class="form-control" id="additionalDisks{{i}}" name="additionalDisks{{i}}" [(ngModel)]="additionalDisks[i]" value="{{item}}" readonly >&nbsp;&nbsp;Gigabyte
+            <!--<div><button id="removeDisks{{i}}" name="removeDisks{{i}}" (click)="removeAdditionalDisk([i],$event)">-</button></div>-->
+        </div>
+
+        <div style="margin-top:10px;">
+            Select a subnet
+            <select class="form-control" [(ngModel)]="SubnetID" name="SubnetID" required>     
+                <option *ngFor="let x of SubnetIDArr" [value]="x.ID" >{{x.Description}}</option>
+            </select> 
+        </div>
+    
+  <div style="margin-top:10px;">
+    <button id='SendFeedback' type="submit" class="btn btn-primary" title="Click to send feedback" >Send&nbsp; 
+      <span class="glyphicon glyphicon-send "></span>  
+    </button>
+</div>
+
+</form>
+{{theJSON}}
