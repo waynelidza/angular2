@@ -45,13 +45,13 @@
 
     <div><b>Additional Disk Count:</b> {{additionalDisks.length}}</div>
 
-        <div *ngFor="let item of additionalDisks; let i = index;">
+      <div *ngFor="let item of additionalDisks; let i = index;">
 
-            <span class="input-group-addon" >Additional Disk-{{i}}</span>
-            <!--<textarea  id="additionalDisks{{i+1}}" name="additionalDisks{{i+1}}" [(ngModel)]="additionalDisks[i]" required onfocusout="additionalDisks{{i+1}}.focus();">{{item}} </textarea>-->
-            <input  class="form-control" id="additionalDisks{{i}}" name="additionalDisks{{i}}" [(ngModel)]="additionalDisks[i]" value="{{item}}" readonly >&nbsp;&nbsp;Gigabyte
-            <!--<div><button id="removeDisks{{i}}" name="removeDisks{{i}}" (click)="removeAdditionalDisk([i],$event)">-</button></div>-->
-        </div>
+          <!--<span class="input-group-addon" >Additional Disk-{{i}}</span>-->
+          Additional Disk-{{i}} (Gigabyte)
+          <input  type="text" class="form-control" id="additionalDisks{{i}}" name="additionalDisks{{i}}" [(ngModel)]="additionalDisks[i]" value="{{item}}" readonly >
+          
+      </div>
 
         <div style="margin-top:10px;">
             Select a subnet
@@ -62,7 +62,7 @@
         </div>
     
   <div style="margin:10px;">
-    <button type="submit" class="btn btn-info btn-lg"  data-toggle="modal" data-target="#myModal">
+    <button type="submit" class="btn btn-primary"  data-toggle="modal" data-target="#myModal">
       Deploy
       <span class="glyphicon glyphicon-send "></span>  
     </button>
@@ -131,9 +131,9 @@
   </div>
 </div>
 
-<pre>OS arr: <br>{{OSArr | json}}</pre>
+<!--<pre>OS arr: <br>{{OSArr | json}}</pre>
 <pre>SizeArr: <br>{{SizeArr | json}}</pre>
-<pre>SubnetIDArr: <br>{{SubnetIDArr | json}}</pre>
+<pre>SubnetIDArr: <br>{{SubnetIDArr | json}}</pre>-->
 <pre>submitted value: <br>{{feedbackForm.value | json}}</pre>
 
 

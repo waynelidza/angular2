@@ -41,7 +41,7 @@ export class ModelBasedFormComponent  {
 
  public inputData:any;
 
- public log:boolean = true;
+ public log:boolean = false;
 
   constructor( private router: Router, private reasonService:ReasonService ) { 
 
