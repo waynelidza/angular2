@@ -88,7 +88,7 @@ constructor(private http:Http) {
     }
 
     //PROVISIONING JSON FROM FILE - TO BE REPLACED BY SERVICE CALL--------------------------------------------------------------------------------------------------------------
-    getProvisioningOptions(){
+    getProvisioningOptions():Observable<any>{
        
        return  this.http.get("assets/Configs/ProvisioningOptions.json").map(res=>res.json());
 
