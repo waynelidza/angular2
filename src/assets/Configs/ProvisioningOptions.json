@@ -3,23 +3,23 @@
     {
         "ID": "RHEL6",
         "Description": "RHEL-6.8_HVM_GA-20160503-x86_64-1-Hourly2-GP2",
-        "Default": "false",
+        "Defaultvalue": "false",
         "MinRootVolSize" : "8"
     },
         {"ID": "RHEL7",
         "Description": "Red Hat Enterprise Linux 7.2 (HVM)",
-        "Default": "false",
-        "MinRootVolSize" : "8"
+        "Defaultvalue": "false",
+        "MinRootVolSize" : "9"
     },
         {"ID": "WIN2012R2",
         "Description": "Microsoft Windows Server 2012 R2 Base",
-        "Default": "true",
+        "Defaultvalue": "true",
         "MinRootVolSize" : "30"
     },
         {"ID": "WIN2016",
         "Description": "Microsoft Windows Server 2016 Base",
-        "Default": "false",
-        "MinRootVolSize" : "30"
+        "Defaultvalue": "false",
+        "MinRootVolSize" : "35"
     }
     ]
     ,
@@ -27,19 +27,19 @@
     {
         "ID": "S",
         "Description": "1 x vCPU 2GB RAM",
-        "Default": "true"
+        "Defaultvalue": "true"
     },
         {"ID": "M",
         "Description": "2 x vCPU 4GB RAM",
-        "Default": "false"
+        "Defaultvalue": "false"
     },
         {"ID": "L",
         "Description": "4 x vCPU 16GB RAM",
-        "Default": "false"
+        "Defaultvalue": "false"
     },
         {"ID": "XL",
         "Description": "8 x vCPU 32GB RAM",
-        "Default": "false"
+        "Defaultvalue": "false"
     }
     ]
     ,
@@ -48,18 +48,18 @@
         "Minimum": "1",
         "Maximum": "500",
         "Unit": "GB",
-        "Default": "30"
+        "Defaultvalue": "30"
     }
     ,
     "Subnet": [
     {
         "ID": "subnet-d329a3b7",
         "Description": "Occam's RazorA",
-        "Default": "true"
+        "Defaultvalue": "true"
     },
         {"ID": "subnet-c0830bb6",
         "Description": "Occam's RazorB",
-        "Default": "false"
+        "Defaultvalue": "false"
     }
     ]
     

@@ -2,7 +2,7 @@ export class OS {
 
     public ID:string;
     public Description:string;
-    public Default:boolean;
-    public minRootVolSize:string;
+    public Defaultvalue:string;
+    public MinRootVolSize:string;
 }
 //TEST CLASS ONLY-PLEASE IGNORE

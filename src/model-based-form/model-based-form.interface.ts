@@ -1,7 +1,7 @@
-export interface StdProvisioning {
+export interface StdProvForm {
     projectName:string;
     name:string;
-    OS:string;
+    oS:OS;
     Size:string;
     RootVolumeSize:number;
     additionalDisks :AdditionalDisk[];
@@ -11,3 +11,12 @@ export interface StdProvisioning {
 export interface AdditionalDisk  {
     size:number;
 }
+
+export class OS {
+
+    public ID:string;
+    public Description:string;
+    public Defaultvalue:string;
+    public MinRootVolSize:string;
+}
+
