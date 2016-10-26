@@ -55,8 +55,8 @@
 
         <div style="margin-top:10px;">
             Select a subnet
-            <select class="form-control" [(ngModel)]="stdProvForm.SubnetID" name="SubnetID" required>     
-                <option *ngFor="let snet of SubnetIDArr" [ngValue]="snet"  >
+            <select class="form-control" [(ngModel)]="stdProvForm.Subnet" name="SubnetID" required>     
+                <option *ngFor="let snet of SubnetIDArr" [ngValue]="snet" >
                   {{snet.Description}}</option>
             </select> 
         </div>
