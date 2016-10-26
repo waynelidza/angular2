@@ -18,38 +18,43 @@ import {SubnetID} from '../admin/SubnetID';
 
 export class ModelBasedFormComponent  {
 
- public additionalDisks:string[]= [];
- public newArray:string[];
- public projectName:string;
- public theJSON:string;
- public theinput:string;
- public inputJSON:string;
+  public additionalDisks:string[]= [];
+  public newArray:string[];
+  public projectName:string;
+  //public theJSON:string;
+  public theinput:string;
+  public inputJSON:string;
 
- public RootVolumeSize:string; //THE DEFAULT
- public SizeArr:Size[] = [];
+  public RootVolumeSize:string; //THE DEFAULT
+  public SizeArr:Size[] = [];
 
- public SubnetID:string; //THE DEFAULT
- public SubnetIDArr:SubnetID[] = [];
- public theFormJson:string;
- 
- public defaultAdditionalDiskSize:string;
- public defaultAdditionalMin:string;
- public defaultAdditionalMax:string;
- public defaultAdditionalDiskUnit:string;
+  public SubnetID:string; //THE DEFAULT
+  public SubnetIDArr:SubnetID[] = [];
+  public theFormJson:string;
+
+  public defaultAdditionalDiskSize:string;
+  public defaultAdditionalMin:string;
+  public defaultAdditionalMax:string;
+  public defaultAdditionalDiskUnit:string;
 
   public stdProvForm: StdProvForm=  {projectName: '',name: '',oS: null,Size: '',RootVolumeSize: 0,additionalDisks: [],Subnet: ''}
   public OSArr = [];
 
  public inputData:any;
 
+ public log:boolean = false;
+
   constructor(fb: FormBuilder, private router: Router, private reasonService:ReasonService ) { 
 
         this.doLog('constructor()');
       
+          //1. GET THE PROVISIONING INPUT/SETUP/OPTIONS FORM DATA
           this.reasonService.getProvisioningOptions().subscribe(data => { 
 
                 this.doLog('unpackData()');
                 this.OSArr = data["OS"];
+
+                //2. find and set default for OS as well as initial value for RootVolSize
                   let iOsDefIndex:number = 0;
                   let defRootVolSize = -1;
                     for(let o of this.OSArr)
@@ -63,18 +68,15 @@ export class ModelBasedFormComponent  {
                       iOsDefIndex++
                     }
 
-                this.SizeArr = data["Size"];
-                this.SubnetIDArr = data["Subnet"]; //direct setting
+                this.SizeArr = data["Size"];//TODO: GET AND SET DEFAULTS
+                this.SubnetIDArr = data["Subnet"]; //TODO: GET AND SET DEFAULTS
 
-                //UNPACK VALIDATION
+                //SET VALIDATION PROPERTIES
                 this.defaultAdditionalDiskSize = data["AdditionalDiskSizes"].Defaultvalue;
                 this.theinput = this.defaultAdditionalDiskSize;
                 this.defaultAdditionalMax = data["AdditionalDiskSizes"].Maximum;
                 this.defaultAdditionalMin = data["AdditionalDiskSizes"].Minimum;
                 this.defaultAdditionalDiskUnit = data["AdditionalDiskSizes"].Unit;
-                this.doLog('unpackData() = true');
-
-
 
                 //CREATE BASE MODEL FOR FORM WITH DEFAULTS SET
                 this.stdProvForm = {
@@ -94,13 +96,14 @@ export class ModelBasedFormComponent  {
 
 //---------------------------------------------------------------------------------------------------------------
 doLog(val:string){
-
-  console.log(`${val} ${this.getTimeStamp()}`);
+  if(this.log){
+    console.log(`${val} ${this.getTimeStamp()}`);
+  }
+ 
 }
 
 getTimeStamp() {
     return new Date().toDateString() + " " + new Date().toTimeString();
-
   }
 
 //----------------------------------------------------------------------------------------------------------------
@@ -109,7 +112,7 @@ getTimeStamp() {
       //console.log(this.theinput)
       this.additionalDisks.push(this.theinput);
 
-      this.theJSON = JSON.stringify(this.additionalDisks);
+      //this.theJSON = JSON.stringify(this.additionalDisks);
       this.theinput = this.defaultAdditionalDiskSize;
       event.preventDefault();
     }
@@ -125,7 +128,7 @@ getTimeStamp() {
 
     this.additionalDisks = [];
 
-    this.theJSON = JSON.stringify(this.additionalDisks);
+    //this.theJSON = JSON.stringify(this.additionalDisks);
     event.preventDefault();
   }
     
@@ -144,7 +147,7 @@ getTimeStamp() {
   }
 //----------------------------------------------------------------------------------------------------------------
   osChanged(value:any){
-
+    console.log(value);
     let splitArr = String(value).split(":", 10);
     let index = Number(splitArr[0]);
 

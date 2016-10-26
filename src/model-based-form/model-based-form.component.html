@@ -38,8 +38,8 @@
   <div class="input-group" style="margin-top:10px;">
     <span class="input-group-addon" id="YourProjectName-addon" >Additional Disks</span>
     <input type="text" class="form-control" id="theinput" name="theinput" [(ngModel)]="theinput" aria-describedby="YourProjectName-addon" >
-    <button style="margin-right:10px;" class="btn btn-primary" (click)="addAdditionalDisk('1',$event)">+ Add disk</button>
-    <button class="btn btn-primary" (click)="removeAdditionalDisks('1',$event)"> - Clear all</button>
+    <button style="margin:5px;" class="btn btn-primary" (click)="addAdditionalDisk('1',$event)">+ Add disk</button>
+    <button style="margin:5px;"class="btn btn-primary" (click)="removeAdditionalDisks('1',$event)"> - Clear all</button>
   </div>
 
     <div><b>Additional Disk Count:</b> {{additionalDisks.length}}</div>
@@ -59,7 +59,7 @@
             </select> 
         </div>
     
-  <div style="margin-top:10px;">
+  <div style="margin:10px;">
     <button id='SendFeedback' type="submit" class="btn btn-primary" title="Click to send feedback" >Send&nbsp; 
       <span class="glyphicon glyphicon-send "></span>  
     </button>
