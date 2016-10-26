@@ -4,7 +4,6 @@ import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
 import { HttpModule }  from '@angular/http';
 
 import { AdminComponent } from '../admin/admin.component';
-import { StdProvisioningComponent } from '../stdprovisioning/stdprovisioning.component';
 import { HomeComponent } from '../home/home.component';
 import { FeedbackComponent } from'../feedback/feedback.component';
 import { StreamingListComponent } from '../streaming-list/streaming-list.component';
@@ -16,7 +15,7 @@ import { ModelBasedFormComponent } from '../model-based-form/model-based-form.co
 
 @NgModule({
   imports: [ BrowserModule, FormsModule,ReactiveFormsModule, HttpModule, AppRoutingModule],
-  declarations: [ AppComponent, AdminComponent, StdProvisioningComponent, HomeComponent, FeedbackComponent, StreamingListComponent, ModelBasedFormComponent],
+  declarations: [ AppComponent, AdminComponent, HomeComponent, FeedbackComponent, StreamingListComponent, ModelBasedFormComponent],
   bootstrap: [ AppComponent ]
 })
 
