@@ -16,10 +16,12 @@ node() {
             echo '**** TODO'
         }
         stage('unit/integration-test') {
-            sh 'ng test --reporters junit'
+            //sh 'ng test --reporters junit'
         }
-        stage('deploy') {
-            echo '*******TODO'
+        if (env.BRANCH_NAME.equals("feature/RefactorUX")) {
+           stage('test-deployment') {
+              sh 'scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /opt/ssh/deployment-user.pem -rp dist deployment-user@10.200.11.178:/opt/reason/reason-ux'
+           }
         }
         stage('finish-up') {
             echo 'done'
