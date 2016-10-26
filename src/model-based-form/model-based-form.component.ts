@@ -163,4 +163,8 @@ getTimeStamp() {
     }
   }
 
+  sendConfirmedRequest(){
+    console.log("inside confirmed request sending method");
+  }
+
 }
