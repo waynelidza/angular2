@@ -20,7 +20,7 @@ node() {
         }
         if (env.BRANCH_NAME.equals("feature/RefactorUX")) {
            stage('test-deployment') {
-              sh 'scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /opt/ssh/deployment-user.pem -rp dist deployment-user@10.200.11.178:/opt/reason/reason-ux'
+              sh 'cd dist && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /opt/ssh/deployment-user.pem -C -r . deployment-user@10.200.11.178:/opt/reason/reason-ux'
            }
         }
         stage('finish-up') {
