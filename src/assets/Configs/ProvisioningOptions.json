@@ -13,13 +13,18 @@
     },
         {"ID": "WIN2012R2",
         "Description": "Microsoft Windows Server 2012 R2 Base",
-        "Defaultvalue": "true",
+        "Defaultvalue": "false",
         "MinRootVolSize" : "30"
     },
         {"ID": "WIN2016",
         "Description": "Microsoft Windows Server 2016 Base",
         "Defaultvalue": "false",
         "MinRootVolSize" : "35"
+    },
+        {"ID": "WIN2018",
+        "Description": "Microsoft Windows Server 2018 Base",
+        "Defaultvalue": "true",
+        "MinRootVolSize" : "42"
     }
     ]
     ,
@@ -27,7 +32,7 @@
     {
         "ID": "S",
         "Description": "1 x vCPU 2GB RAM",
-        "Defaultvalue": "true"
+        "Defaultvalue": "false"
     },
         {"ID": "M",
         "Description": "2 x vCPU 4GB RAM",
@@ -40,6 +45,10 @@
         {"ID": "XL",
         "Description": "8 x vCPU 32GB RAM",
         "Defaultvalue": "false"
+    },
+        {"ID": "XXL",
+        "Description": "18 x vCPU 132GB RAM",
+        "Defaultvalue": "true"
     }
     ]
     ,
@@ -55,11 +64,15 @@
     {
         "ID": "subnet-d329a3b7",
         "Description": "Occam's RazorA",
-        "Defaultvalue": "true"
+        "Defaultvalue": "false"
     },
         {"ID": "subnet-c0830bb6",
         "Description": "Occam's RazorB",
         "Defaultvalue": "false"
+    },
+        {"ID": "subnet-c0830bb6-default",
+        "Description": "Occam's Razor Default Test",
+        "Defaultvalue": "true"
     }
     ]
     

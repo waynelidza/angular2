@@ -21,16 +21,17 @@
         </select> 
     </div>
 
-  <div class="input-group" style="margin-top:10px;">
-    <span class="input-group-addon" id="YourRootVolumeSize-addon" >Root Volume Size</span>
-    <input type="text" class="form-control" id="RootVolumeSize" name="RootVolumeSize" ngModel aria-describedby="YourRootVolumeSize-addon"  
-        [(ngModel)]="stdProvForm.RootVolumeSize"  required>
-  </div>
+    <div class="input-group" style="margin-top:10px;">
+      <span class="input-group-addon" id="YourRootVolumeSize-addon" >Root Volume Size</span>
+      <input type="text" class="form-control" id="RootVolumeSize" name="RootVolumeSize" ngModel aria-describedby="YourRootVolumeSize-addon"  
+          [(ngModel)]="stdProvForm.RootVolumeSize"  required>
+    </div>
 
     <div style="margin-top:10px;">
         Select a VM size
-        <select class="form-control" [(ngModel)]="Size" name="Size" required>     
-            <option *ngFor="let x of SizeArr" [value]="x.ID" >{{x.Description}}</option>
+        <select class="form-control" [(ngModel)]="stdProvForm.Size" name="Size" required>     
+            <option *ngFor="let size of SizeArr" [ngValue]="size"  >
+              {{size.Description}}</option>
         </select> 
     </div>
 
@@ -54,8 +55,9 @@
 
         <div style="margin-top:10px;">
             Select a subnet
-            <select class="form-control" [(ngModel)]="SubnetID" name="SubnetID" required>     
-                <option *ngFor="let x of SubnetIDArr" [value]="x.ID" >{{x.Description}}</option>
+            <select class="form-control" [(ngModel)]="stdProvForm.SubnetID" name="SubnetID" required>     
+                <option *ngFor="let snet of SubnetIDArr" [ngValue]="snet"  >
+                  {{snet.Description}}</option>
             </select> 
         </div>
     
@@ -67,9 +69,6 @@
 </div>
 
 </form>
-
-
-
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
@@ -132,13 +131,9 @@
   </div>
 </div>
 
-
-
-
-
-<!--<pre>OS arr: <br>{{OSArr | json}}</pre>
+<pre>OS arr: <br>{{OSArr | json}}</pre>
 <pre>SizeArr: <br>{{SizeArr | json}}</pre>
-<pre>SubnetIDArr: <br>{{SubnetIDArr | json}}</pre>-->
+<pre>SubnetIDArr: <br>{{SubnetIDArr | json}}</pre>
 <pre>submitted value: <br>{{feedbackForm.value | json}}</pre>
 
 

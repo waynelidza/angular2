@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { StdProvForm,AdditionalDisk } from './model-based-form.interface';
 import { RouterModule, Routes, Router} from '@angular/router';
 
 import { ReasonService } from '../app/reason.service';
 
-import {Size} from '../admin/Size';
-import {OS} from './model-based-form.interface';
-import {SubnetID} from '../admin/SubnetID';
+
+import {OS,Size,SubnetID,StdProvForm,AdditionalDisk} from './model-based-form.interface';
+
 
 @Component({
   selector: 'model-based-form',
@@ -25,11 +24,11 @@ export class ModelBasedFormComponent  {
   public theinput:string;
   public inputJSON:string;
 
-  public RootVolumeSize:string; //THE DEFAULT
-  public SizeArr:Size[] = [];
+  //public RootVolumeSize:string; //THE DEFAULT
+  public SizeArr = [];
 
-  public SubnetID:string; //THE DEFAULT
-  public SubnetIDArr:SubnetID[] = [];
+  //public SubnetID:string; //THE DEFAULT
+  public SubnetIDArr = [];
   public theFormJson:string;
 
   public defaultAdditionalDiskSize:string;
@@ -37,14 +36,14 @@ export class ModelBasedFormComponent  {
   public defaultAdditionalMax:string;
   public defaultAdditionalDiskUnit:string;
 
-  public stdProvForm: StdProvForm=  {projectName: '',name: '',oS: null,Size: '',RootVolumeSize: 0,additionalDisks: [],Subnet: ''}
+  public stdProvForm: StdProvForm=  {projectName: '', name: '', oS: null, Size: null, RootVolumeSize: 0, additionalDisks: [], Subnet: null}
   public OSArr = [];
 
  public inputData:any;
 
- public log:boolean = false;
+ public log:boolean = true;
 
-  constructor(fb: FormBuilder, private router: Router, private reasonService:ReasonService ) { 
+  constructor( private router: Router, private reasonService:ReasonService ) { 
 
         this.doLog('constructor()');
       
@@ -53,6 +52,7 @@ export class ModelBasedFormComponent  {
 
                 this.doLog('unpackData()');
                 this.OSArr = data["OS"];
+                this.doLog(JSON.stringify(this.OSArr));
 
                 //2. find and set default for OS as well as initial value for RootVolSize
                   let iOsDefIndex:number = 0;
@@ -61,32 +61,59 @@ export class ModelBasedFormComponent  {
                     {
                       if(o.Defaultvalue == 'true')
                       {
-                        this.doLog('found default it is = ' + o.ID);
+                        this.doLog('found default for Os it is = ' + o.ID);
                         defRootVolSize = Number(o.MinRootVolSize);
-                          break;
+                        break;
                       }
                       iOsDefIndex++
                     }
 
-                this.SizeArr = data["Size"];//TODO: GET AND SET DEFAULTS
-                this.SubnetIDArr = data["Subnet"]; //TODO: GET AND SET DEFAULTS
+                 //3. GET SIZES AND SET DEFAULT   
+                this.SizeArr = data["Size"];
+                this.doLog(JSON.stringify(this.SizeArr));
+                let sizeDefIndex:number = 0;
+                  
+                    for(let o of this.SizeArr)
+                    {
+                      if(o.Defaultvalue == 'true')
+                      {
+                        this.doLog('found default for Size it is = ' + o.ID);
+                        break;
+                      }
+                      sizeDefIndex++
+                    }
 
-                //SET VALIDATION PROPERTIES
+                //3. GET SUBNETS AND SET DEFAULT   
+                this.SubnetIDArr = data["Subnet"]; 
+                this.doLog(JSON.stringify(this.SubnetIDArr));
+                let subnetDefIndex:number = 0;
+                  
+                    for(let o of this.SubnetIDArr)
+                    {
+                      if(o.Defaultvalue == 'true')
+                      {
+                        this.doLog('found default for Subnet it is = ' + o.ID);
+                        break;
+                      }
+                      subnetDefIndex++
+                    }
+
+                //4.SET VALIDATION PROPERTIES
                 this.defaultAdditionalDiskSize = data["AdditionalDiskSizes"].Defaultvalue;
                 this.theinput = this.defaultAdditionalDiskSize;
                 this.defaultAdditionalMax = data["AdditionalDiskSizes"].Maximum;
                 this.defaultAdditionalMin = data["AdditionalDiskSizes"].Minimum;
                 this.defaultAdditionalDiskUnit = data["AdditionalDiskSizes"].Unit;
 
-                //CREATE BASE MODEL FOR FORM WITH DEFAULTS SET
+                //5.CREATE BASE MODEL FOR FORM WITH DEFAULTS SET
                 this.stdProvForm = {
                   projectName: '',
                   name: '',
                   oS: this.OSArr[iOsDefIndex],
-                  Size: '',
+                  Size: this.SizeArr[sizeDefIndex],
                   RootVolumeSize: defRootVolSize,
                   additionalDisks: [],
-                  Subnet: ''
+                  Subnet: this.SubnetIDArr[subnetDefIndex]
                 }
             },
             err => console.error(err), //TODO: OUTPUT ERRORS/MESSAGES TO UX
