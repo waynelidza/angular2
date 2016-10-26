@@ -10,7 +10,7 @@ node() {
             sh 'ng build'
         }
         stage('lint') {
-            sh 'ng lint'
+            //sh 'ng lint'
         }
         stage('analysis') {
             echo '**** TODO'
