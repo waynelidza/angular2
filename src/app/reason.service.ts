@@ -20,12 +20,16 @@ constructor(private http:Http) {
     this.getConfigs()
 }
     //----------------------------------------------------------------------------------------------------------------------------
-    getConfigs(){
+    getConfigs():Observable<any>{
 
-            this.http.get('assets/Configs/Configs.json').map(res => res.json()).subscribe(value => {
-                //console.log('xyz: '+value[0].wsUrl);
-            this.setConfigs(value[0]); 
-        }, err => console.log(`Error: ${err}`), ()=>console.log('getConfigs run'));
+            let result = this.http.get('assets/Configs/Configs.json').map(res => res.json());
+            
+            result.subscribe(value => {
+                    //console.log('xyz: '+value[0].wsUrl);
+                this.setConfigs(value[0]); 
+            }, err => console.log(`Error: ${err}`), ()=>console.log('getConfigs run'));
+
+            return result;
         
     }
     //----------------------------------------------------------------------------------------------------------------------------

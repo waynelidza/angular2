@@ -18,6 +18,13 @@ export class ResponseContainer
 
 export class HttpMockResponse
 {
+    public static reasonConfig = {
+                    wsUrl : "http://svc",
+                    GetStatustPollMilliSeconds : 1000,
+                    GetLogPollMilliSeconds : 1000,
+                    HomeURL : "http://home"
+                };
+
     public static testModuleMetaDataWith(metaData:TestModuleMetadata):TestModuleMetadata{
         if (!metaData.providers){
             metaData.declarations = new Array<any>();
@@ -66,12 +73,7 @@ export class HttpMockResponse
     public static config():ResponseContainer{
         return new ResponseContainer(new Response(
             new ResponseOptions({
-                body: [{
-                    wsUrl : "http://svc",
-                    GetStatustPollMilliSeconds : 1000,
-                    GetLogPollMilliSeconds : 1000,
-                    HomeURL : "http://home"
-                }]
+                body: [ this.reasonConfig ]
                 })), (connection:MockConnection) => {
                     return connection.request.url.endsWith('assets/Configs/Configs.json');
             })
