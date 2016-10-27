@@ -270,7 +270,7 @@ export class AdminComponent {
    
     if (this.IsJsonString(this.templatejson)) {
 
-      this._reasonService.doPost(this.templateName, this.templatejson).subscribe(
+      this._reasonService.doAdminProvisioningPost(this.templateName, this.templatejson).subscribe(
         data => { this.posts = 'created', this.uuid = data.uuid, this.status = data.status},
         err => console.error(err), //TODO: OUTPUT ERRORS/MESSAGES TO UX
         () => console.log('done loading posts') //TODO: OUTPUT ERRORS/MESSAGES TO UX

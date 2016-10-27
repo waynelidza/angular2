@@ -11,12 +11,12 @@ import { StreamingListComponent } from '../streaming-list/streaming-list.compone
 import { AppComponent }  from './app.component';
 import { AppRoutingModule }     from './app.routes';
 
-import { ModelBasedFormComponent } from '../model-based-form/model-based-form.component';
+import { StdProvFormInputComponent } from '../std-prov-form-input/std-prov-form-input.component';
 
 
 @NgModule({
   imports: [ BrowserModule, FormsModule,ReactiveFormsModule, HttpModule, AppRoutingModule],
-  declarations: [ AppComponent, AdminComponent, HomeComponent, FeedbackComponent, StreamingListComponent, ModelBasedFormComponent],
+  declarations: [ AppComponent, AdminComponent, HomeComponent, FeedbackComponent, StreamingListComponent, StdProvFormInputComponent],
   bootstrap: [ AppComponent ]
 })
 

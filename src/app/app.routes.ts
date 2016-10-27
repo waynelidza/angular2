@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {AdminComponent} from'../admin/admin.component';
 import {HomeComponent} from'../home/home.component';
 import {FeedbackComponent} from'../feedback/feedback.component';
-import {ModelBasedFormComponent} from'../model-based-form/model-based-form.component';
+import {StdProvFormInputComponent} from'../std-prov-form-input/std-prov-form-input.component';
 
 // Route Configuration
 const routes: Routes = [
@@ -13,7 +13,7 @@ const routes: Routes = [
     { path: 'admin', component: AdminComponent },
     { path: 'home', component: HomeComponent },
     { path: 'feedback', component: FeedbackComponent },
-    { path: 'mbf', component: ModelBasedFormComponent }
+    { path: 'StdProvFormInput', component: StdProvFormInputComponent }
 ];
 
 @NgModule({

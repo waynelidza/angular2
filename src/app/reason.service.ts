@@ -45,19 +45,24 @@ constructor(private http:Http) {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post(`${this.wsURL}/feedback`,jsonData,options).map(res=>res.json());
+        return this.http.post(`${this.wsURL}/api/feedback`,jsonData,options).map(res=>res.json());
     }
 
     //----------------------------------------------------------------------------------------------------------------------------
-    doPost(productName:string, jsonTemplate:string)  {
+    doAdminProvisioningPost(productName:string, jsonTemplate:string)  {
         
-        return this.http.post(`${this.wsURL}/products/${productName}/deployments`,jsonTemplate).map(res=>res.json());
+        return this.http.post(`${this.wsURL}/api/products/${productName}/admin/deployments`,jsonTemplate).map(res=>res.json());
     }
 
+//------------------------------------------------------------------------------------------------------------------------------------
+    doStdProvisioningPost(productName:string, jsonTemplate:string)  {
+        
+        return this.http.post(`${this.wsURL}/api/products/${productName}/deployments`,jsonTemplate).map(res=>res.json());
+    }
     //----------------------------------------------------------------------------------------------------------------------------
     getStatus(uuid:string, name:string) {
 
-        return this.http.get(`${this.wsURL}/products/${name}/deployments/${uuid}/status`).map((res:Response) => res.json());
+        return this.http.get(`${this.wsURL}/api/products/${name}/deployments/${uuid}/status`).map((res:Response) => res.json());
     }
 
     //SINGLE (OBSOLETE)----------------------------------------------------------------------------------------------------------------------------
@@ -72,22 +77,22 @@ constructor(private http:Http) {
     //STATUS POLLING----------------------------------------------------------------------------------------------------------------------------
     getStatustPoll(uuid: string, name: string) {
 
-         return Observable.interval(this.GetStatustPollMilliSeconds ).flatMapTo(this.http.get(`${this.wsURL}/products/${name}/deployments/${uuid}/status`).map((res:Response) => res.json()),);
+         return Observable.interval(this.GetStatustPollMilliSeconds ).flatMapTo(this.http.get(`${this.wsURL}/api/products/${name}/deployments/${uuid}/status`).map((res:Response) => res.json()),);
     }
 
     //LOG POLLING--------------------------------------------------------------------------------------------------------------
     getLogPoll(uuid: string, name: string) {
 
-        return Observable.interval(this.GetLogPollMilliSeconds).flatMapTo(this.http.get(`${this.wsURL}/products/${name}/deployments/${uuid}/logs`).map((res:Response) => res.json()),);
+        return Observable.interval(this.GetLogPollMilliSeconds).flatMapTo(this.http.get(`${this.wsURL}/api/products/${name}/deployments/${uuid}/logs`).map((res:Response) => res.json()),);
     }
 
     //SINGLE GET TERRAFORM OUTPUTS--------------------------------------------------------------------------------------------------------------
     getOutputs(uuid:string, name:string) {
 
-        return this.http.get(`${this.wsURL}/products/${name}/deployments/${uuid}/outputs`).map((res:Response) => res.json());
+        return this.http.get(`${this.wsURL}/api/products/${name}/deployments/${uuid}/outputs`).map((res:Response) => res.json());
     }
 
-    //PROVISIONING JSON FROM FILE - TO BE REPLACED BY SERVICE CALL--------------------------------------------------------------------------------------------------------------
+    //PROVISIONING JSON FROM FILE - TO BE REPLACED BY API CALL--------------------------------------------------------------------------------------------------------------
     getProvisioningOptions():Observable<any>{
        
        return  this.http.get("assets/Configs/ProvisioningOptions.json").map(res=>res.json());

@@ -3,19 +3,19 @@ import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { RouterModule, Routes, Router} from '@angular/router';
 
 import { ReasonService } from '../app/reason.service';
-import { RHelper }     from '../model-based-form/helper.module';
+import { RHelper }     from '../std-prov-form-input/helper.module';
 
-import {OS, Size, SubnetID, StdProvForm, AdditionalDisk} from './model-based-form.interface';
+import {OS, Size, SubnetID, StdProvForm, AdditionalDisk} from './std-prov-form-input.interface';
 
 
 @Component({
-  selector: 'model-based-form',
-  templateUrl: './model-based-form.component.html',
-  styleUrls: ['./model-based-form.component.css'],
+  selector: 'std-prov-form-input',
+  templateUrl: './std-prov-form-input.component.html',
+  styleUrls: ['./std-prov-form-input.component.css'],
   providers: [ReasonService]
 })
 
-export class ModelBasedFormComponent  {
+export class StdProvFormInputComponent  {
 
   public additionalDisks:string[]= [];
   public newArray:string[];
