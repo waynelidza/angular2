@@ -17,7 +17,7 @@ import {OS, Size, Subnet, StdProvForm, AdditionalDisk} from './std-prov-form-inp
 
 export class StdProvFormInputComponent  {
 
-  @Output() ProvisionThisEvent: EventEmitter<StdProvForm> = new EventEmitter<StdProvForm>();
+  @Output() submittedEvent: EventEmitter<StdProvForm> = new EventEmitter<StdProvForm>();
 
   public newArray:string[];
   public theDiskInput:string;
@@ -138,7 +138,7 @@ export class StdProvFormInputComponent  {
     event.preventDefault();
 
     //EMMIT EVENT AND DATA FOR PROVISIONING
-    this.ProvisionThisEvent.emit(this.stdProvForm);
+    this.submittedEvent.emit(this.stdProvForm);
 
     //CLEAR ALL ARRAYS ETC....
     this.setDefaults();

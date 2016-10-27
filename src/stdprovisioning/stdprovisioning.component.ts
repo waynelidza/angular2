@@ -5,6 +5,7 @@ import { FormsModule } from "@angular/forms";
 import { Router } from '@angular/router';
 
 import {FeedbackComponent} from '../feedback/feedback.component';
+import {OS, Size, Subnet, StdProvForm, AdditionalDisk} from '../std-prov-form-input/std-prov-form-input.interface';
 
 import { ReasonService } from '../app/reason.service';
 
@@ -64,6 +65,7 @@ export class StdProvisioningComponent {
   public displaySubmitButton = true;
   public displayFeedback = false;
   public feedbackSent = false;
+  //public stdProvForm: StdProvForm ;
  
       constructor(private _reasonService: ReasonService, private http:Http) {
     
@@ -81,7 +83,14 @@ export class StdProvisioningComponent {
         console.log(proOpt);
 
   }
+//---------------------------------------------------------------------------------------------------------
+submittedEvent(stdProvFormIn:StdProvForm){
 
+        //this.stdProvForm = stdProvFormIn;
+        //console.log('submittedEvent data = '+JSON.stringify(stdProvForm));
+
+        this.sendRequest(stdProvFormIn);
+}
   //HELPERS
   getTimeStamp() {
     return new Date().toDateString() + " " + new Date().toTimeString();
@@ -105,8 +114,10 @@ export class StdProvisioningComponent {
   }
 
   //Submit button click---------------------------------------------------------------------------------------------------------
-  sendRequest(formValue:any) {
+  sendRequest(stdProvFormIn:StdProvForm) {
 
+
+    let stdProvJSON = JSON.stringify(stdProvFormIn);
     //clear any vars
     this.displayOutputDiv = false;
     this.displayLogDiv = false;
@@ -120,22 +131,22 @@ export class StdProvisioningComponent {
     this.uuid = '';
 
     //validation #1
-    if (formValue.templateName.length > 0) {
-      v = true;
-    }
-    else {
-      this.hasError = true;
-      this.messageStatus = 'danger';
-      this.message = 'Template name must be entered!!';
-    }
+    // if (formValue.templateName.length > 0) {
+    //   v = true;
+    // }
+    // else {
+    //   this.hasError = true;
+    //   this.messageStatus = 'danger';
+    //   this.message = 'Template name must be entered!!';
+    // }
 
     //validation #2
-    if (this.IsJsonString(formValue.templatejson) && v == true) {
+    if (this.IsJsonString(stdProvJSON)) {
 
       this.displaySubmitButton = false;
 
-      this.templateName = formValue.templateName;
-      this.templatejson = formValue.templatejson;
+      this.templateName = stdProvFormIn.ProvisioningName;
+      this.templatejson = stdProvJSON;
 
       //TOO: IS THIS STILL NEEDED???
        var sleep = function (time:any) {
@@ -169,7 +180,7 @@ export class StdProvisioningComponent {
       //DO ERROR FORMATTING ETC...
       if (v == true) {
 
-        if (formValue.templatejson.length < 1) {
+        if (stdProvJSON.length < 1) {
           this.setMessage('Error: JSON Template is required','e');
           this.displaySubmitButton = true;
         }
@@ -303,7 +314,7 @@ export class StdProvisioningComponent {
 
     //WAIT FOR THE UUID TO BE SET ...USUALLY A FEW SECONDS
     while (this.uuid == '') {
-      console.log('waiting for uui...')
+      //console.log('waiting for uui...')
     }
 
     //CALL STAUS POLLABLE SERVICE WITH A SUBSCRIPTION TO CANCEL LATER
