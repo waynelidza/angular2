@@ -11,7 +11,7 @@ import { ReasonService } from '../app/reason.service';
 
 @Component({
   selector: 'admin-component',
-  templateUrl: './stdprovisioning.component.html',
+  templateUrl: './stdprovisioning2.component.html',
   styleUrls: [ './stdprovisioning.component.css' ], 
   providers: [ReasonService]
   
