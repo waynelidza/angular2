@@ -4,27 +4,27 @@
         "ID": "RHEL6",
         "Description": "RHEL-6.8_HVM_GA-20160503-x86_64-1-Hourly2-GP2",
         "Defaultvalue": "false",
-        "MinRootVolSize" : "8"
+        "MinRootVolSize" : 8
     },
         {"ID": "RHEL7",
         "Description": "Red Hat Enterprise Linux 7.2 (HVM)",
         "Defaultvalue": "false",
-        "MinRootVolSize" : "9"
+        "MinRootVolSize" : 9
     },
         {"ID": "WIN2012R2",
         "Description": "Microsoft Windows Server 2012 R2 Base",
         "Defaultvalue": "false",
-        "MinRootVolSize" : "30"
+        "MinRootVolSize" : 30
     },
         {"ID": "WIN2016",
         "Description": "Microsoft Windows Server 2016 Base",
         "Defaultvalue": "false",
-        "MinRootVolSize" : "35"
+        "MinRootVolSize" : 35
     },
         {"ID": "WIN2018",
         "Description": "Microsoft Windows Server 2018 Base",
         "Defaultvalue": "true",
-        "MinRootVolSize" : "42"
+        "MinRootVolSize" : 42
     }
     ]
     ,

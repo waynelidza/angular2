@@ -17,7 +17,7 @@ export class OS {
     public ID:string;
     public Description:string;
     public Defaultvalue:string;
-    public MinRootVolSize:string;
+    public MinRootVolSize:number;
 }
 
 export class Size {
@@ -34,16 +34,6 @@ export class Subnet {
     public Defaultvalue:string;
 }
 
-export class StdProvOutput {
-
-        ProjectName:string;
-        ProvisioningName:string;
-        OS:OS;
-        RootVolumeSize:Number;
-        Size:Size;
-        Subnet:Subnet;
-        AdditionalDisks:AdditionalDisk[];
-}
 
 
 

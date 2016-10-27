@@ -5,7 +5,7 @@ import { RouterModule, Routes, Router} from '@angular/router';
 import { ReasonService } from '../app/reason.service';
 import { RHelper }     from '../std-prov-form-input/helper.module';
 
-import {OS, Size, Subnet, StdProvForm, AdditionalDisk, StdProvOutput} from './std-prov-form-input.interface';
+import {OS, Size, Subnet, StdProvForm, AdditionalDisk} from './std-prov-form-input.interface';
 
 
 @Component({
@@ -17,7 +17,7 @@ import {OS, Size, Subnet, StdProvForm, AdditionalDisk, StdProvOutput} from './st
 
 export class StdProvFormInputComponent  {
 
-  @Output() ProvisionThis: EventEmitter<StdProvForm> = new EventEmitter<StdProvForm>();
+  @Output() ProvisionThisEvent: EventEmitter<StdProvForm> = new EventEmitter<StdProvForm>();
 
   public newArray:string[];
   public theDiskInput:string;
@@ -37,63 +37,66 @@ export class StdProvFormInputComponent  {
  public inputData:any;
 
  public m_enableLogging:boolean = false;
+ public message: string = '';
 
-  constructor( private router: Router, private reasonService:ReasonService ) { 
+ constructor( private router: Router, private reasonService:ReasonService ) { 
 
          RHelper.doLog('constructor()',this.m_enableLogging)
-        this.setDefaults();
- 
+
+         this.setDefaults();
   }
 
 
-setDefaults(){
-         //1. GET THE PROVISIONING INPUT/SETUP/OPTIONS FORM DATA (TO BE REPLACED BY WS CALL)
-          this.reasonService.getProvisioningOptions().subscribe(data => { 
+ setDefaults(){
 
-              RHelper.doLog(JSON.stringify(data),this.m_enableLogging)
-                //2. Find and set default for OS as well as initial value for RootVolSize
-                 this.OSArr = data["OS"];
-                  let iOsDefIndex:number = 0;
-                  let defRootVolSize = -1;
-                    for(let o of this.OSArr)
-                    {
-                      if(o.Defaultvalue == 'true')
-                      {
-                        defRootVolSize = Number(o.MinRootVolSize);
-                        break;
-                      }
-                      iOsDefIndex++
-                    }
+      //1. GET THE PROVISIONING INPUT/SETUP/OPTIONS FORM DATA (TO BE REPLACED BY WS CALL)
+      this.reasonService.getProvisioningOptions().subscribe(data => { 
 
-                //3. GET SIZES AND SET DEFAULT   
-                this.SizeArr = data["Size"];
-                let sizeDefIndex = RHelper.getDefaultIndex(this.SizeArr,'true');
-
-                //4. GET SUBNETS AND SET DEFAULT   
-                this.SubnetArr = data["Subnet"]; 
-                let subnetDefIndex = RHelper.getDefaultIndex(this.SubnetArr,'true');
-
-                //4.SET VALIDATION PROPERTIES
-                this.defaultAdditionalDiskSize = data["AdditionalDiskSizes"].Defaultvalue;
-                this.theDiskInput = this.defaultAdditionalDiskSize;
-                this.defaultAdditionalMax = data["AdditionalDiskSizes"].Maximum;
-                this.defaultAdditionalMin = data["AdditionalDiskSizes"].Minimum;
-                this.defaultAdditionalDiskUnit = data["AdditionalDiskSizes"].Unit;
-
-                //5.CREATE BASE MODEL FOR FORM WITH DEFAULTS SET
-                this.stdProvForm = {
-                  ProjectName: '',
-                  ProvisioningName: '',
-                  OS: this.OSArr[iOsDefIndex],
-                  Size: this.SizeArr[sizeDefIndex],
-                  RootVolumeSize: defRootVolSize,
-                  AdditionalDisks: [],
-                  Subnet: this.SubnetArr[subnetDefIndex]
+          RHelper.doLog(JSON.stringify(data),this.m_enableLogging)
+            //2. Find and set default for OS as well as initial value for RootVolSize
+              this.OSArr = data["OS"];
+              let iOsDefIndex:number = 0;
+              let defRootVolSize = -1;
+                for(let o of this.OSArr)
+                {
+                  if(o.Defaultvalue == 'true')
+                  {
+                    defRootVolSize = Number(o.MinRootVolSize);
+                    break;
+                  }
+                  iOsDefIndex++
                 }
-            },
-            err => console.error(err), //TODO: OUTPUT ERRORS/MESSAGES TO UX
-            () => RHelper.doLog('done loading/setting provisioning options',this.m_enableLogging)
-          );
+
+            //3. GET SIZES AND SET DEFAULT   
+            this.SizeArr = data["Size"];
+            let sizeDefIndex = RHelper.getDefaultIndex(this.SizeArr,'true');
+
+            //4. GET SUBNETS AND SET DEFAULT   
+            this.SubnetArr = data["Subnet"]; 
+            let subnetDefIndex = RHelper.getDefaultIndex(this.SubnetArr,'true');
+
+            //4.SET VALIDATION PROPERTIES
+            this.defaultAdditionalDiskSize = data["AdditionalDiskSizes"].Defaultvalue;
+            this.theDiskInput = this.defaultAdditionalDiskSize;
+            this.defaultAdditionalMax = data["AdditionalDiskSizes"].Maximum;
+            this.defaultAdditionalMin = data["AdditionalDiskSizes"].Minimum;
+            this.defaultAdditionalDiskUnit = data["AdditionalDiskSizes"].Unit;
+
+            //5.CREATE BASE MODEL FOR FORM WITH DEFAULTS SET
+            this.stdProvForm = {
+              ProjectName: '',
+              ProvisioningName: '',
+              OS: this.OSArr[iOsDefIndex],
+              Size: this.SizeArr[sizeDefIndex],
+              RootVolumeSize: defRootVolSize,
+              AdditionalDisks: [],
+              Subnet: this.SubnetArr[subnetDefIndex]
+            }
+        },
+        err => console.error(err), //TODO: OUTPUT ERRORS/MESSAGES TO UX
+        () => RHelper.doLog('done loading/setting provisioning options',this.m_enableLogging)
+      );
+
 }
 
 //----------------------------------------------------------------------------------------------------------------
@@ -101,18 +104,19 @@ setDefaults(){
 
     if(Number(this.theDiskInput) >= Number(this.defaultAdditionalMin) &&  Number(this.theDiskInput) <= Number(this.defaultAdditionalMax))
     {
+
       let ad = new AdditionalDisk();
       ad.size = Number(this.theDiskInput);
-
       this.stdProvForm.AdditionalDisks.push(ad);
 
       this.theDiskInput = this.defaultAdditionalDiskSize;
 
       event.preventDefault();
     }
-    else{
+    else
+    {
       this.theDiskInput = this.defaultAdditionalDiskSize;
-        alert('Invalid disk size must be between 1 and 500');
+      this.message = `Invalid disk size must be between ${this.defaultAdditionalMin} and ${this.defaultAdditionalMax}`;
     }
 
   }
@@ -129,16 +133,12 @@ setDefaults(){
   //----------------------------------------------------------------------------------------------------------------
   doProvisioning(formValue:any, event){
 
-    console.log('doProvisioning = ' + JSON.stringify(this.stdProvForm));
+    console.log(JSON.stringify(this.stdProvForm));
 
     event.preventDefault();
-    //console.log('doProvisioning()');
-    //this.theFormJson = JSON.stringify(formValue);
-    
-    //console.log(this.stdProvForm);
 
     //EMMIT EVENT AND DATA FOR PROVISIONING
-    this.ProvisionThis.emit(this.stdProvForm);
+    this.ProvisionThisEvent.emit(this.stdProvForm);
 
     //CLEAR ALL ARRAYS ETC....
     this.setDefaults();

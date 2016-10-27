@@ -10,15 +10,15 @@ import { ReasonService } from '../app/reason.service';
 
 @Component({
   selector: 'admin-component',
-  templateUrl: './admin.component.html',
-  styleUrls: [ './admin.component.css' ], 
+  templateUrl: './stdprovisioning.component.html',
+  styleUrls: [ './stdprovisioning.component.css' ], 
   providers: [ReasonService]
   
 })
 
-export class AdminComponent {
+export class StdProvisioningComponent {
 
-  title = 'Reason Admin UX';
+  title = 'Reason Standard Provisioning';
   public outputJSONs:string;
   public logJSONs:string;
   public posts:string;

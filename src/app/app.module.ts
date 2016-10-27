@@ -7,16 +7,15 @@ import { AdminComponent } from '../admin/admin.component';
 import { HomeComponent } from '../home/home.component';
 import { FeedbackComponent } from'../feedback/feedback.component';
 import { StreamingListComponent } from '../streaming-list/streaming-list.component';
+import { StdProvFormInputComponent } from '../std-prov-form-input/std-prov-form-input.component';
+import { StdProvisioningComponent } from '../stdprovisioning/stdprovisioning.component';
 
 import { AppComponent }  from './app.component';
 import { AppRoutingModule }     from './app.routes';
 
-import { StdProvFormInputComponent } from '../std-prov-form-input/std-prov-form-input.component';
-
-
 @NgModule({
   imports: [ BrowserModule, FormsModule,ReactiveFormsModule, HttpModule, AppRoutingModule],
-  declarations: [ AppComponent, AdminComponent, HomeComponent, FeedbackComponent, StreamingListComponent, StdProvFormInputComponent],
+  declarations: [ AppComponent, AdminComponent, HomeComponent, FeedbackComponent, StreamingListComponent, StdProvFormInputComponent, StdProvisioningComponent],
   bootstrap: [ AppComponent ]
 })
 
