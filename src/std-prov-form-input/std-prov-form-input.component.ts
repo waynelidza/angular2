@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,EventEmitter ,Output } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { RouterModule, Routes, Router} from '@angular/router';
 
 import { ReasonService } from '../app/reason.service';
 import { RHelper }     from '../std-prov-form-input/helper.module';
 
-import {OS, Size, SubnetID, StdProvForm, AdditionalDisk} from './std-prov-form-input.interface';
+import {OS, Size, Subnet, StdProvForm, AdditionalDisk, StdProvOutput} from './std-prov-form-input.interface';
 
 
 @Component({
@@ -17,18 +17,13 @@ import {OS, Size, SubnetID, StdProvForm, AdditionalDisk} from './std-prov-form-i
 
 export class StdProvFormInputComponent  {
 
-  public additionalDisks:string[]= [];
+  @Output() ProvisionThis: EventEmitter<StdProvForm> = new EventEmitter<StdProvForm>();
+
   public newArray:string[];
-  public projectName:string;
-  //public theJSON:string;
-  public theinput:string;
+  public theDiskInput:string;
   public inputJSON:string;
-
-  //public RootVolumeSize:string; //THE DEFAULT
   public SizeArr = [];
-
-  //public SubnetID:string; //THE DEFAULT
-  public SubnetIDArr = [];
+  public SubnetArr = [];
   public theFormJson:string;
 
   public defaultAdditionalDiskSize:string;
@@ -36,7 +31,7 @@ export class StdProvFormInputComponent  {
   public defaultAdditionalMax:string;
   public defaultAdditionalDiskUnit:string;
 
-  public stdProvForm: StdProvForm=  {projectName: '', name: '', oS: null, Size: null, RootVolumeSize: 0, additionalDisks: [], Subnet: null}
+  public stdProvForm: StdProvForm =  { ProjectName: '', ProvisioningName: '', OS: null, Size: null, RootVolumeSize: 0, AdditionalDisks: [], Subnet: null}
   public OSArr = [];
 
  public inputData:any;
@@ -45,12 +40,12 @@ export class StdProvFormInputComponent  {
 
   constructor( private router: Router, private reasonService:ReasonService ) { 
 
-        //this.doLog('constructor()');
          RHelper.doLog('constructor()',this.m_enableLogging)
         
           //1. GET THE PROVISIONING INPUT/SETUP/OPTIONS FORM DATA (TO BE REPLACED BY WS CALL)
           this.reasonService.getProvisioningOptions().subscribe(data => { 
 
+              RHelper.doLog(JSON.stringify(data),this.m_enableLogging)
                 //2. Find and set default for OS as well as initial value for RootVolSize
                  this.OSArr = data["OS"];
                   let iOsDefIndex:number = 0;
@@ -70,25 +65,25 @@ export class StdProvFormInputComponent  {
                 let sizeDefIndex = RHelper.getDefaultIndex(this.SizeArr,'true');
 
                 //4. GET SUBNETS AND SET DEFAULT   
-                this.SubnetIDArr = data["Subnet"]; 
-                let subnetDefIndex = RHelper.getDefaultIndex(this.SubnetIDArr,'true');
+                this.SubnetArr = data["Subnet"]; 
+                let subnetDefIndex = RHelper.getDefaultIndex(this.SubnetArr,'true');
 
                 //4.SET VALIDATION PROPERTIES
                 this.defaultAdditionalDiskSize = data["AdditionalDiskSizes"].Defaultvalue;
-                this.theinput = this.defaultAdditionalDiskSize;
+                this.theDiskInput = this.defaultAdditionalDiskSize;
                 this.defaultAdditionalMax = data["AdditionalDiskSizes"].Maximum;
                 this.defaultAdditionalMin = data["AdditionalDiskSizes"].Minimum;
                 this.defaultAdditionalDiskUnit = data["AdditionalDiskSizes"].Unit;
 
                 //5.CREATE BASE MODEL FOR FORM WITH DEFAULTS SET
                 this.stdProvForm = {
-                  projectName: '',
-                  name: '',
-                  oS: this.OSArr[iOsDefIndex],
+                  ProjectName: '',
+                  ProvisioningName: '',
+                  OS: this.OSArr[iOsDefIndex],
                   Size: this.SizeArr[sizeDefIndex],
                   RootVolumeSize: defRootVolSize,
-                  additionalDisks: [],
-                  Subnet: this.SubnetIDArr[subnetDefIndex]
+                  AdditionalDisks: [],
+                  Subnet: this.SubnetArr[subnetDefIndex]
                 }
             },
             err => console.error(err), //TODO: OUTPUT ERRORS/MESSAGES TO UX
@@ -97,17 +92,21 @@ export class StdProvFormInputComponent  {
   }
 
 //----------------------------------------------------------------------------------------------------------------
-  addAdditionalDisk(string,event){
-    if(Number(this.theinput) >= Number(this.defaultAdditionalMin) &&  Number(this.theinput) <= Number(this.defaultAdditionalMax)){
-      //console.log(this.theinput)
-      this.additionalDisks.push(this.theinput);
+  addAdditionalDisk(diskSize:string, event){
 
-      //this.theJSON = JSON.stringify(this.additionalDisks);
-      this.theinput = this.defaultAdditionalDiskSize;
+    if(Number(this.theDiskInput) >= Number(this.defaultAdditionalMin) &&  Number(this.theDiskInput) <= Number(this.defaultAdditionalMax))
+    {
+      let ad = new AdditionalDisk();
+      ad.size = Number(this.theDiskInput);
+
+      this.stdProvForm.AdditionalDisks.push(ad);
+
+      this.theDiskInput = this.defaultAdditionalDiskSize;
+
       event.preventDefault();
     }
     else{
-      this.theinput = this.defaultAdditionalDiskSize;
+      this.theDiskInput = this.defaultAdditionalDiskSize;
         alert('Invalid disk size must be between 1 and 500');
     }
 
@@ -116,21 +115,39 @@ export class StdProvFormInputComponent  {
 //----------------------------------------------------------------------------------------------------------------
   removeAdditionalDisks(i: any, event,){
 
-    this.additionalDisks = [];
+    this.stdProvForm.AdditionalDisks = [];
 
     //this.theJSON = JSON.stringify(this.additionalDisks);
     event.preventDefault();
   }
     
   //----------------------------------------------------------------------------------------------------------------
-  save(formValue:any){
-    this.theFormJson = JSON.stringify(formValue);
-    console.log('save = '+JSON.stringify(formValue));
+  doProvisioning(formValue:any){
 
-    //TODO: DO WS CALL HERE ......
+    console.log('doProvisioning()');
+    this.theFormJson = JSON.stringify(formValue);
+    console.log(this.stdProvForm);
+
+    // let formDataObj = JSON.parse(formValue);
+    
+    // let spo = new StdProvOutput()
+    // spo.ProjectName = this.stdProvForm.ProjectName;
+    // spo.ProvisioningName = this.stdProvForm.ProvisioningName;
+    // spo.OS = this.stdProvForm.OS;
+    // spo.Size = this.stdProvForm.Size;
+    // spo.Subnet = this.stdProvForm.Subnet;
+    // spo.AdditionalDisks = this.stdProvForm.AdditionalDisks;
+
+
+    //console.log(JSON.stringify(spo));
+    
+
+
+    //EMMIT EVENT AND DATA FOR PROVISIONING
+    this.ProvisionThis.emit(this.stdProvForm);
 
     //CLEAR ALL ARRAYS ETC....
-    this.additionalDisks = [];
+    this.stdProvForm.AdditionalDisks = [];
 
     //INFO: NAVIGATE AWAY
     //this.router.navigate(['/home']);

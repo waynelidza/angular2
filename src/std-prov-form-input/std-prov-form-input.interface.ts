@@ -1,14 +1,14 @@
 export interface StdProvForm {
-    projectName:string;
-    name:string;
-    oS:OS;
+    ProjectName:string;
+    ProvisioningName:string;
+    OS:OS;
     Size:Size;
     RootVolumeSize:number;
-    additionalDisks :AdditionalDisk[];
-    Subnet:SubnetID;
+    AdditionalDisks :AdditionalDisk[];
+    Subnet:Subnet;
 }
 
-export interface AdditionalDisk  {
+export class AdditionalDisk  {
     size:number;
 }
 
@@ -27,11 +27,22 @@ export class Size {
     public Defaultvalue:string;
 }
 
-export class SubnetID {
+export class Subnet {
 
     public ID:string;
     public Description:string;
     public Defaultvalue:string;
+}
+
+export class StdProvOutput {
+
+        ProjectName:string;
+        ProvisioningName:string;
+        OS:OS;
+        RootVolumeSize:Number;
+        Size:Size;
+        Subnet:Subnet;
+        AdditionalDisks:AdditionalDisk[];
 }
 
 

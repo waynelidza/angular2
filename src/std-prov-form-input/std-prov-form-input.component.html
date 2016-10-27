@@ -1,20 +1,20 @@
 
 
-<form #feedbackForm="ngForm" (ngSubmit)="save(feedbackForm.value); feedbackForm.reset();"  id='daForm'>
+<form #stdProvinputForm="ngForm" (ngSubmit)="doProvisioning(stdProvinputForm.value); stdProvinputForm.reset();"  id='daForm'>
 
   <div class="input-group">
     <span class="input-group-addon" id="YourProjectName-addon" >Project Name</span>
-    <input type="text" class="form-control" id="projectName" name="projectName" ngModel aria-describedby="YourProjectName-addon" required>
+    <input type="text" class="form-control" id="projectName" name="projectName" [(ngModel)]="stdProvForm.ProjectName" aria-describedby="YourProjectName-addon" required>
   </div>
 
   <div class="input-group" style="margin-top:10px;">
     <span class="input-group-addon" id="YourProvisioningName-addon" >Provisioning Name</span>
-    <input type="text" class="form-control" id="ProvisioningName" name="ProvisioningName" ngModel aria-describedby="YourProvisioningName-addon" required>
+    <input type="text" class="form-control" id="ProvisioningName" name="ProvisioningName" [(ngModel)]="stdProvForm.ProvisioningName" aria-describedby="YourProvisioningName-addon" required>
   </div>
 
     <div style="margin-top:10px;">
         Select an OS
-        <select class="form-control" [(ngModel)]="stdProvForm.oS" name="oS" (change)="osChanged($event.target.value)" required >     
+        <select class="form-control" [(ngModel)]="stdProvForm.OS" name="oS" (change)="osChanged($event.target.value)" required >     
             <option *ngFor="let os of OSArr"  [ngValue]="os"  >
                 {{os.Description}}
             </option>
@@ -35,28 +35,28 @@
         </select> 
     </div>
 
-
   <div class="input-group" style="margin-top:10px;">
     <span class="input-group-addon" id="YourProjectName-addon" >Additional Disks</span>
-    <input type="text" class="form-control" id="theinput" name="theinput" [(ngModel)]="theinput" aria-describedby="YourProjectName-addon" >
-    <button style="margin:5px;" class="btn btn-primary" (click)="addAdditionalDisk('1',$event)">+ Add disk</button>
-    <button style="margin:5px;"class="btn btn-primary" (click)="removeAdditionalDisks('1',$event)"> - Clear all</button>
+    <input type="text" class="form-control" id="theDiskInput" name="theinput" [(ngModel)]="theDiskInput" aria-describedby="YourProjectName-addon" >
+
+      <button style="margin:5px;" class="btn btn-primary" (click)="addAdditionalDisk('1',$event)">+ Add disk</button>
+      <button style="margin:5px;"class="btn btn-primary" (click)="removeAdditionalDisks('1',$event)"> - Clear all</button>
   </div>
 
-    <div><b>Additional Disk Count:</b> {{additionalDisks.length}}</div>
+    <div><b>Additional Disk Count:</b> {{stdProvForm.AdditionalDisks.length}}</div>
 
-      <div *ngFor="let item of additionalDisks; let i = index;">
+      <div *ngFor="let item of stdProvForm.AdditionalDisks; let i = index;">
 
           <!--<span class="input-group-addon" >Additional Disk-{{i}}</span>-->
           Additional Disk-{{i}} (Gigabyte)
-          <input  type="text" class="form-control" id="additionalDisks{{i}}" name="additionalDisks{{i}}" [(ngModel)]="additionalDisks[i]" value="{{item}}" readonly >
+          <input  type="text" class="form-control" id="stdProvForm.AdditionalDisks{{i}}" name="stdProvForm.AdditionalDisks{{i}}" [(ngModel)]="stdProvForm.AdditionalDisks[i].size" value="stdProvForm.AdditionalDisks[i].size." readonly >
           
       </div>
 
         <div style="margin-top:10px;">
             Select a subnet
-            <select class="form-control" [(ngModel)]="stdProvForm.Subnet" name="SubnetID" required>     
-                <option *ngFor="let snet of SubnetIDArr" [ngValue]="snet" >
+            <select class="form-control" [(ngModel)]="stdProvForm.Subnet" name="Subnet" required>     
+                <option *ngFor="let snet of SubnetArr" [ngValue]="snet" >
                   {{snet.Description}}</option>
             </select> 
         </div>
@@ -124,7 +124,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" (click)="sendConfirmedRequest()" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-thumbs-up"></span>Confirm</button>
+        <button type="submit" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-thumbs-up"></span>Confirm</button>
         <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-thumbs-down"></span>Quit</button>
       </div>
     </div>
@@ -133,7 +133,9 @@
 
 <!--<pre>OS arr: <br>{{OSArr | json}}</pre>
 <pre>SizeArr: <br>{{SizeArr | json}}</pre>
-<pre>SubnetIDArr: <br>{{SubnetIDArr | json}}</pre>-->
-<pre>submitted value: <br>{{feedbackForm.value | json}}</pre>
+<pre>SubnetArr: <br>{{SubnetArr | json}}</pre>-->
+<pre>stdProvinputForm: <br>{{stdProvinputForm.value | json}}</pre>
+<pre>stdProvForm object: <br>{{stdProvForm | json}}</pre>
+<pre>theFormJson: <br>{{theFormJson | json}}</pre>
 
 
