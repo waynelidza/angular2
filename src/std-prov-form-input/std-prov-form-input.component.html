@@ -1,6 +1,6 @@
 
 
-<form #stdProvinputForm="ngForm" (ngSubmit)="doProvisioning(stdProvinputForm.value); stdProvinputForm.reset();"  id='daForm'>
+<form #stdProvinputForm="ngForm" (ngSubmit)="doProvisioning(stdProvinputForm.value,$event); stdProvinputForm.reset();"  id='daForm'>
 
   <div class="input-group">
     <span class="input-group-addon" id="YourProjectName-addon" >Project Name</span>
@@ -49,7 +49,7 @@
 
           <!--<span class="input-group-addon" >Additional Disk-{{i}}</span>-->
           Additional Disk-{{i}} (Gigabyte)
-          <input  type="text" class="form-control" id="stdProvForm.AdditionalDisks{{i}}" name="stdProvForm.AdditionalDisks{{i}}" [(ngModel)]="stdProvForm.AdditionalDisks[i].size" value="stdProvForm.AdditionalDisks[i].size." readonly >
+          <input  type="text" class="form-control" id="stdProvFormAdditionalDisks{{i}}" name="stdProvFormAdditionalDisks{{i}}" [(ngModel)]="stdProvForm.AdditionalDisks[i].size"  readonly >
           
       </div>
 

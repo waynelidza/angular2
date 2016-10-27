@@ -36,13 +36,18 @@ export class StdProvFormInputComponent  {
 
  public inputData:any;
 
- public m_enableLogging:boolean = true;
+ public m_enableLogging:boolean = false;
 
   constructor( private router: Router, private reasonService:ReasonService ) { 
 
          RHelper.doLog('constructor()',this.m_enableLogging)
-        
-          //1. GET THE PROVISIONING INPUT/SETUP/OPTIONS FORM DATA (TO BE REPLACED BY WS CALL)
+        this.setDefaults();
+ 
+  }
+
+
+setDefaults(){
+         //1. GET THE PROVISIONING INPUT/SETUP/OPTIONS FORM DATA (TO BE REPLACED BY WS CALL)
           this.reasonService.getProvisioningOptions().subscribe(data => { 
 
               RHelper.doLog(JSON.stringify(data),this.m_enableLogging)
@@ -89,7 +94,7 @@ export class StdProvFormInputComponent  {
             err => console.error(err), //TODO: OUTPUT ERRORS/MESSAGES TO UX
             () => RHelper.doLog('done loading/setting provisioning options',this.m_enableLogging)
           );
-  }
+}
 
 //----------------------------------------------------------------------------------------------------------------
   addAdditionalDisk(diskSize:string, event){
@@ -122,32 +127,21 @@ export class StdProvFormInputComponent  {
   }
     
   //----------------------------------------------------------------------------------------------------------------
-  doProvisioning(formValue:any){
+  doProvisioning(formValue:any, event){
 
-    console.log('doProvisioning()');
-    this.theFormJson = JSON.stringify(formValue);
-    console.log(this.stdProvForm);
+    console.log('doProvisioning = ' + JSON.stringify(this.stdProvForm));
 
-    // let formDataObj = JSON.parse(formValue);
+    event.preventDefault();
+    //console.log('doProvisioning()');
+    //this.theFormJson = JSON.stringify(formValue);
     
-    // let spo = new StdProvOutput()
-    // spo.ProjectName = this.stdProvForm.ProjectName;
-    // spo.ProvisioningName = this.stdProvForm.ProvisioningName;
-    // spo.OS = this.stdProvForm.OS;
-    // spo.Size = this.stdProvForm.Size;
-    // spo.Subnet = this.stdProvForm.Subnet;
-    // spo.AdditionalDisks = this.stdProvForm.AdditionalDisks;
-
-
-    //console.log(JSON.stringify(spo));
-    
-
+    //console.log(this.stdProvForm);
 
     //EMMIT EVENT AND DATA FOR PROVISIONING
     this.ProvisionThis.emit(this.stdProvForm);
 
     //CLEAR ALL ARRAYS ETC....
-    this.stdProvForm.AdditionalDisks = [];
+    this.setDefaults();
 
     //INFO: NAVIGATE AWAY
     //this.router.navigate(['/home']);
