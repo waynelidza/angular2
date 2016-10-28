@@ -60,16 +60,27 @@ export class StdProvisioningComponent {
   public logArr:any = [];
   public outputDic = {};
   public outputsArr:any = [];
-  public homeURL = 'http://localhost:4200/';
+  //public homeURL = 'http://localhost:4200/';
   public result : Array<Object>; 
   public displaySubmitButton = true;
   public displayFeedback = false;
   public feedbackSent = false;
-  //public stdProvForm: StdProvForm ;
- 
+
+  public Panel1a = 'true';
+  public Panel1Class = 'panel-collapse collapse in';
+
+  public Panel2a = 'false';
+  public Panel2Class = 'panel-collapse collapse';
+
+  public Panel3a = 'false';
+  public Panel3Class = 'panel-collapse collapse';
+
+  public Panel4a = 'false';
+  public Panel4Class = 'panel-collapse collapse';
+
       constructor(private _reasonService: ReasonService, private http:Http) {
     
-        this.homeURL = _reasonService.HomeURL;
+        //this.homeURL = _reasonService.HomeURL;
         
         let proOpt:string = "";
 
@@ -86,10 +97,15 @@ export class StdProvisioningComponent {
 //---------------------------------------------------------------------------------------------------------
 submittedEvent(stdProvFormIn:StdProvForm){
 
-        //this.stdProvForm = stdProvFormIn;
-        //console.log('submittedEvent data = '+JSON.stringify(stdProvForm));
+ console.log("submittedEvent() fired");
 
         this.sendRequest(stdProvFormIn);
+
+  this.Panel1a = 'false';
+  this.Panel1Class = 'panel-collapse collapse';
+  this.Panel2a = 'true';
+  this.Panel2Class = 'panel-collapse collapse in';
+
 }
   //HELPERS
   getTimeStamp() {
@@ -116,8 +132,8 @@ submittedEvent(stdProvFormIn:StdProvForm){
   //Submit button click---------------------------------------------------------------------------------------------------------
   sendRequest(stdProvFormIn:StdProvForm) {
 
-
     let stdProvJSON = JSON.stringify(stdProvFormIn);
+    console.log('sendRequest = ' + stdProvJSON);
     //clear any vars
     this.displayOutputDiv = false;
     this.displayLogDiv = false;
@@ -161,6 +177,7 @@ submittedEvent(stdProvFormIn:StdProvForm){
         if (this.status === "submitted") {
 
           this.setMessage('uuid: ' + this.uuid,'s');
+          console.log(this.uuid);
           this.requestSubmitted = true; // :) WE HAVE THE UUID :)
           
           //CHECK THE STATUS AND START POLLING...
@@ -297,18 +314,6 @@ submittedEvent(stdProvFormIn:StdProvForm){
     return true;
   }
 
-  //----------------------------------------------------------------------------------------------------------------------------
-  // getLogandOutput() {
-
-  //   this._reasonService.getLogandOutput(this.uuid).subscribe(
-
-  //     data => {
-  //       this.outputJSONs = data[0],
-  //         this.logJSONs = data[1]
-  //     }
-  //   );
-  // }
-
   //STATUS POLL----------------------------------------------------------------------------------------------------------------------------
   startPolling() {
 
@@ -376,7 +381,17 @@ submittedEvent(stdProvFormIn:StdProvForm){
         if(didEnd == true)
         {
           this.displayFeedback = true;
-        }
+
+        this.Panel2a = 'false';
+        this.Panel2Class = 'panel-collapse collapse';
+        
+        this.Panel3a = 'true';
+        this.Panel3Class = 'panel-collapse collapse in';
+
+
+        // this.Panel4a = 'true';
+        // this.Panel4Class = 'panel-collapse collapse in';
+        } 
     }
   }
 

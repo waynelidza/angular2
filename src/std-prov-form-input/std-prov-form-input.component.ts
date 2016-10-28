@@ -133,7 +133,23 @@ export class StdProvFormInputComponent  {
   //----------------------------------------------------------------------------------------------------------------
   doProvisioning(formValue:any, event){
 
-    console.log(JSON.stringify(this.stdProvForm));
+    //console.log(JSON.stringify(this.stdProvForm));
+
+    event.preventDefault();
+
+    //EMMIT EVENT AND DATA FOR PROVISIONING
+    //this.submittedEvent.emit(this.stdProvForm);
+
+    //CLEAR ALL ARRAYS ETC....
+    //this.setDefaults();
+
+    //INFO: NAVIGATE AWAY
+    //this.router.navigate(['/home']);
+  }
+  //----------------------------------------------------------------------------------------------------------------
+  sendConfirmedRequest(formValue:any, event){
+    
+    console.log("sendConfirmedRequest()");
 
     event.preventDefault();
 
@@ -142,9 +158,6 @@ export class StdProvFormInputComponent  {
 
     //CLEAR ALL ARRAYS ETC....
     this.setDefaults();
-
-    //INFO: NAVIGATE AWAY
-    //this.router.navigate(['/home']);
   }
 //----------------------------------------------------------------------------------------------------------------
   osChanged(value:any){
@@ -164,9 +177,6 @@ export class StdProvFormInputComponent  {
     }
   }
   
-//----------------------------------------------------------------------------------------------------------------
-  sendConfirmedRequest(){
-    console.log("inside confirmed request sending method");
-  }
+
 
 }
