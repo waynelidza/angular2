@@ -3,17 +3,17 @@
   <div class="input-group">
     <span class="input-group-addon" id="YourProjectName-addon" >Project Name</span>
     <input type="text" class="form-control" id="projectName" name="projectName" [(ngModel)]="stdProvForm.ProjectName" aria-describedby="YourProjectName-addon" >
-  </div><span span style='color:red;margin-left:10px;'>{{valProjectNameMessage}}</span> 
+  </div><span  style='color:red;margin-left:10px;'>{{valProjectNameMessage}}</span> 
 
   <div class="input-group" style="margin-top:10px;">
     <span class="input-group-addon" id="YourProvisioningName-addon" >Provisioning Name</span>
     <input type="text" class="form-control" id="ProvisioningName" name="ProvisioningName" [(ngModel)]="stdProvForm.ProvisioningName" aria-describedby="YourProvisioningName-addon" >
-  </div><span span style='color:red;margin-left:10px;'>{{valProvNameMessage}}</span> 
+  </div><span  style='color:red;margin-left:10px;'>{{valProvNameMessage}}</span> 
 
     <div style="margin-top:10px;">
         Select an OS
         <select class="form-control" [(ngModel)]="stdProvForm.OS" name="oS" (change)="osChanged($event.target.value)" required >     
-            <option *ngFor="let os of OSArr"  [ngValue]="os"  >
+            <option *ngFor="let os of OSArr" [ngValue]="os"  >
                 {{os.Description}} 
             </option>
         </select> 
@@ -62,17 +62,15 @@
     
   <div style="margin:10px;">
 
-    <button type="submit" (click)="doProvisioning(stdProvinputForm.value,$event);" class="btn btn-primary"  data-toggle="modal" data-target="#myModal">
-
-      Deploy
-      <span class="glyphicon glyphicon-send "></span>  
+    <button (click)="deploy(stdProvinputForm.value,$event);" class="btn btn-primary"  data-toggle="modal" data-target="#myModal">
+      Deploy<span class="glyphicon glyphicon-send "></span>  
     </button>
 </div>
       
 </form>
 
 <!-- Modal -->
-<div *ngIf="valErrorCount == 0">
+<div *ngIf="valErrorCount == 0" >
 <div class="modal fade" id="myModal" role="dialog" >
   <div class="modal-dialog">
     <!-- Modal content-->
@@ -96,28 +94,34 @@
 
               <tr>
                 <td>Project Name:</td>
-                <td>{{stdProvForm.projectName}}</td>
+                <td>{{stdProvForm?.ProjectName}}</td>
               </tr>
 
               <tr>
                 <td>Template Name:</td>
-                <td>{{stdProvForm.name}}</td>
+                <td>{{stdProvForm?.ProvisioningName}}</td>
               </tr>
 
               <tr>
                 <td>Subnet:</td>
-                <td>{{stdProvForm.Subnet}}</td>
+                <td>{{stdProvForm?.Subnet?.ID}}</td>
               </tr>
 
               <tr>
                 <td>Operating System:</td>
-                <td>{{stdProvForm.oS}}</td>
+                <td>{{stdProvForm?.OS?.ID}}</td>
               </tr>
 
               <tr>
                 <td>Size:</td>
-                <td>{{stdProvForm.Size}}</td>
+                <td>{{stdProvForm?.Size?.Description}}</td>
               </tr>
+
+              <tr *ngFor="let disk of stdProvForm.AdditionalDisks; let i = index;">
+                <td>Additional Disk {{i}} Size:</td>
+                <td>{{disk.size}}</td>
+              </tr>
+
             </tbody>
           </table>
         </div>
@@ -133,7 +137,7 @@
   </div>
 </div>
 </div>
-
+<!--<pre>stdProvForm object: <br>{{stdProvForm | json}}</pre>-->
 <!--<pre>OS arr: <br>{{OSArr | json}}</pre>
 <pre>SizeArr: <br>{{SizeArr | json}}</pre>
 <pre>SubnetArr: <br>{{SubnetArr | json}}</pre>-->

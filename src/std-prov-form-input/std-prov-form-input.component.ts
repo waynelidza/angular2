@@ -44,9 +44,8 @@ export class StdProvFormInputComponent  {
  public valAdditionalDiskMessage: string = '';
  public valErrorCount = 0;
 
- public errorsArr:string[] = [];
-
  public MinRootSize = 0;
+ public valCounter = 0;
 
  constructor( private router: Router, private reasonService:ReasonService ) { 
 
@@ -130,7 +129,7 @@ export class StdProvFormInputComponent  {
     {
       this.theDiskInput = this.defaultAdditionalDiskSize;
       this.valAdditionalDiskMessage = `Additional Disk: Disk size must be between ${this.defaultAdditionalMin} and ${this.defaultAdditionalMax} Gigabytes (inclusive)`;
-      
+
     }
 
   }
@@ -139,25 +138,22 @@ export class StdProvFormInputComponent  {
   removeAdditionalDisks(i: any, event,){
 
     this.stdProvForm.AdditionalDisks = [];
-
     event.preventDefault();
   }
     
   //----------------------------------------------------------------------------------------------------------------
-  doProvisioning(formValue:any, event){
+  deploy(formValue:any, event){
 
     console.log('doProvisioning');
-     this.doValidation();
+    this.doValidation();
     event.preventDefault();
-
-   
 
   }
 
 doValidation(){
 
-  this.valErrorCount = 0;
-   this.valAdditionalDiskMessage = '';
+   this.valErrorCount = 0;
+
    this.valProjectNameMessage = '';
    this.valProvNameMessage = '';
    this.valRootVolSizeMessage = '';
@@ -188,8 +184,6 @@ doValidation(){
   sendConfirmedRequest(formValue:any, event){
     
     console.log('sendConfirmedRequest');
-
-    //console.log("sendConfirmedRequest()");
 
     event.preventDefault();
 
