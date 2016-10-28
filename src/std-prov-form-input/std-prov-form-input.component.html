@@ -1,20 +1,20 @@
-<form #stdProvinputForm="ngForm" (ngSubmit)="doProvisioning(stdProvinputForm.value,$event); "  id='daForm'>
+<form #stdProvinputForm="ngForm"   id='daForm'>
 
   <div class="input-group">
     <span class="input-group-addon" id="YourProjectName-addon" >Project Name</span>
-    <input type="text" class="form-control" id="projectName" name="projectName" [(ngModel)]="stdProvForm.ProjectName" aria-describedby="YourProjectName-addon" required>
-  </div>
+    <input type="text" class="form-control" id="projectName" name="projectName" [(ngModel)]="stdProvForm.ProjectName" aria-describedby="YourProjectName-addon" >
+  </div><span span style='color:red;margin-left:10px;'>{{valProjectNameMessage}}</span> 
 
   <div class="input-group" style="margin-top:10px;">
     <span class="input-group-addon" id="YourProvisioningName-addon" >Provisioning Name</span>
-    <input type="text" class="form-control" id="ProvisioningName" name="ProvisioningName" [(ngModel)]="stdProvForm.ProvisioningName" aria-describedby="YourProvisioningName-addon" required>
-  </div>
+    <input type="text" class="form-control" id="ProvisioningName" name="ProvisioningName" [(ngModel)]="stdProvForm.ProvisioningName" aria-describedby="YourProvisioningName-addon" >
+  </div><span span style='color:red;margin-left:10px;'>{{valProvNameMessage}}</span> 
 
     <div style="margin-top:10px;">
         Select an OS
         <select class="form-control" [(ngModel)]="stdProvForm.OS" name="oS" (change)="osChanged($event.target.value)" required >     
             <option *ngFor="let os of OSArr"  [ngValue]="os"  >
-                {{os.Description}}
+                {{os.Description}} 
             </option>
         </select> 
     </div>
@@ -23,7 +23,7 @@
       <span class="input-group-addon" id="YourRootVolumeSize-addon" >Root Volume Size</span>
       <input type="text" class="form-control" id="RootVolumeSize" name="RootVolumeSize" ngModel aria-describedby="YourRootVolumeSize-addon"  
           [(ngModel)]="stdProvForm.RootVolumeSize"  required>
-    </div>
+    </div><span style='color:red;margin-left:10px;'>{{valRootVolSizeMessage}}</span> 
 
     <div style="margin-top:10px;">
         Select a VM size
@@ -39,6 +39,7 @@
 
       <button style="margin:5px;" class="btn btn-primary" (click)="addAdditionalDisk('1',$event)">+ Add disk</button>
       <button style="margin:5px;"class="btn btn-primary" (click)="removeAdditionalDisks('1',$event)"> - Clear all</button>
+      <span span style='color:red;;margin-left:10px;'>{{valAdditionalDiskMessage}}</span> 
   </div>
 
     <div><b>Additional Disk Count:</b> {{stdProvForm.AdditionalDisks.length}}</div>
@@ -60,16 +61,19 @@
         </div>
     
   <div style="margin:10px;">
-    <button type="submit" class="btn btn-primary"  data-toggle="modal" data-target="#myModal">
+
+    <button type="submit" (click)="doProvisioning(stdProvinputForm.value,$event);" class="btn btn-primary"  data-toggle="modal" data-target="#myModal">
+
       Deploy
       <span class="glyphicon glyphicon-send "></span>  
     </button>
 </div>
-      <span style='color:red;'>{{message}}</span> 
+      
 </form>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
+<div *ngIf="valErrorCount == 0">
+<div class="modal fade" id="myModal" role="dialog" >
   <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
@@ -127,6 +131,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 
 <!--<pre>OS arr: <br>{{OSArr | json}}</pre>
