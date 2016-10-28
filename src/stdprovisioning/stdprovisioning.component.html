@@ -20,7 +20,11 @@
 
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingTwo" style="background-color:#337ab7;color:White;">
-      <div style="float:right;">&nbsp;&nbsp; {{uuid}} &nbsp;&nbsp;<img src="assets/Images/ajax-loader-header.gif" *ngIf="!displaySubmitButton"/></div>
+      <div style="float:right;margin-right:10px;"> 
+        <input type="text" name="uuid" value="{{uuid}}" style="border: 0;box-shadow:none;border-radius: 0px;margin-right:10px;color:white;width:285px;background-color:#337ab7" *ngIf="!displaySubmitButton">
+   
+        <img src="assets/Images/ajax-loader-header.gif" *ngIf="!displaySubmitButton"/>
+      </div>
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" [attr.aria-expanded]="Panel2a" aria-controls="collapseTwo">
           Step 2: Status and Logs

@@ -37,7 +37,16 @@ export class StdProvFormInputComponent  {
  public inputData:any;
 
  public m_enableLogging:boolean = false;
- public message: string = '';
+
+ public valRootVolSizeMessage: string = '';
+ public valProjectNameMessage: string = '';
+ public valProvNameMessage: string = '';
+ public valAdditionalDiskMessage: string = '';
+ public valErrorCount = 0;
+
+ public errorsArr:string[] = [];
+
+ public MinRootSize = 0;
 
  constructor( private router: Router, private reasonService:ReasonService ) { 
 
@@ -92,6 +101,8 @@ export class StdProvFormInputComponent  {
               AdditionalDisks: [],
               Subnet: this.SubnetArr[subnetDefIndex]
             }
+
+            this.MinRootSize = defRootVolSize;
         },
         err => console.error(err), //TODO: OUTPUT ERRORS/MESSAGES TO UX
         () => RHelper.doLog('done loading/setting provisioning options',this.m_enableLogging)
@@ -102,6 +113,8 @@ export class StdProvFormInputComponent  {
 //----------------------------------------------------------------------------------------------------------------
   addAdditionalDisk(diskSize:string, event){
 
+    this.valAdditionalDiskMessage = '';
+    
     if(Number(this.theDiskInput) >= Number(this.defaultAdditionalMin) &&  Number(this.theDiskInput) <= Number(this.defaultAdditionalMax))
     {
 
@@ -110,13 +123,14 @@ export class StdProvFormInputComponent  {
       this.stdProvForm.AdditionalDisks.push(ad);
 
       this.theDiskInput = this.defaultAdditionalDiskSize;
-
+      this.valAdditionalDiskMessage = '';
       event.preventDefault();
     }
     else
     {
       this.theDiskInput = this.defaultAdditionalDiskSize;
-      this.message = `Invalid disk size must be between ${this.defaultAdditionalMin} and ${this.defaultAdditionalMax}`;
+      this.valAdditionalDiskMessage = `Additional Disk: Disk size must be between ${this.defaultAdditionalMin} and ${this.defaultAdditionalMax} Gigabytes (inclusive)`;
+      
     }
 
   }
@@ -133,9 +147,43 @@ export class StdProvFormInputComponent  {
   doProvisioning(formValue:any, event){
 
     console.log('doProvisioning');
+     this.doValidation();
     event.preventDefault();
 
+   
+
   }
+
+doValidation(){
+
+  this.valErrorCount = 0;
+   this.valAdditionalDiskMessage = '';
+   this.valProjectNameMessage = '';
+   this.valProvNameMessage = '';
+   this.valRootVolSizeMessage = '';
+
+  //1. ProjectName
+  if(this.stdProvForm.ProjectName.length == 0)
+  {
+    this.valProjectNameMessage = 'This field is required'
+    this.valErrorCount++;
+  }
+
+  //2. ProvisioningName
+  if(this.stdProvForm.ProvisioningName.length == 0)
+  {
+    this.valProvNameMessage = 'This field is required';
+    this.valErrorCount++;
+  }
+
+  //3 MinRootSize
+  if(this.stdProvForm.RootVolumeSize < this.MinRootSize )
+  {
+    this.valRootVolSizeMessage = `Root Volume Size: Your root volume must be ${this.MinRootSize} Gigabytes or greater`
+    this.valErrorCount++;
+  }
+
+}
   //----------------------------------------------------------------------------------------------------------------
   sendConfirmedRequest(formValue:any, event){
     
@@ -163,6 +211,7 @@ export class StdProvFormInputComponent  {
       if (index == i)
       {
         this.stdProvForm.RootVolumeSize = Number(o.MinRootVolSize);
+        this.MinRootSize = this.stdProvForm.RootVolumeSize;
         break;
       }
       i++;
