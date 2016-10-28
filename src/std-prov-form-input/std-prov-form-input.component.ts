@@ -126,30 +126,22 @@ export class StdProvFormInputComponent  {
 
     this.stdProvForm.AdditionalDisks = [];
 
-    //this.theJSON = JSON.stringify(this.additionalDisks);
     event.preventDefault();
   }
     
   //----------------------------------------------------------------------------------------------------------------
   doProvisioning(formValue:any, event){
 
-    //console.log(JSON.stringify(this.stdProvForm));
-
+    console.log('doProvisioning');
     event.preventDefault();
 
-    //EMMIT EVENT AND DATA FOR PROVISIONING
-    //this.submittedEvent.emit(this.stdProvForm);
-
-    //CLEAR ALL ARRAYS ETC....
-    //this.setDefaults();
-
-    //INFO: NAVIGATE AWAY
-    //this.router.navigate(['/home']);
   }
   //----------------------------------------------------------------------------------------------------------------
   sendConfirmedRequest(formValue:any, event){
     
-    console.log("sendConfirmedRequest()");
+    console.log('sendConfirmedRequest');
+
+    //console.log("sendConfirmedRequest()");
 
     event.preventDefault();
 

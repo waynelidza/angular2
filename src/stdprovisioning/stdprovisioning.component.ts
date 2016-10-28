@@ -11,7 +11,7 @@ import { ReasonService } from '../app/reason.service';
 
 @Component({
   selector: 'admin-component',
-  templateUrl: './stdprovisioning2.component.html',
+  templateUrl: './stdprovisioning.component.html',
   styleUrls: [ './stdprovisioning.component.css' ], 
   providers: [ReasonService]
   
@@ -60,12 +60,12 @@ export class StdProvisioningComponent {
   public logArr:any = [];
   public outputDic = {};
   public outputsArr:any = [];
-  //public homeURL = 'http://localhost:4200/';
   public result : Array<Object>; 
   public displaySubmitButton = true;
   public displayFeedback = false;
   public feedbackSent = false;
 
+  //ACCORDIAN PANEL ANIMATION
   public Panel1a = 'true';
   public Panel1Class = 'panel-collapse collapse in';
 
@@ -78,29 +78,28 @@ export class StdProvisioningComponent {
   public Panel4a = 'false';
   public Panel4Class = 'panel-collapse collapse';
 
-      constructor(private _reasonService: ReasonService, private http:Http) {
+  constructor(private _reasonService: ReasonService, private http:Http) {
     
-        //this.homeURL = _reasonService.HomeURL;
-        
-        let proOpt:string = "";
+      let proOpt:string = "";
 
-        //returns object from 
-        _reasonService.getProvisioningOptions().subscribe(
-            data => { proOpt = JSON.stringify(data), console.log(JSON.stringify(data))},
-            err => console.error(err), //TODO: OUTPUT ERRORS/MESSAGES TO UX
-            () => console.log('done loading posts')
-          );
+      //returns object from 
+      _reasonService.getProvisioningOptions().subscribe(
+          data => { proOpt = JSON.stringify(data), console.log(JSON.stringify(data))},
+          err => console.error(err), //TODO: OUTPUT ERRORS/MESSAGES TO UX
+          () => console.log('done loading posts')
+        );
 
-        console.log(proOpt);
+      //console.log(proOpt);
 
   }
 //---------------------------------------------------------------------------------------------------------
 submittedEvent(stdProvFormIn:StdProvForm){
 
- console.log("submittedEvent() fired");
+  //console.log("submittedEvent() fired");
 
-        this.sendRequest(stdProvFormIn);
+  this.sendRequest(stdProvFormIn);
 
+  //SET ACCORDIAN
   this.Panel1a = 'false';
   this.Panel1Class = 'panel-collapse collapse';
   this.Panel2a = 'true';
@@ -384,7 +383,7 @@ submittedEvent(stdProvFormIn:StdProvForm){
 
         this.Panel2a = 'false';
         this.Panel2Class = 'panel-collapse collapse';
-        
+
         this.Panel3a = 'true';
         this.Panel3Class = 'panel-collapse collapse in';
 
@@ -407,12 +406,3 @@ convertToArr(Input:any)
 }
 
 }
-
-// DEPLOYMENT_STATUSES = %i{
-//   submitted
-//   creating
-//   created
-//   failed
-//   destroying
-//   destroyed
-// }
